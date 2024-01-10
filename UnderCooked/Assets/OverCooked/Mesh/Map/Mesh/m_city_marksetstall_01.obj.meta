@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b1365b7befe56e845b97bcc9e864aaae
+guid: aac5b37bc2737b741904b70d27d14de5
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: m_city_pigeon_grounded_01_0Mat
-    second: {fileID: 2100000, guid: fe1515a0a169fa0489fd9ab410824c0f, type: 2}
+      name: m_city_marksetstall_01_0Mat
+    second: {fileID: 2100000, guid: 26984019fb699a943afd9f336e4fa2b8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

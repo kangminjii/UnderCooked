@@ -3,7 +3,22 @@ guid: 74e54ab8dbb96a3438cea214cd5c3467
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_sk_the_pass_red_01_0Mat
+    second: {fileID: 2100000, guid: 3e43159e0ed09a047af5d86aaaf51977, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_sk_the_pass_red_01_1Mat
+    second: {fileID: 2100000, guid: 3e43159e0ed09a047af5d86aaaf51977, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_sk_the_pass_red_01_2Mat
+    second: {fileID: 2100000, guid: 3e43159e0ed09a047af5d86aaaf51977, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
