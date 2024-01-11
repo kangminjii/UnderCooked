@@ -3,7 +3,12 @@ guid: f2d8e2b4fdfc6ae4ebcef39a7efcefb7
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_city_wall_straight_01_0Mat
+    second: {fileID: 2100000, guid: ca8b0346bf34c98418e4db129e5fc4fc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

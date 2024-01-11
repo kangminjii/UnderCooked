@@ -3,7 +3,12 @@ guid: e2b3c97626cabbf43ba466e18a9f52a3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Knife_0Mat
+    second: {fileID: 2100000, guid: 83798fdfb378d74498293a4fc5e69072, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

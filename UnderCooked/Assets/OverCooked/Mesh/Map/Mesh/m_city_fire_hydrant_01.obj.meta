@@ -3,7 +3,12 @@ guid: c5790754b6e1b11498db39b2361eedb5
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_city_fire_hydrant_01_0Mat
+    second: {fileID: 2100000, guid: ab5dc9867d28ba34b8b72af412f6a40e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
