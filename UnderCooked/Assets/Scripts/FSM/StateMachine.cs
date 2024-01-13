@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    BaseState currentState;
+    BaseState _currentState;
+
+    //BaseState_P _currentState;
 
     public bool isGrounded;
 
     private void Start()
     {
-        currentState = GetInitialState();
-        if (currentState != null)
-            currentState.Enter();
+        _currentState = GetInitialState();
+        if (_currentState != null)
+            _currentState.Enter();
     }
 
     private void Update()
     {
-        if (currentState != null)
-            currentState.UpdateLogic();
+        if (_currentState != null)
+            _currentState.UpdateLogic();
     }
 
     private void LateUpdate()
     {
-        if (currentState != null)
-            currentState.UpdatePhysics();
+        if (_currentState != null)
+            _currentState.UpdatePhysics();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,10 +48,10 @@ public class StateMachine : MonoBehaviour
 
     public void ChangeState(BaseState newState)
     {
-        currentState.Exit();
+        _currentState.Exit();
 
-        currentState = newState;
-        currentState.Enter();
+        _currentState = newState;
+        _currentState.Enter();
     }
 
     protected virtual BaseState GetInitialState()
@@ -58,7 +60,7 @@ public class StateMachine : MonoBehaviour
     }
     private void OnGUI()
     {
-        string content = currentState != null ? currentState.name : "(no current state)";
+        string content = _currentState != null ? _currentState.name : "(no current state)";
         GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
     }
 
