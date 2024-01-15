@@ -6,16 +6,12 @@ public class Managers : MonoBehaviour
 {
     static Managers _instance; // 유일성 보장
 
-    InputManagers _input = new InputManagers();
+    InputManager _input = new InputManager();
     public static Managers Instance { get { Init(); return _instance; } }
-    public static InputManagers Input { get { return Instance._input; } }
+    public static InputManager Input { get { return Instance._input; } }
 
 
-    void Update()
-    {
-        _input.OnUpdate();
-    }
-
+  
     static void Init()
     {
         //초기화
