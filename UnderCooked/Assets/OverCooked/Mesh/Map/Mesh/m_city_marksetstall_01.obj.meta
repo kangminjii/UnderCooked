@@ -3,7 +3,12 @@ guid: aac5b37bc2737b741904b70d27d14de5
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_city_marksetstall_01_0Mat
+    second: {fileID: 2100000, guid: 26984019fb699a943afd9f336e4fa2b8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,7 +3,12 @@ guid: b1365b7befe56e845b97bcc9e864aaae
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_city_pigeon_grounded_01_0Mat
+    second: {fileID: 2100000, guid: fe1515a0a169fa0489fd9ab410824c0f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
