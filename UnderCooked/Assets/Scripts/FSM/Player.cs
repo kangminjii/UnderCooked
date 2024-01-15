@@ -8,15 +8,19 @@ public class Player : StateMachine
     public Idle idleState;
     [HideInInspector]
     public Moving movingState;
-   
+    [HideInInspector]
+    public Dash dashState;
+
 
     public Rigidbody rigidbody;
+    public Vector3 lookDir;
 
 
     private void Awake()
     {
         idleState = new Idle(this);
         movingState = new Moving(this);
+        dashState = new Dash(this);
 
         rigidbody = GetComponent<Rigidbody>();
     }

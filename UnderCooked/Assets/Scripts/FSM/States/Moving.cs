@@ -5,7 +5,6 @@ using UnityEngine;
 public class Moving : Grab
 {
     private float _speed = 5.0f;
-    Vector3 LookDir;
 
 
     public Moving(Player stateMachine) : base("Moving", stateMachine) 
@@ -53,7 +52,7 @@ public class Moving : Grab
             _sm.transform.rotation = Quaternion.Slerp(_sm.transform.rotation, toRotation, 0.06f);
         }
 
-        LookDir = _sm.transform.forward;
+        _sm.lookDir = _sm.transform.forward;
     }
 
 }

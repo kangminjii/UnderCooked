@@ -7,6 +7,6 @@ public class Define
     public enum KeyBoardEvent
     {
         Pressed,
-
+        Click,
     }
 }
