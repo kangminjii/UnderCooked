@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Jumping : BaseState
 {
-    protected MovementSM _sm;
+    protected Player _sm;
     private bool _grounded;
 
-    public Jumping(MovementSM stateMachine) : base("Jumping", stateMachine) 
+    public Jumping(Player stateMachine) : base("Jumping", stateMachine) 
     {
-        _sm = (MovementSM)stateMachine;
+        _sm = (Player)stateMachine;
     }
 
     public override void Enter()

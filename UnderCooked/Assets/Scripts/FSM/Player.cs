@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementSM : StateMachine
+public class Player : StateMachine
 {
     [HideInInspector]
     public Idle idleState;

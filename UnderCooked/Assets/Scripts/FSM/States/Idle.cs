@@ -6,13 +6,13 @@ public class Idle : Grounded
 {
     private float _horizontalInput;
 
-    public Idle(MovementSM stateMachine) : base("Idle", stateMachine) { }
+    public Idle(Player stateMachine) : base("Idle", stateMachine) { }
 
     public override void Enter()
     {
         base.Enter();
         _horizontalInput = 0f;
-        ((MovementSM)stateMachine).meshRenderer.material.color = Color.black;
+        ((Player)stateMachine).meshRenderer.material.color = Color.black;
     }
 
     public override void UpdateLogic()
@@ -21,7 +21,7 @@ public class Idle : Grounded
         _horizontalInput = Input.GetAxis("Horizontal");
         // transition to "moving" state if input != 0
         if (Mathf.Abs(_horizontalInput) > Mathf.Epsilon)
-            stateMachine.ChangeState(((MovementSM)stateMachine).movingState);
+            stateMachine.ChangeState(((Player)stateMachine).movingState);
     }
 
 }

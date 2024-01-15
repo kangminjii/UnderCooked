@@ -6,9 +6,9 @@ public class Moving : Grounded
 {
     private float _horizontalInput;
 
-    public Moving(MovementSM stateMachine) : base("Moving", stateMachine) 
+    public Moving(Player stateMachine) : base("Moving", stateMachine) 
     {
-        _sm = (MovementSM)stateMachine;
+        _sm = (Player)stateMachine;
     }
 
     public override void Enter()

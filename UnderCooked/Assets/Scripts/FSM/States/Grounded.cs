@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Grounded : BaseState
 {
-    protected MovementSM _sm;
+    protected Player _sm;
 
-    public Grounded(string name, MovementSM stateMachine) : base(name, stateMachine) 
+    public Grounded(string name, Player stateMachine) : base(name, stateMachine) 
     {
-        _sm = (MovementSM)stateMachine;
+        _sm = (Player)stateMachine;
     }
 
 
