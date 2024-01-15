@@ -6,7 +6,6 @@ public class StateMachine : MonoBehaviour
 {
         BaseState _currentState;
 
-        public bool isGrounded;
 
         private void OnGUI()
         {
@@ -31,22 +30,6 @@ public class StateMachine : MonoBehaviour
         {
             if (_currentState != null)
                 _currentState.UpdatePhysics();
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            int groundLayer = LayerMask.NameToLayer("Ground");
-
-            if (collision.gameObject.layer == groundLayer)
-                isGrounded = true;
-        }
-
-        private void OnCollisionExit(Collision collision)
-        {
-            int groundLayer = LayerMask.NameToLayer("Ground");
-
-            if (collision.gameObject.layer == groundLayer)
-                isGrounded = false;
         }
 
         public void ChangeState(BaseState newState)

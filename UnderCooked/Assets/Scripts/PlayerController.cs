@@ -16,50 +16,41 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Managers.Input.KeyAction -= OnKeyboard;
-        Managers.Input.KeyAction += OnKeyboard;
+        Managers.Input.KeyBoardAction -= OnKeyboard;
+        Managers.Input.KeyBoardAction += OnKeyboard;
         PlayerRigidbody = GetComponent<Rigidbody>();
-
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void OnKeyboard(Define.KeyBoardEvent evt)
     {
-        if (Input.anyKey)
-        {
-            OnKeyboard();
-        }
-
-         
-    }
-
-    void OnKeyboard()
-    {
-
         Vector3 moveDirection = Vector3.zero;
 
         //if (Dash)
         //    return;
 
-
-        if (Input.GetKey(KeyCode.UpArrow))
+        switch (evt)
         {
-            moveDirection += Vector3.forward;
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            moveDirection += Vector3.left;
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            moveDirection += Vector3.back;
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            moveDirection += Vector3.right;
+            case Define.KeyBoardEvent.Pressed:
+                {
+                    if (Input.GetKey(KeyCode.UpArrow))
+                    {
+                        moveDirection += Vector3.forward;
+                    }
+                    if (Input.GetKey(KeyCode.LeftArrow))
+                    {
+                        moveDirection += Vector3.left;
+                    }
+                    if (Input.GetKey(KeyCode.DownArrow))
+                    {
+                        moveDirection += Vector3.back;
+                    }
+                    if (Input.GetKey(KeyCode.RightArrow))
+                    {
+                        moveDirection += Vector3.right;
+                    }
+                }
+                break;
         }
 
         if (moveDirection != Vector3.zero)
@@ -69,19 +60,12 @@ public class PlayerController : MonoBehaviour
         }
 
 
-
-
-
         PlayerRigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
-      
-       
         LookDir = transform.forward;
 
 
         if (Input.GetKey(KeyCode.LeftShift) && Time.time > LastDashTime && Dash)
         {
-
-
             float dashForce = 7f;
 
             PlayerRigidbody.velocity = LookDir * dashForce;
@@ -91,8 +75,6 @@ public class PlayerController : MonoBehaviour
             LastDashTime = Time.time + DashCoolDown;
 
             Dash = false;
-
-                
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
             ResetDash();
