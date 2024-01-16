@@ -13,116 +13,59 @@ public class PlayerController : MonoBehaviour
     float DashCoolDown = 0.6f;
     float LastDashTime = -Mathf.Infinity;
     bool Dash = true;
-    bool Move = false;
 
-    float wait_run_ratio = 0;
-
-    public enum PlayerState
+    void Start()
     {
-        Idle,
-        Walk,
-        Dash,
-        Pick,
-        Coop,
-        Drop
+        Managers.Input.KeyBoardAction -= OnKeyboard;
+        Managers.Input.KeyBoardAction += OnKeyboard;
+        PlayerRigidbody = GetComponent<Rigidbody>();
     }
 
-    PlayerState _state = PlayerState.Idle;
 
-    void UpdateIdle()
-    {
-        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 0, 5.0f * Time.deltaTime);
-        Animator anim = GetComponent<Animator>();
-        anim.SetFloat("wait_run_ratio", wait_run_ratio);
-        anim.Play("WAIT_RUN");
-
-        if (Input.GetKey(KeyCode.DownArrow))
-            _state = PlayerState.Walk;
-    }
-
-    void UpdateWalk()
+    void OnKeyboard(Define.KeyBoardEvent evt)
     {
         Vector3 moveDirection = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            moveDirection += Vector3.forward;
-        }
+        //if (Dash)
+        //    return;
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        switch (evt)
         {
-            moveDirection += Vector3.left;
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            moveDirection += Vector3.back;
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            moveDirection += Vector3.right;
+            case Define.KeyBoardEvent.Pressed:
+                {
+                    if (Input.GetKey(KeyCode.UpArrow))
+                    {
+                        moveDirection += Vector3.forward;
+                    }
+                    if (Input.GetKey(KeyCode.LeftArrow))
+                    {
+                        moveDirection += Vector3.left;
+                    }
+                    if (Input.GetKey(KeyCode.DownArrow))
+                    {
+                        moveDirection += Vector3.back;
+                    }
+                    if (Input.GetKey(KeyCode.RightArrow))
+                    {
+                        moveDirection += Vector3.right;
+                    }
+                }
+                break;
         }
 
         if (moveDirection != Vector3.zero)
         {
-            //Move = true;
             Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.06f);
         }
-        else
-        {
-            // Move = false;
-            _state = PlayerState.Idle;
-        }
+
 
         PlayerRigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
-
         LookDir = transform.forward;
 
-        //애니메이션
-        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 1, 5.0f * Time.deltaTime);
-        Animator anim = GetComponent<Animator>();
-        anim.SetFloat("wait_run_ratio", wait_run_ratio);
-        anim.Play("WAIT_RUN");
-    }
-
-
-    void Start()
-    {
-        Managers.Input.KeyAction -= OnKeyboard;
-        Managers.Input.KeyAction += OnKeyboard;
-        PlayerRigidbody = GetComponent<Rigidbody>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        OnKeyboard();
-
-        switch (_state)
-        {
-            case PlayerState.Idle:
-                UpdateIdle();
-                break;
-            case PlayerState.Walk:
-                UpdateWalk();
-                break;
-
-        }
-
-    }
-
-    void OnKeyboard()
-    {
-        
 
         if (Input.GetKey(KeyCode.LeftShift) && Time.time > LastDashTime && Dash)
         {
-
-
             float dashForce = 7f;
 
             PlayerRigidbody.velocity = LookDir * dashForce;
@@ -131,20 +74,11 @@ public class PlayerController : MonoBehaviour
 
             LastDashTime = Time.time + DashCoolDown;
 
-            
             Dash = false;
-
         }
-        else
-        {
+        if (Input.GetKeyUp(KeyCode.LeftShift))
             ResetDash();
-            
-        }
-        //if (Input.GetKeyUp(KeyCode.LeftShift))
-        //ResetDash();
 
-
-       
     }
 
     void ResetDash()
