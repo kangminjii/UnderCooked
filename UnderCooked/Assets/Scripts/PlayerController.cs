@@ -78,8 +78,10 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
             ResetDash();
+        
 
     }
+    
 
     void ResetDash()
     {
