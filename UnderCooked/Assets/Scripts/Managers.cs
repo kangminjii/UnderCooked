@@ -5,10 +5,17 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     static Managers _instance; // 유일성 보장
+    public static Managers Instance { get { Init(); return _instance; } }
+
 
     InputManager _input = new InputManager();
-    public static Managers Instance { get { Init(); return _instance; } }
+
+    PoolManager _pool = new PoolManager();
     public static InputManager Input { get { return Instance._input; } }
+
+    public static PoolManager Pool { get { return Instance._pool; } }
+
+    
 
 
   
