@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7479588643760919675}
   - component: {fileID: 7479588643760919677}
   - component: {fileID: 7479588643760919674}
+  - component: {fileID: 7239608652109267494}
   m_Layer: 0
   m_Name: m_sk_the_pass_red_01_0
   m_TagString: Untagged
@@ -118,6 +119,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7239608652109267494
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479588643760919672}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2336630945920376181, guid: 74e54ab8dbb96a3438cea214cd5c3467, type: 3}
 --- !u!1 &7479588643936599703
 GameObject:
   m_ObjectHideFlags: 0
