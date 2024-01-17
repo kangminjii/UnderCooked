@@ -23,11 +23,15 @@ public class Moving : Grab
         
         if (Input.anyKey == false)
             stateMachine.ChangeState(_sm.idleState);
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            
-            stateMachine.ChangeState(_sm.dashState);
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {         
+            stateMachine.ChangeState(_sm.dashState);
+        }
+
+        if (_sm.Cutting && Input.GetKey(KeyCode.LeftControl))
+        {
+            stateMachine.ChangeState(_sm.chopState);
         }
     }
     public override void UpdatePhysics()

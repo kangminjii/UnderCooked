@@ -14,7 +14,7 @@ public class StateMachine : MonoBehaviour
     //Dictionary<StateName, BaseState> _playerStateDictionary;
 
 
-        private void OnGUI()
+    private void OnGUI()
     {
         string content = _currentState != null ? _currentState.name : "(no current state)";
         GUILayout.Label($"<color='black'><size=40>{content}</size></color>");

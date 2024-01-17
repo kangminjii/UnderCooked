@@ -19,8 +19,9 @@ public class Player : StateMachine
     public Vector3 lookDir;
     public float dashCoolDown = 0.6f;
     public float lastDashTime = -Mathf.Infinity;
-    public bool dash = true;
-    public bool candash = true;
+
+
+    public bool Cutting = false;
 
     private void Awake()
     {
@@ -42,15 +43,26 @@ public class Player : StateMachine
         return idleState;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("CuttingBoard"))
+        {
+            Debug.Log("CuttingBoard");
+            Cutting = true;
 
-    //public void SetCoolDown()
-    //{
-    //    StartCoroutine(abcd);
-    //}
-    ////코루틴으로 setcooldown
-    //IEnumerator abcd()
-    //{
+        }
+    }
 
-    //}
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("CuttingBoard"))
+        {
+            Cutting = false;
+
+        }
+    }
+
+
 
 }

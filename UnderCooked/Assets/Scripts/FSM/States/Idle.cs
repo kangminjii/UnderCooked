@@ -20,10 +20,17 @@ public class Idle : Grab
 
         _sm.anim.SetFloat("speed", 0);
 
-        if (Input.anyKey == true)
+        if (_sm.Cutting && Input.GetKey(KeyCode.LeftControl))
+            stateMachine.ChangeState(_sm.chopState);
+
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
+            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
             stateMachine.ChangeState(_sm.movingState);
+
         if (Input.GetKey(KeyCode.LeftShift))
             stateMachine.ChangeState(_sm.dashState);
+
+
     }
 
 
