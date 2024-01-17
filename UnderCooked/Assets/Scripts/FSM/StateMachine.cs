@@ -31,6 +31,7 @@ public class StateMachine : MonoBehaviour
     {
         if (_currentState != null)
             _currentState.UpdateLogic();
+
     }
 
     private void LateUpdate()

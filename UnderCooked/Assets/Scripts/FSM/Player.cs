@@ -10,6 +10,8 @@ public class Player : StateMachine
     public Moving movingState;
     [HideInInspector]
     public Dash dashState;
+    [HideInInspector]
+    public Chop chopState;
 
     public Animator anim;
 
@@ -25,6 +27,7 @@ public class Player : StateMachine
         idleState = new Idle(this);
         movingState = new Moving(this);
         dashState = new Dash(this);
+        chopState = new Chop(this);
 
         //AddState(idleState, StateName.Idle);
         //AddState(movingState, StateName.Walk);
@@ -38,6 +41,7 @@ public class Player : StateMachine
     {
         return idleState;
     }
+
 
     //public void SetCoolDown()
     //{
