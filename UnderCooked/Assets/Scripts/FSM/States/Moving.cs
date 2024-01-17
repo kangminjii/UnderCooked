@@ -23,6 +23,12 @@ public class Moving : Grab
         
         if (Input.anyKey == false)
             stateMachine.ChangeState(_sm.idleState);
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            
+            stateMachine.ChangeState(_sm.dashState);
+
+        }
     }
     public override void UpdatePhysics()
     {
@@ -34,6 +40,8 @@ public class Moving : Grab
     void OnKeyboard()
     {
         Vector3 moveDirection = Vector3.zero;
+
+        _sm.anim.SetFloat("speed", _speed);
               
         if (Input.GetKey(KeyCode.UpArrow))
             moveDirection += Vector3.forward;

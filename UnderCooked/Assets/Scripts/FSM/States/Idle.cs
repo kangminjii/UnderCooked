@@ -18,8 +18,13 @@ public class Idle : Grab
     {
         base.UpdateLogic();
 
+        _sm.anim.SetFloat("speed", 0);
+
         if (Input.anyKey == true)
             stateMachine.ChangeState(_sm.movingState);
+        if (Input.GetKey(KeyCode.LeftShift))
+            stateMachine.ChangeState(_sm.dashState);
     }
+
 
 }
