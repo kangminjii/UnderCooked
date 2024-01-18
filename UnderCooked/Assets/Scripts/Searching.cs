@@ -30,10 +30,25 @@ public class Searching : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            //instanceMaterial.
+            Debug.Log("TriggeredEnter");
+        
+            Color newEmissionColor = new Color(0.5f, 0.45f, 0.4f, 0f);
+            instanceMaterial.SetColor("_EmissionColor", newEmissionColor);
+            instanceMaterial.EnableKeyword("_EMISSION");
+
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Debug.Log("TriggeredExit");
+
+            instanceMaterial.DisableKeyword("_EMISSION");
+
+        }
+    }
 
 
 }

@@ -960,6 +960,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1999578161652223094, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
   m_PrefabInstance: {fileID: 524577030}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &545005154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1966596815387071996, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
+  m_PrefabInstance: {fileID: 251282155599551489}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &545005155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545005154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4738d7109f396b4083abe663b182cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &545005159
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545005154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 0.5, z: 1.5}
+  m_Center: {x: 16.800465, y: 0.24999999, z: -3.6}
 --- !u!1001 &560278129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4551,6 +4581,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2127509650}
     m_Modifications:
+    - target: {fileID: 251282155964630518, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1966596815387071996, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
       propertyPath: m_Name
       value: CounterTop_no_wall (2)
@@ -4763,6 +4797,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2551404991560830546, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915116074188342654, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
