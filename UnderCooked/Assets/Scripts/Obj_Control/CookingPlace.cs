@@ -4,6 +4,7 @@ public class CookingPlace : MonoBehaviour
 {
     private Player player;
     public int guage;
+    public bool onDoma = false;
 
     private GameObject food;
 
@@ -17,6 +18,7 @@ public class CookingPlace : MonoBehaviour
 
             player.doma = this;
             player.Cutting = true;
+            onDoma = true;
         }
     }
 
@@ -24,15 +26,36 @@ public class CookingPlace : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("doma out");           
+
             player.CheckDoma(this.transform);
-
             //player.Cutting = false;
-
+            //Debug.Log("doma out");
+            //player.CheckDoma(this.transform);
+            onDoma = false;
             player = null;
+        }
+        //else
+        //{
+        //    player.Cutting = false;
+        //    onDoma = false;
+        //}
+
+    }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            onDoma = true;
+            player.Cutting = true;
 
         }
+            
+                
     }
+
+
 
     public void Cooking()
     {

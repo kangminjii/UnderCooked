@@ -49,10 +49,9 @@ public class Player : StateMachine
 
     public void CheckDoma(Transform target)
     {
-        
+
         if (doma != target)
         {
-
             Cutting = false;
         }
     }
