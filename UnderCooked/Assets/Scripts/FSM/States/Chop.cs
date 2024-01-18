@@ -16,21 +16,26 @@ public class Chop : Grab
     {
         base.Enter();
 
+        _sm.knife.SetActive(true);
+        _sm.anim.Play("Chop");
+        _sm.anim.SetBool("Cutting", true);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        _sm.knife.SetActive(false);
+        _sm.anim.SetBool("Cutting", false);
+        
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        _sm.anim.SetBool("Cutting", true);
-        
-        
         if (!_sm.Cutting)
         {
-            _sm.anim.SetBool("Cutting", false);
             stateMachine.ChangeState(_sm.idleState);
         }
-        
-
         
     }
     public override void UpdatePhysics()
@@ -64,7 +69,5 @@ public class Chop : Grab
 
         _sm.lookDir = _sm.transform.forward;
     }
-
-
 }
 

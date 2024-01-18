@@ -20,8 +20,12 @@ public class Player : StateMachine
     public float dashCoolDown = 0.6f;
     public float lastDashTime = -Mathf.Infinity;
 
+    public GameObject knife;
 
     public bool Cutting = false;
+
+
+    public CookingPlace doma;
 
     private void Awake()
     {
@@ -43,26 +47,33 @@ public class Player : StateMachine
         return idleState;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void CheckDoma(Transform target)
     {
-        if(other.CompareTag("CuttingBoard"))
+        
+        if (doma != target)
         {
-            Debug.Log("CuttingBoard");
-            Cutting = true;
 
-        }
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("CuttingBoard"))
-        {
             Cutting = false;
-
         }
     }
 
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.CompareTag("CuttingBoard"))
+    //    {
+    //        Debug.Log("CuttingBoard1111111");
+    //        Cutting = true;
+    //    }
+    //}
 
 
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("CuttingBoard"))
+    //    {
+    //        Debug.Log("CuttingBoard2222222");
+    //        Cutting = false;
+
+    //    }
+    //}
 }
