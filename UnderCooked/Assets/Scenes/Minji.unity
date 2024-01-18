@@ -1757,7 +1757,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 4c822d257ea08794ebb13852bbeb5e9f, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c822d257ea08794ebb13852bbeb5e9f, type: 3}
       propertyPath: m_LocalScale.x
@@ -1773,7 +1773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c822d257ea08794ebb13852bbeb5e9f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.671
+      value: 21.63
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c822d257ea08794ebb13852bbeb5e9f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4705,6 +4705,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2127509650}
     m_Modifications:
+    - target: {fileID: 251282155964630518, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 251282155964630518, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8d28fdb69c85c0542992339dd621c6c0, type: 2}
+    - target: {fileID: 251282155964630518, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca15f4a66abb093438630e9041b4722e, type: 2}
     - target: {fileID: 1966596815387071996, guid: 3a178e4573a95284794ff36ff5fa1f1d, type: 3}
       propertyPath: m_Name
       value: CounterTop_no_wall
@@ -4987,9 +4999,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8010840746653959128, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010840746653959128, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010840746653959128, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8124626233523608921, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8124626233523608921, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
@@ -5077,7 +5105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4372525488428876090, guid: 97ec39c47cba25d49854abc7f916bdfc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.6
+      value: 21.62
       objectReference: {fileID: 0}
     - target: {fileID: 4372525488428876090, guid: 97ec39c47cba25d49854abc7f916bdfc, type: 3}
       propertyPath: m_LocalPosition.y
