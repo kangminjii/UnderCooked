@@ -30,7 +30,7 @@ public class Searching : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            instance
+            //instanceMaterial.
         }
     }
 
