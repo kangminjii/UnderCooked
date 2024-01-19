@@ -10,11 +10,8 @@ using UnityEngine;
 // 컴포넌트 기반 아키텍처 또는 인터페이스 활용을 주로 함
 
 
-
-
 public class Searching : MonoBehaviour
 {
-
     private Material commonMaterial;
     private Material instanceMaterial;
 
