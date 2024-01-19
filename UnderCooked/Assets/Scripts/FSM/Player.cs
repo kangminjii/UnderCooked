@@ -19,8 +19,17 @@ public class Player : StateMachine
     public Vector3 lookDir;
     public float dashCoolDown = 0.6f;
     public float lastDashTime = -Mathf.Infinity;
-    public bool dash = true;
-    public bool candash = true;
+
+    public GameObject knife;
+
+    public bool Cutting = false;
+
+
+    public CookingPlace doma;
+
+
+    private string _lastName;
+
 
     private void Awake()
     {
@@ -35,6 +44,9 @@ public class Player : StateMachine
 
         rigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+
+
+        Searching.OnObjectTriggered += HandleObjectTriggered;
     }
 
     protected override BaseState GetInitialState()
@@ -42,15 +54,53 @@ public class Player : StateMachine
         return idleState;
     }
 
+    public void CheckDoma(Transform target)
+    {
 
-    //public void SetCoolDown()
+        if (doma != target)
+        {
+            Cutting = false;
+        }
+    }
+
+    private void HandleObjectTriggered(string name)
+    {
+        if(name != _lastName)
+        {
+            // object 색변화
+            // name 사물은 색 켜기, _lastName은 색 끄기
+            Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
+            interactingObject.EnableColor();
+
+            if(_lastName != null) // ""로 해야 될때있고, null로 해야 될때가있음
+            {
+                Searching pastObject = GameObject.Find(_lastName).GetComponent<Searching>();
+                pastObject.DisableColor();
+            }
+
+            _lastName = name;
+        }
+    }
+
+   
+
+    //private void OnTriggerEnter(Collider other)
     //{
-    //    StartCoroutine(abcd);
+    //    if(other.CompareTag("CuttingBoard"))
+    //    {
+    //        Debug.Log("CuttingBoard1111111");
+    //        Cutting = true;
+    //    }
     //}
-    ////코루틴으로 setcooldown
-    //IEnumerator abcd()
+
+
+    //private void OnTriggerExit(Collider other)
     //{
+    //    if (other.CompareTag("CuttingBoard"))
+    //    {
+    //        Debug.Log("CuttingBoard2222222");
+    //        Cutting = false;
 
+    //    }
     //}
-
 }

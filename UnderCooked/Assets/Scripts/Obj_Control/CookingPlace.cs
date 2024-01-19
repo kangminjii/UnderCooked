@@ -1,16 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CookingPlace : StateMachine
+public class CookingPlace : MonoBehaviour
 {
+    private Player player;
+    public int guage;
+    public bool onDoma = false;
 
-    void Start()
+    private GameObject food;
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("doma on");
+            player = other.transform.GetComponent<Player>();
+
+            player.doma = this;
+            player.Cutting = true;
+            onDoma = true;
+        }
     }
 
-    void Update()
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+
+            player.CheckDoma(this.transform);
+            //player.Cutting = false;
+            //Debug.Log("doma out");
+            //player.CheckDoma(this.transform);
+            onDoma = false;
+            player = null;
+        }
+        //else
+        //{
+        //    player.Cutting = false;
+        //    onDoma = false;
+        //}
+
+    }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            onDoma = true;
+            player.Cutting = true;
+
+        }
+            
+                
+    }
+
+
+
+    public void Cooking()
     {
         
     }
