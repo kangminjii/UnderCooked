@@ -27,6 +27,10 @@ public class Player : StateMachine
 
     public CookingPlace doma;
 
+
+    private string _lastName;
+
+
     private void Awake()
     {
         idleState = new Idle(this);
@@ -40,6 +44,9 @@ public class Player : StateMachine
 
         rigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+
+
+        Searching.OnObjectTriggered += HandleObjectTriggered;
     }
 
     protected override BaseState GetInitialState()
@@ -55,6 +62,27 @@ public class Player : StateMachine
             Cutting = false;
         }
     }
+
+    private void HandleObjectTriggered(string name)
+    {
+        if(name != _lastName)
+        {
+            // object 색변화
+            // name 사물은 색 켜기, _lastName은 색 끄기
+            Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
+            interactingObject.EnableColor();
+
+            if(_lastName != null) // ""로 해야 될때있고, null로 해야 될때가있음
+            {
+                Searching pastObject = GameObject.Find(_lastName).GetComponent<Searching>();
+                pastObject.DisableColor();
+            }
+
+            _lastName = name;
+        }
+    }
+
+   
 
     //private void OnTriggerEnter(Collider other)
     //{
