@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class BaseState
 {
-    public string name;
+    public string Name;
 
-    protected StateMachine stateMachine;
+    protected StateMachine _stateMachine;
 
 
     public BaseState(string name, StateMachine stateMachine)
     {
-        this.name = name;
-        this.stateMachine = stateMachine;
+        this.Name = name;
+        this._stateMachine = stateMachine;
     }
 
     public virtual void Enter() { }

@@ -13,10 +13,18 @@ public class StateMachine : MonoBehaviour
     BaseState _currentState;
     //Dictionary<StateName, BaseState> _playerStateDictionary;
 
+    //protected void AddState(BaseState newState, StateName name)
+    //{
+    //    if (!_playerStateDictionary.TryGetValue(name, out BaseState state))
+    //    {
+    //        _playerStateDictionary.Add(name, newState);
+    //    }
+    //}    
+
 
     private void OnGUI()
     {
-        string content = _currentState != null ? _currentState.name : "(no current state)";
+        string content = _currentState != null ? _currentState.Name : "(no current state)";
         GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
     }
 
@@ -31,7 +39,6 @@ public class StateMachine : MonoBehaviour
     {
         if (_currentState != null)
             _currentState.UpdateLogic();
-
     }
 
     private void LateUpdate()
@@ -51,12 +58,5 @@ public class StateMachine : MonoBehaviour
     {
         return null;
     }
-
-    //protected void AddState(BaseState newState, StateName name)
-    //{
-    //    if (!_playerStateDictionary.TryGetValue(name, out BaseState state))
-    //    {
-    //        _playerStateDictionary.Add(name, newState);
-    //    }
-    //}    
+   
 }

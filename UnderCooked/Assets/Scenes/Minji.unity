@@ -3614,8 +3614,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.64, z: 0.8}
-  m_Center: {x: 0, y: 0.42, z: 0}
+  m_Size: {x: 0.59, y: 0.64, z: 0.8}
+  m_Center: {x: 0, y: 0.42, z: 0.27}
 --- !u!54 &1681594565
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3649,8 +3649,9 @@ MonoBehaviour:
   lookDir: {x: 0, y: 0, z: 0}
   dashCoolDown: 0.6
   lastDashTime: -Infinity
-  dash: 1
-  candash: 1
+  knife: {fileID: 0}
+  Cutting: 0
+  doma: {fileID: 0}
 --- !u!1001 &1734083126
 PrefabInstance:
   m_ObjectHideFlags: 0

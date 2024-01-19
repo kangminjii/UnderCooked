@@ -16,7 +16,7 @@ public class CookingPlace : MonoBehaviour
             Debug.Log("doma on");
             player = other.transform.GetComponent<Player>();
 
-            player.doma = this;
+            player.Doma = this;
             player.Cutting = true;
             onDoma = true;
         }

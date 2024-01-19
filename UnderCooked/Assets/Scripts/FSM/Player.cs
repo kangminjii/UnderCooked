@@ -5,45 +5,42 @@ using UnityEngine;
 public class Player : StateMachine
 {
     [HideInInspector]
-    public Idle idleState;
+    public Idle IdleState;
     [HideInInspector]
-    public Moving movingState;
+    public Moving MovingState;
     [HideInInspector]
-    public Dash dashState;
+    public Dash DashState;
     [HideInInspector]
-    public Chop chopState;
+    public Chop ChopState;
 
-    public Animator anim;
+    public CookingPlace Doma;
 
-    public Rigidbody rigidbody;
-    public Vector3 lookDir;
-    public float dashCoolDown = 0.6f;
-    public float lastDashTime = -Mathf.Infinity;
+    public Animator Anim;
+    public Rigidbody Rigidbody;
+    public GameObject Knife;
 
-    public GameObject knife;
+    public Vector3 LookDir;
+    public float DashCoolDown = 0.6f;
+    public float LastDashTime = -Mathf.Infinity;
 
     public bool Cutting = false;
-
-
-    public CookingPlace doma;
-
 
     private string _lastName;
 
 
     private void Awake()
     {
-        idleState = new Idle(this);
-        movingState = new Moving(this);
-        dashState = new Dash(this);
-        chopState = new Chop(this);
+        IdleState = new Idle(this);
+        MovingState = new Moving(this);
+        DashState = new Dash(this);
+        ChopState = new Chop(this);
 
         //AddState(idleState, StateName.Idle);
         //AddState(movingState, StateName.Walk);
         //AddState(dashState, StateName.Dash);
 
-        rigidbody = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        Rigidbody = GetComponent<Rigidbody>();
+        Anim = GetComponent<Animator>();
 
 
         Searching.OnObjectTriggered += HandleObjectTriggered;
@@ -51,13 +48,13 @@ public class Player : StateMachine
 
     protected override BaseState GetInitialState()
     {
-        return idleState;
+        return IdleState;
     }
 
     public void CheckDoma(Transform target)
     {
 
-        if (doma != target)
+        if (Doma != target)
         {
             Cutting = false;
         }
