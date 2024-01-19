@@ -5,11 +5,13 @@ using UnityEngine;
 public class Grab : BaseState
 {
     protected Player _sm;
-    protected Chop _chop;
+    
+
 
     public Grab(string name, Player stateMachine) : base(name, stateMachine)
     {
         _sm = (Player)stateMachine;
+        
     }
    
 }

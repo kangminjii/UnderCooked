@@ -19,8 +19,13 @@ public class Player : StateMachine
     public Vector3 lookDir;
     public float dashCoolDown = 0.6f;
     public float lastDashTime = -Mathf.Infinity;
-    public bool dash = true;
-    public bool candash = true;
+
+    public GameObject knife;
+
+    public bool Cutting = false;
+
+
+    public CookingPlace doma;
 
     private void Awake()
     {
@@ -42,15 +47,32 @@ public class Player : StateMachine
         return idleState;
     }
 
+    public void CheckDoma(Transform target)
+    {
 
-    //public void SetCoolDown()
+        if (doma != target)
+        {
+            Cutting = false;
+        }
+    }
+
+    //private void OnTriggerEnter(Collider other)
     //{
-    //    StartCoroutine(abcd);
+    //    if(other.CompareTag("CuttingBoard"))
+    //    {
+    //        Debug.Log("CuttingBoard1111111");
+    //        Cutting = true;
+    //    }
     //}
-    ////코루틴으로 setcooldown
-    //IEnumerator abcd()
+
+
+    //private void OnTriggerExit(Collider other)
     //{
+    //    if (other.CompareTag("CuttingBoard"))
+    //    {
+    //        Debug.Log("CuttingBoard2222222");
+    //        Cutting = false;
 
+    //    }
     //}
-
 }
