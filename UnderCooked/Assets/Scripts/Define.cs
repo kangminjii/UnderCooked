@@ -17,7 +17,7 @@ public class Define
         Crate,
         PlateReturn,
         Passing,
-
-        Size, // 마지막 번호
+        Default,
     }
+
 }

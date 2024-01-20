@@ -25,7 +25,7 @@ public class Player : StateMachine
 
     public bool Cutting = false;
 
-    private string _triggeredName = "";
+    private GameObject _lastTriggeredObject;
     private string _triggerExitName = "";
 
 
@@ -63,20 +63,18 @@ public class Player : StateMachine
         }
     }
 
-    private void HandleObjectTriggerEnter(string name, GameObject triggeredObject)
+    private void HandleObjectTriggerEnter(GameObject triggeredObject)
     {
-        Debug.Log("현재: " + name + ", 과거: " + _triggeredName + ", Exit: " + _triggerExitName);
-        
         // 다른 Table로 Trigger될때
-        if(name != _triggeredName)
+        if(_lastTriggeredObject != null && triggeredObject.name != _lastTriggeredObject.name)
         {
-            Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
+            Searching interactingObject = triggeredObject.GetComponent<Searching>();
             interactingObject.EnableColor();
 
-            if (_triggeredName.Length > 0)
+            if (_lastTriggeredObject != null)
             {
                 // TriggerExit으로 안꺼진 Object 처리
-                Searching pastObject = GameObject.Find(_triggeredName).GetComponent<Searching>();
+                Searching pastObject = _lastTriggeredObject.GetComponent<Searching>();
                 pastObject.DisableColor();
             }
         }
@@ -85,19 +83,19 @@ public class Player : StateMachine
         {
             if (name == _triggerExitName)
             {
-                Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
+                Searching interactingObject = triggeredObject.GetComponent<Searching>();
                 interactingObject.EnableColor();
             }
         }
 
-        _triggeredName = name;
+        _lastTriggeredObject = triggeredObject;
 
-        TriggeredObject(triggeredObject);
+        TriggeredObject(_lastTriggeredObject);
     }
 
-    private void HandleObjectTriggerExit(string name, GameObject triggeredObject)
+    private void HandleObjectTriggerExit(GameObject triggeredObject)
     {
-        Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
+        Searching interactingObject = triggeredObject.GetComponent<Searching>();
         interactingObject.DisableColor();
 
         _triggerExitName = name;
@@ -106,12 +104,49 @@ public class Player : StateMachine
 
     private void TriggeredObject(GameObject triggeredObject)
     {
-        //if(triggeredObject.tag == "c")
-        {
+        Define.Object objectType = GetObjectFromTag(triggeredObject.tag);
 
+        switch (objectType)
+        {
+            case Define.Object.Table:
+                Debug.Log("Table감지");
+                break;
+            case Define.Object.Bin:
+                Debug.Log("Bin감지");
+                break;
+            case Define.Object.Crate:
+                Debug.Log("Crate감지");
+                break;
+            case Define.Object.PlateReturn:
+                Debug.Log("PlateReturn감지");
+                break;
+            case Define.Object.Passing:
+                Debug.Log("Passing감지");
+                break;
+            case Define.Object.Default:
+                break;
         }
 
-       
     }
+
+private Define.Object GetObjectFromTag(string tag)
+    {
+        switch (tag)
+        {
+            case "Table":
+                return Define.Object.Table;
+            case "Bin":
+                return Define.Object.Bin;
+            case "Crate":
+                return Define.Object.Crate;
+            case "PlateReturn":
+                return Define.Object.PlateReturn;
+            case "Passing":
+                return Define.Object.Passing;
+            default:
+                return Define.Object.Default;
+        }
+    }
+
 
 }

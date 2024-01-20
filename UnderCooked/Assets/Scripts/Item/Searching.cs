@@ -10,7 +10,7 @@ public class Searching : MonoBehaviour
     private Material _instanceMaterial;
 
     // 이벤트 호출
-    public delegate void ObjectTriggeredHandler(string name, GameObject gameObject);
+    public delegate void ObjectTriggeredHandler(GameObject gameObject);
     public static event ObjectTriggeredHandler ObjectTriggerEnter;
     public static event ObjectTriggeredHandler ObjectTriggerExit;
 
@@ -29,7 +29,7 @@ public class Searching : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            ObjectTriggerEnter(this.name, this.gameObject);
+            ObjectTriggerEnter(this.gameObject);
         }
     }
 
@@ -37,7 +37,7 @@ public class Searching : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            ObjectTriggerExit(this.name, this.gameObject);
+            ObjectTriggerExit(this.gameObject);
         }
     }
 
