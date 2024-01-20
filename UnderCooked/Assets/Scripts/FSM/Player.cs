@@ -25,7 +25,8 @@ public class Player : StateMachine
 
     public bool Cutting = false;
 
-    private string _lastName;
+    private string _triggeredName = "";
+    private string _triggerExitName = "";
 
 
     private void Awake()
@@ -43,7 +44,9 @@ public class Player : StateMachine
         Anim = GetComponent<Animator>();
 
 
-        Searching.OnObjectTriggered += HandleObjectTriggered;
+        Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
+        Searching.ObjectTriggerExit += HandleObjectTriggerExit;
+
     }
 
     protected override BaseState GetInitialState()
@@ -60,44 +63,55 @@ public class Player : StateMachine
         }
     }
 
-    private void HandleObjectTriggered(string name)
+    private void HandleObjectTriggerEnter(string name, GameObject triggeredObject)
     {
-        if(name != _lastName)
+        Debug.Log("현재: " + name + ", 과거: " + _triggeredName + ", Exit: " + _triggerExitName);
+        
+        // 다른 Table로 Trigger될때
+        if(name != _triggeredName)
         {
-            // object 색변화
-            // name 사물은 색 켜기, _lastName은 색 끄기
             Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
             interactingObject.EnableColor();
 
-            if(_lastName != null) // ""로 해야 될때있고, null로 해야 될때가있음
+            if (_triggeredName.Length > 0)
             {
-                Searching pastObject = GameObject.Find(_lastName).GetComponent<Searching>();
+                // TriggerExit으로 안꺼진 Object 처리
+                Searching pastObject = GameObject.Find(_triggeredName).GetComponent<Searching>();
                 pastObject.DisableColor();
             }
-
-            _lastName = name;
         }
+        // 같은 Table로 Trigger될때
+        else
+        {
+            if (name == _triggerExitName)
+            {
+                Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
+                interactingObject.EnableColor();
+            }
+        }
+
+        _triggeredName = name;
+
+        TriggeredObject(triggeredObject);
     }
 
-   
+    private void HandleObjectTriggerExit(string name, GameObject triggeredObject)
+    {
+        Searching interactingObject = GameObject.Find(name).GetComponent<Searching>();
+        interactingObject.DisableColor();
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.CompareTag("CuttingBoard"))
-    //    {
-    //        Debug.Log("CuttingBoard1111111");
-    //        Cutting = true;
-    //    }
-    //}
+        _triggerExitName = name;
+    }
 
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("CuttingBoard"))
-    //    {
-    //        Debug.Log("CuttingBoard2222222");
-    //        Cutting = false;
+    private void TriggeredObject(GameObject triggeredObject)
+    {
+        //if(triggeredObject.tag == "c")
+        {
 
-    //    }
-    //}
+        }
+
+       
+    }
+
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Food
   - CuttingBoard
+  - Table
   layers:
   - Default
   - TransparentFX

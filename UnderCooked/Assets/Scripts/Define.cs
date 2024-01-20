@@ -9,4 +9,15 @@ public class Define
         Pressed,
         Click,
     }
+
+    public enum Object
+    {
+        Table,
+        Bin,
+        Crate,
+        PlateReturn,
+        Passing,
+
+        Size, // 마지막 번호
+    }
 }
