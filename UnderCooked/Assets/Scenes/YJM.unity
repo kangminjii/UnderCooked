@@ -996,7 +996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5761031507792625008, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5761031507792625008, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}
       propertyPath: m_TagString
@@ -1438,6 +1438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guage: 0
+  onDoma: 0
 --- !u!1001 &646183369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3421,7 +3422,7 @@ MonoBehaviour:
   animName: CrateBox
   triggerKey: 306
   prawn: {fileID: 733191574}
-  spawnPoint: {fileID: 440015492}
+  spawnPoint: {fileID: 0}
   light: {fileID: 1158716906}
   animtor: {fileID: 0}
 --- !u!65 &1495574560
@@ -3498,6 +3499,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2b3c97626cabbf43ba466e18a9f52a3, type: 3}
+--- !u!1 &1530353820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9065138246141053133, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
+  m_PrefabInstance: {fileID: 1775944298}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1531367688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3675,7 +3681,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!64 &1563897838
 MeshCollider:
@@ -3925,8 +3931,11 @@ MonoBehaviour:
   dashCoolDown: 0.6
   lastDashTime: -Infinity
   knife: {fileID: 1985228795}
+  leftHand: {fileID: 1530353820}
   Cutting: 0
+  IsGrab: 0
   doma: {fileID: 0}
+  selectObj: 
 --- !u!65 &1681594570
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4199,6 +4208,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5313676125378162317, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00292
+      objectReference: {fileID: 0}
     - target: {fileID: -4309876815694426178, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4454,6 +4467,10 @@ PrefabInstance:
     - target: {fileID: 4404599584553082462, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590951680827376292, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4620621390946246101, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
       propertyPath: m_IsActive
@@ -4910,6 +4927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guage: 0
+  onDoma: 0
 --- !u!1001 &1909962096
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,5 +13,18 @@ public class Grab : BaseState
         _sm = (Player)stateMachine;
         
     }
-   
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void UpdateLogic()
+    {
+        base.UpdateLogic();
+    }
+
+
+
+
 }

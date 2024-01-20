@@ -4,9 +4,10 @@ public class CookingPlace : MonoBehaviour
 {
     private Player player;
     public int guage;
+    
     public bool onDoma = false;
 
-    private GameObject food;
+    //private GameObject[] Food;
 
 
     private void OnTriggerEnter(Collider other)
@@ -16,10 +17,17 @@ public class CookingPlace : MonoBehaviour
             Debug.Log("doma on");
             player = other.transform.GetComponent<Player>();
 
+            
             player.doma = this;
             player.Cutting = true;
             onDoma = true;
+
+
         }
+
+           
+
+
     }
 
     private void OnTriggerExit(Collider other)

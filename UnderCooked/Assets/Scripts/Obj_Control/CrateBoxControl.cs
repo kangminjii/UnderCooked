@@ -10,11 +10,13 @@ public class CrateBoxControl : MonoBehaviour
     public Transform spawnPoint;
     public GameObject light;
 
+    private Player player;
+
     public Animator animtor;
 
     bool canInteract = false;
     bool spawnCheck = false;
-
+    bool Isonfood = false;
     private void Start()
     {
         animtor = GetComponent<Animator>();
@@ -52,6 +54,7 @@ public class CrateBoxControl : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(triggerKey))
         {
+
             spawnCheck = true;
             PlayAnimation();
             canInteract = false;
@@ -64,10 +67,18 @@ public class CrateBoxControl : MonoBehaviour
         }
     }
 
-
     public void SpawnObj()
     {
-        GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity);
+        
+        GameObject Instance = Instantiate(prawn);
+
+        //spawnPoint.position = player.leftHand.transform.position;
+        Instance.transform.parent = player.leftHand.transform;
+
+        //Debug.Log(spawnPoint.position);
+
+        //GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity)
+
     }
 
 
@@ -77,6 +88,11 @@ public class CrateBoxControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Food"))
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            player = collision.gameObject.GetComponent<Player>();
+            
         }
     }
 

@@ -21,14 +21,17 @@ public class Player : StateMachine
     public float lastDashTime = -Mathf.Infinity;
 
     public GameObject knife;
+    public GameObject leftHand;
 
     public bool Cutting = false;
+    public bool IsGrab = false;
 
 
     public CookingPlace doma;
 
 
-    private string _lastName;
+    private string _lastName = null;
+    public string selectObj;
 
 
     private void Awake()
@@ -79,28 +82,15 @@ public class Player : StateMachine
             }
 
             _lastName = name;
+            Debug.Log(_lastName);
         }
+            
     }
 
-   
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.CompareTag("CuttingBoard"))
-    //    {
-    //        Debug.Log("CuttingBoard1111111");
-    //        Cutting = true;
-    //    }
-    //}
+   public Vector3 GetHandPosition()
+    {
+        return transform.position + transform.forward * 2.0f;
+    }
 
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("CuttingBoard"))
-    //    {
-    //        Debug.Log("CuttingBoard2222222");
-    //        Cutting = false;
-
-    //    }
-    //}
 }
