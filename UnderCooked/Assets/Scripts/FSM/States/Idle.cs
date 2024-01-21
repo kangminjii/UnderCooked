@@ -20,6 +20,12 @@ public class Idle : Grab
 
         _sm.anim.SetFloat("speed", 0);
 
+        if (Managers.Instance.IsGrab == true)
+        {
+            _sm.anim.Play("Idle_Holding");
+            _sm.anim.SetBool("Grab", true);
+        }
+
         if (_sm.Cutting && Input.GetKey(KeyCode.LeftControl))
             stateMachine.ChangeState(_sm.chopState);
 
@@ -29,7 +35,6 @@ public class Idle : Grab
 
         if (Input.GetKey(KeyCode.LeftShift))
             stateMachine.ChangeState(_sm.dashState);
-
 
     }
 

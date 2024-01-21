@@ -56,7 +56,10 @@ public class CrateBoxControl : MonoBehaviour
             PlayAnimation();
             canInteract = false;
             if (Managers.Instance.IsGrab == false)
-            SpawnObj();
+            {
+                SpawnObj();
+                Managers.Instance.IsGrab = true;
+            }
         }
 
 

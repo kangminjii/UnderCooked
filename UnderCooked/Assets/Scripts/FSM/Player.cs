@@ -13,6 +13,7 @@ public class Player : StateMachine
     [HideInInspector]
     public Chop chopState;
 
+
     public Animator anim;
 
     public Rigidbody rigidbody;
