@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391238278c02fa344affdd20d77cace3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsGrab: 0
 --- !u!4 &109829064
 Transform:
   m_ObjectHideFlags: 0
@@ -927,12 +928,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440015491}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.23, y: 1.736, z: -5.458}
+  m_LocalPosition: {x: 0, y: 0.589, z: 0.819}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_Father: {fileID: 1681594572}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &441276921 stripped
 Transform:
@@ -2801,6 +2802,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1999578161652223094, guid: 3591e538a002a78498ceac3e321411a0, type: 3}
   m_PrefabInstance: {fileID: 1218658332}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1221454506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6920895807411010260, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
+  m_PrefabInstance: {fileID: 5206247004970206553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1265231152
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2858,11 +2864,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5790754b6e1b11498db39b2361eedb5, type: 3}
---- !u!1 &1306192245 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9065138246141053133, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
-  m_PrefabInstance: {fileID: 1402419610}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1335449495 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4c822d257ea08794ebb13852bbeb5e9f, type: 3}
@@ -3331,8 +3332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animName: CrateBox
   triggerKey: 32
-  prawn: {fileID: 3680230060054598797, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
-  spawnPoint: {fileID: 1681594572}
+  prawn: {fileID: 6240997415291314734, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
+  spawnPoint: {fileID: 440015492}
   light: {fileID: 1158716906}
   animtor: {fileID: 0}
 --- !u!65 &1495574560
@@ -3501,7 +3502,7 @@ Transform:
   m_Children:
   - {fileID: 184836027}
   - {fileID: 719172661}
-  - {fileID: 543450653181627802}
+  - {fileID: 1221454506}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3801,7 +3802,6 @@ MonoBehaviour:
   dashCoolDown: 0.6
   lastDashTime: -Infinity
   knife: {fileID: 1985228795}
-  leftHand: {fileID: 1306192245}
   Cutting: 0
   IsGrab: 0
   doma: {fileID: 0}
@@ -5294,11 +5294,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
---- !u!4 &543450653181627802 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5749679919397898435, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
-  m_PrefabInstance: {fileID: 5206247004970206553}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2693605169286328077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5576,6 +5571,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1547827705}
     m_Modifications:
+    - target: {fileID: 21035313937876782, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
+      propertyPath: m_Name
+      value: Prawn
+      objectReference: {fileID: 0}
     - target: {fileID: 4936270376278217337, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
       propertyPath: m_Name
       value: Prawn
@@ -5623,6 +5622,10 @@ PrefabInstance:
     - target: {fileID: 5749679919397898435, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6920895807411010260, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
