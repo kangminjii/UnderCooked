@@ -21,7 +21,7 @@ public class Player : StateMachine
     public float lastDashTime = -Mathf.Infinity;
 
     public GameObject knife;
-    public GameObject leftHand;
+    
 
     public bool Cutting = false;
     public bool IsGrab = false;
@@ -87,10 +87,6 @@ public class Player : StateMachine
             
     }
 
-   public Vector3 GetHandPosition()
-    {
-        return transform.position + transform.forward * 2.0f;
-    }
 
 
 }

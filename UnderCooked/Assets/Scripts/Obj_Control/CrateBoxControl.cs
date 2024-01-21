@@ -5,24 +5,21 @@ using UnityEngine;
 public class CrateBoxControl : MonoBehaviour
 {
     public string animName = "CrateBox";
-    public KeyCode triggerKey = KeyCode.LeftControl;
+    public KeyCode triggerKey = KeyCode.Space;
     public GameObject prawn;
     public Transform spawnPoint;
     public GameObject light;
 
-    private Player player;
-
     public Animator animtor;
 
     bool canInteract = false;
-    bool spawnCheck = false;
-    bool Isonfood = false;
+   
+    
+    
+
     private void Start()
     {
         animtor = GetComponent<Animator>();
-        //GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity);
-
-        //instance.transform.SetParent(spawnPoint);
 
     }
 
@@ -55,30 +52,25 @@ public class CrateBoxControl : MonoBehaviour
         if (canInteract && Input.GetKeyDown(triggerKey))
         {
 
-            spawnCheck = true;
+            //spawnCheck = true;
             PlayAnimation();
             canInteract = false;
+            if (Managers.Instance.IsGrab == false)
+            SpawnObj();
         }
 
-        if (spawnCheck)
-        {
-            SpawnObj();
-            spawnCheck = false;
-        }
+
+
     }
 
     public void SpawnObj()
     {
-        
-        GameObject Instance = Instantiate(prawn);
 
-        //spawnPoint.position = player.leftHand.transform.position;
-        Instance.transform.parent = player.leftHand.transform;
+        GameObject instance = Instantiate(prawn,spawnPoint.position, Quaternion.identity);
+        GameObject playerobj = GameObject.FindGameObjectWithTag("Player");
 
-        //Debug.Log(spawnPoint.position);
-
-        //GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity)
-
+        instance.transform.parent = playerobj.transform;
+        Managers.Instance.IsGrab = true;
     }
 
 
@@ -91,8 +83,8 @@ public class CrateBoxControl : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            player = collision.gameObject.GetComponent<Player>();
-            
+            //player = collision.gameObject.GetComponent<Player>();
+
         }
     }
 
