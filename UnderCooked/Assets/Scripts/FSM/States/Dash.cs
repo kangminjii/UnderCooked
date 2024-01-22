@@ -45,7 +45,7 @@ public class Dash : BaseState
 
         _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
 
-        _playerSM.LastDashTime = Time.time + _playerSM.DashCoolDown;
+        //_playerSM.LastDashTime = Time.time + _playerSM.DashCoolDown;
 
         //if (Input.GetKeyUp(KeyCode.LeftShift))
 

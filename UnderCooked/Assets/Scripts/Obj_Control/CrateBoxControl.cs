@@ -6,7 +6,7 @@ public class CrateBoxControl : MonoBehaviour
 {
     public string animName = "CrateBox";
     public KeyCode triggerKey = KeyCode.LeftControl;
-    public GameObject prawn;
+    public GameObject Parwn;
     public Transform spawnPoint;
     public GameObject light;
 
@@ -20,7 +20,7 @@ public class CrateBoxControl : MonoBehaviour
     private void Start()
     {
         animtor = GetComponent<Animator>();
-        //GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity);
+        //GameObject instance = Instantiate(Parwn, spawnPoint.position, Quaternion.identity);
 
         //instance.transform.SetParent(spawnPoint);
 
@@ -70,14 +70,14 @@ public class CrateBoxControl : MonoBehaviour
     public void SpawnObj()
     {
         
-        GameObject Instance = Instantiate(prawn);
+        GameObject Instance = Instantiate(Parwn);
 
         //spawnPoint.position = player.leftHand.transform.position;
-        Instance.transform.parent = player.leftHand.transform;
+        Instance.transform.parent = player.LeftHand.transform;
 
         //Debug.Log(spawnPoint.position);
 
-        //GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity)
+        //GameObject instance = Instantiate(Parwn, spawnPoint.position, Quaternion.identity)
 
     }
 
