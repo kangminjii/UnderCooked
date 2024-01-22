@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Grab : BaseState
 {
-    protected Player _sm;
+    protected Player _playerSM;
     
 
 
     public Grab(string name, Player stateMachine) : base(name, stateMachine)
     {
-        _sm = (Player)stateMachine;
+        _playerSM = (Player)stateMachine;
         
     }
 

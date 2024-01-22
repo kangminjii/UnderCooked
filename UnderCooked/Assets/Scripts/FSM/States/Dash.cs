@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Dash : BaseState
 {
-    protected Player _sm;
-    float initTime;
+    protected Player _playerSM;
+    
+    float _initTime;
     
     public Dash(Player stateMachine) : base("Dash", stateMachine)
     {
-        _sm = (Player)stateMachine;
+        _playerSM = (Player)stateMachine;
     }
 
 
     public override void Enter()
     {
         base.Enter();
-        initTime = 0;
+        _initTime = 0;
         //_sm.SetCooldown();
     }
 
@@ -25,7 +26,7 @@ public class Dash : BaseState
         base.UpdateLogic();
 
         
-        stateMachine.ChangeState(_sm.movingState);
+        _stateMachine.ChangeState(_playerSM.MovingState);
             
     }
 
@@ -40,11 +41,11 @@ public class Dash : BaseState
 
         float dashForce = 6f;
 
-        _sm.rigidbody.velocity = _sm.lookDir * dashForce;
+        _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
 
-        _sm.rigidbody.AddForce(_sm.lookDir * dashForce, ForceMode.Force);
+        _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
 
-        _sm.lastDashTime = Time.time + _sm.dashCoolDown;
+        _playerSM.LastDashTime = Time.time + _playerSM.DashCoolDown;
 
         //if (Input.GetKeyUp(KeyCode.LeftShift))
 
