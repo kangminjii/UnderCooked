@@ -33,10 +33,10 @@ public class Dash : BaseState
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        OnShift();
+        OnAlt();
     }
 
-    public void OnShift()
+    public void OnAlt()
     {
 
         float dashForce = 6f;

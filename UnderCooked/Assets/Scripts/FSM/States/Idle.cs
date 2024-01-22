@@ -23,7 +23,27 @@ public class Idle : BaseState
 
         _playerSM.Anim.SetFloat("speed", 0);
 
-        if(Managers.Instance.IsGrab == true)
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+            if(_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
+            {
+                Managers.Instance.IsPick_Prawn = false;
+                Managers.Instance.IsGrab = false;
+                Managers.Instance.IsDrop = true;
+                Managers.Instance.SpawnPlayerPrawn();
+            }
+            
+        }
+
+        if(Managers.Instance.IsGrab == false)
+        {
+            _stateMachine.ChangeState(_playerSM.IdleState);
+        }
+
+        if (Managers.Instance.IsGrab == true)
         {
             //_playerSM.Anim.Play("Idle_Holding");
             _playerSM.Anim.SetBool("Grab", true);
@@ -40,7 +60,7 @@ public class Idle : BaseState
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
             _stateMachine.ChangeState(_playerSM.MovingState);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftAlt))
             _stateMachine.ChangeState(_playerSM.DashState);
 
 

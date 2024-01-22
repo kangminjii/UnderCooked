@@ -16,22 +16,24 @@ public class CookingPlace : MonoBehaviour
     private void Start()
     {
         CookingKnife = this.transform.Find("CuttingBoard_Knife").gameObject;
+        player = GetComponent<Player>();
         
 
     }
 
     private void Update()
     {
-        if (onDoma == true && Managers.Instance.IsGrab == true && Input.GetKeyDown(KeyCode.Space))
+        if (onDoma && Managers.Instance.IsGrab && Input.GetKeyDown(KeyCode.Space))
         {
             Managers.Instance.IsGrab = false;
             CookingKnife.SetActive(false);
-            if(Managers.Instance.IsPick_Prawn == true && !IsInDoma)
+            if(Managers.Instance.IsPick_Prawn && !IsInDoma)
             {
                 Instantiate(On_Prawn, this.SpawnPos.position, Quaternion.identity);
                 Managers.Instance.IsPick_Prawn = false;
+                Managers.Instance.IsDrop = true;
                 IsInDoma = true;
-
+                
             }
 
         }
@@ -60,7 +62,7 @@ public class CookingPlace : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             player.CheckDoma(this.transform);
-            if (player.Doma != this.transform)
+            if (player.Doma != this)
             {
                 //player.Cutting = false;
                 //Debug.Log("doma out");

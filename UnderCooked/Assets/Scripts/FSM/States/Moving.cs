@@ -23,6 +23,21 @@ public class Moving : BaseState
     {
         base.UpdateLogic();
 
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+            if (_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
+            {
+                Managers.Instance.IsPick_Prawn = false;
+                Managers.Instance.IsGrab = false;
+                Managers.Instance.IsDrop = true;
+                Managers.Instance.SpawnPlayerPrawn();
+                _playerSM.Anim.Play("Idle01");
+            }
+
+        }
+
         if (Managers.Instance.IsGrab == true)
         {
             //_playerSM.Anim.Play("Walk_Holding");
@@ -38,7 +53,7 @@ public class Moving : BaseState
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.IdleState);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {         
             _stateMachine.ChangeState(_playerSM.DashState);
         }
@@ -84,5 +99,7 @@ public class Moving : BaseState
 
 
     }
+
+
 
 }

@@ -68,24 +68,28 @@ public class CrateBoxControl : MonoBehaviour
     public void SpawnObj()
     {
 
-        if(!Managers.Instance.IsPick_Prawn)
-        {
-            GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            instance.transform.parent = playerObject.transform;
-            Managers.Instance.IsGrab = true;
-            Managers.Instance.IsPick_Prawn = true;
 
-        }
-        
-
-
-        
-
-
+        GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        instance.transform.parent = playerObject.transform;
+        Managers.Instance.IsGrab = true;
+        Managers.Instance.IsDrop = false;
+        //Managers.Instance.IsPick_Prawn = true;
+        Invoke("SetIsPickPrawnTrue", 0.3f);
 
 
     }
+
+    public void SetIsPickPrawnTrue()
+    {
+        Managers.Instance.IsPick_Prawn = true;
+        
+    }
+
+
+
+
+
 
 
     private void OnCollisionEnter(Collision collision)

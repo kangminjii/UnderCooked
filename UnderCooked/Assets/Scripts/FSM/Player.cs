@@ -19,6 +19,7 @@ public class Player : StateMachine
     public Animator Anim;
     public Rigidbody Rigidbody;
     public GameObject Knife;
+    public GameObject PlayerPrawn;
 
 
     public Vector3 LookDir;
@@ -27,11 +28,9 @@ public class Player : StateMachine
 
     public bool Cutting = false;
 
-    public GameObject LeftHand;
-
     private GameObject _lastTriggeredObject;
     private GameObject _triggerExitObject;
-
+    
 
     private void Awake()
     {
@@ -63,6 +62,7 @@ public class Player : StateMachine
         if (Doma != target)
         {
             Cutting = false;
+            Doma = null;
         }
     }
 
