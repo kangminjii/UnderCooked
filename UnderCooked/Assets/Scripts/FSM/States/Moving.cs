@@ -28,6 +28,10 @@ public class Moving : BaseState
             //_playerSM.Anim.Play("Walk_Holding");
             _playerSM.Anim.SetBool("Grab", true);
         }
+        else
+        {
+            _playerSM.Anim.SetBool("Grab", false);
+        }
 
 
 

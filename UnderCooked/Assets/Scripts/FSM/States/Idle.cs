@@ -28,6 +28,10 @@ public class Idle : BaseState
             //_playerSM.Anim.Play("Idle_Holding");
             _playerSM.Anim.SetBool("Grab", true);
         }
+        else
+        {
+            _playerSM.Anim.SetBool("Grab", false);
+        }
 
         if (_playerSM.Cutting && Input.GetKey(KeyCode.LeftControl))
             _stateMachine.ChangeState(_playerSM.ChopState);
