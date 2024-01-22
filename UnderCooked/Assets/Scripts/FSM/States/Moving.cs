@@ -35,6 +35,7 @@ public class Moving : BaseState
         {
             _stateMachine.ChangeState(_playerSM.ChopState);
         }
+
     }
     public override void UpdatePhysics()
     {
