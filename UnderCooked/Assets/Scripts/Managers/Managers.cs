@@ -15,7 +15,8 @@ public class Managers : MonoBehaviour
 
     public static PoolManager Pool { get { return Instance._pool; } }
 
-    
+
+    public bool IsGrab = false;
 
 
   

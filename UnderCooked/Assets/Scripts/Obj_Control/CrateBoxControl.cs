@@ -6,19 +6,20 @@ public class CrateBoxControl : MonoBehaviour
 {
     public string animName = "CrateBox";
     public KeyCode triggerKey = KeyCode.LeftControl;
-    public GameObject prawn;
+    public GameObject Prawn;
     public Transform spawnPoint;
     public GameObject light;
+
+    private Player player;
 
     public Animator animtor;
 
     bool canInteract = false;
-    bool spawnCheck = false;
 
     private void Start()
     {
         animtor = GetComponent<Animator>();
-        //GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity);
+        //GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
 
         //instance.transform.SetParent(spawnPoint);
 
@@ -52,22 +53,41 @@ public class CrateBoxControl : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(triggerKey))
         {
-            spawnCheck = true;
+
             PlayAnimation();
             canInteract = false;
+            if(Managers.Instance.IsGrab == false)
+            {
+                SpawnObj();
+                
+            }
         }
 
-        if (spawnCheck)
-        {
-            SpawnObj();
-            spawnCheck = false;
-        }
     }
-
 
     public void SpawnObj()
     {
-        GameObject instance = Instantiate(prawn, spawnPoint.position, Quaternion.identity);
+
+        //GameObject Instance = Instantiate(Prawn);
+
+        //spawnPoint.position = player.leftHand.transform.position;
+
+        //Debug.Log(spawnPoint.position);
+
+        //GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
+        //instance.transform.parent = player.transform;
+
+        GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
+
+        // 플레이어가 prawn을 부착할 부모 객체입니다.
+        // 실제 플레이어 오브젝트 구조에 따라 조정해야 할 수 있습니다.
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        // 생성된 객체를 플레이어의 자식으로 설정합니다.
+        instance.transform.parent = playerObject.transform;
+
+        Managers.Instance.IsGrab = true;
+
     }
 
 
@@ -78,6 +98,11 @@ public class CrateBoxControl : MonoBehaviour
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
         }
+        //if (collision.gameObject.CompareTag("Player"))
+        //{
+        //    player = collision.gameObject.GetComponent<Player>();
+            
+        //}
     }
 
 }

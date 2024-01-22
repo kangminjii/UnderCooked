@@ -13,17 +13,21 @@ public class Player : StateMachine
     [HideInInspector]
     public Chop ChopState;
 
+    
     public CookingPlace Doma;
 
     public Animator Anim;
     public Rigidbody Rigidbody;
     public GameObject Knife;
 
+
     public Vector3 LookDir;
     public float DashCoolDown = 0.6f;
-    public float LastDashTime = -Mathf.Infinity;
+    public float LstDashTime = -Mathf.Infinity;
 
     public bool Cutting = false;
+
+    public GameObject LeftHand;
 
     private GameObject _lastTriggeredObject;
     private GameObject _triggerExitObject;
@@ -42,7 +46,6 @@ public class Player : StateMachine
 
         Rigidbody = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
-
 
         Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit += HandleObjectTriggerExit;
@@ -66,7 +69,7 @@ public class Player : StateMachine
     private void HandleObjectTriggerEnter(GameObject triggeredObject)
     {
         // 다른 Table로 Trigger될때
-        if(_lastTriggeredObject != null && triggeredObject.name != _lastTriggeredObject.name)
+        if (_lastTriggeredObject != null && triggeredObject.name != _lastTriggeredObject.name)
         {
             Searching interactingObject = triggeredObject.GetComponent<Searching>();
             interactingObject.EnableColor();
@@ -89,8 +92,6 @@ public class Player : StateMachine
         }
 
         _lastTriggeredObject = triggeredObject;
-
-        TriggeredObject(_lastTriggeredObject);
     }
 
     private void HandleObjectTriggerExit(GameObject triggeredObject)
@@ -129,7 +130,7 @@ public class Player : StateMachine
 
     }
 
-private Define.Object GetObjectFromTag(string tag)
+    private Define.Object GetObjectFromTag(string tag)
     {
         switch (tag)
         {
