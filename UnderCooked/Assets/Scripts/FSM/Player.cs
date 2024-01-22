@@ -26,14 +26,11 @@ public class Player : StateMachine
     public float LstDashTime = -Mathf.Infinity;
 
     public bool Cutting = false;
-    public bool IsGrab = false;
 
     public GameObject LeftHand;
 
     private GameObject _lastTriggeredObject;
-    private string _triggerExitName = "";
-
-
+    private GameObject _triggerExitObject;
 
 
     private void Awake()
@@ -87,7 +84,7 @@ public class Player : StateMachine
         // 같은 Table로 Trigger될때
         else
         {
-            if (name == _triggerExitName)
+            if (_triggerExitObject == triggeredObject)
             {
                 Searching interactingObject = triggeredObject.GetComponent<Searching>();
                 interactingObject.EnableColor();
@@ -95,8 +92,6 @@ public class Player : StateMachine
         }
 
         _lastTriggeredObject = triggeredObject;
-
-        TriggeredObject(_lastTriggeredObject);
     }
 
     private void HandleObjectTriggerExit(GameObject triggeredObject)
@@ -104,7 +99,7 @@ public class Player : StateMachine
         Searching interactingObject = triggeredObject.GetComponent<Searching>();
         interactingObject.DisableColor();
 
-        _triggerExitName = name;
+        _triggerExitObject = triggeredObject;
     }
 
 

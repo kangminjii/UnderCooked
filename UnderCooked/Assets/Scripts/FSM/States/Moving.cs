@@ -22,7 +22,15 @@ public class Moving : BaseState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        
+
+        if (Managers.Instance.IsGrab == true)
+        {
+            //_playerSM.Anim.Play("Walk_Holding");
+            _playerSM.Anim.SetBool("Grab", true);
+        }
+
+
+
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.IdleState);
 
@@ -68,6 +76,9 @@ public class Moving : BaseState
         }
 
         _playerSM.LookDir = _playerSM.transform.forward;
+
+
+
     }
 
 }

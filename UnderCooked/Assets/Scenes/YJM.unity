@@ -3332,7 +3332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animName: CrateBox
   triggerKey: 32
-  prawn: {fileID: 6240997415291314734, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
+  Prawn: {fileID: 3506288439499941170, guid: ec038c3e76b932c43933c44ab5da7f8b, type: 3}
   spawnPoint: {fileID: 440015492}
   light: {fileID: 1158716906}
   animtor: {fileID: 0}
@@ -3796,16 +3796,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bebd4ff3cb4c842800e5e1bece7d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  rigidbody: {fileID: 0}
-  lookDir: {x: 0, y: 0, z: 0}
-  dashCoolDown: 0.6
-  lastDashTime: -Infinity
-  knife: {fileID: 1985228795}
+  Doma: {fileID: 0}
+  Anim: {fileID: 0}
+  Rigidbody: {fileID: 0}
+  Knife: {fileID: 1985228795}
+  LookDir: {x: 0, y: 0, z: 0}
+  DashCoolDown: 0.6
+  LstDashTime: -Infinity
   Cutting: 0
-  IsGrab: 0
-  doma: {fileID: 0}
-  selectObj: 
+  LeftHand: {fileID: 0}
 --- !u!65 &1681594570
 BoxCollider:
   m_ObjectHideFlags: 0
