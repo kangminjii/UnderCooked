@@ -26,7 +26,7 @@ public class Player : StateMachine
     public bool Cutting = false;
 
     private GameObject _lastTriggeredObject;
-    private string _triggerExitName = "";
+    private GameObject _triggerExitObject;
 
 
     private void Awake()
@@ -81,7 +81,7 @@ public class Player : StateMachine
         // 같은 Table로 Trigger될때
         else
         {
-            if (name == _triggerExitName)
+            if (_triggerExitObject == triggeredObject)
             {
                 Searching interactingObject = triggeredObject.GetComponent<Searching>();
                 interactingObject.EnableColor();
@@ -98,7 +98,7 @@ public class Player : StateMachine
         Searching interactingObject = triggeredObject.GetComponent<Searching>();
         interactingObject.DisableColor();
 
-        _triggerExitName = name;
+        _triggerExitObject = triggeredObject;
     }
 
 
