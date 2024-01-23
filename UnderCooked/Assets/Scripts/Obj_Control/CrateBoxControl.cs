@@ -4,33 +4,53 @@ using UnityEngine;
 
 public class CrateBoxControl : MonoBehaviour
 {
-    public string animName = "CrateBox";
-    public KeyCode triggerKey = KeyCode.LeftControl;
-    public GameObject Prawn;
-    public Transform spawnPoint;
-    public GameObject light;
+    Animator _animtor;
+    GameObject _playerObject;
+    Transform _spawnPoint;
 
-    private Player player;
-
-    public Animator animtor;
-
+    KeyCode triggerKey = KeyCode.Space;
     bool canInteract = false;
+
 
     private void Start()
     {
-        animtor = GetComponent<Animator>();
-        //GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
-
-        //instance.transform.SetParent(spawnPoint);
-
+        _animtor = GetComponent<Animator>();
+        _playerObject = GameObject.Find("Chef");
+        _spawnPoint = _playerObject.transform.Find("SpawnPoint");
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
+    {
+        if (Input.GetKeyDown(triggerKey))
+        {
+            if (canInteract && !Managers.Instance.IsGrab)
+            {
+                _animtor.SetTrigger("IsOpen");
+                SpawnObj();
+            }
+        }
+    }
+
+
+    public void SpawnObj()
+    {
+        GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _playerObject.transform);
+        Managers.Resource.PlayerGrabItem.Add(instance);
+
+        Managers.Instance.IsGrab = true;
+        Managers.Instance.IsDrop = false;
+        Invoke("SetIsPickPrawnTrue", 0.3f);
+    }
+
+    public void SetIsPickPrawnTrue()
+    {
+        Managers.Instance.IsPick_Prawn = true;
+    }
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("tt");
-            light.SetActive(true);
             canInteract = true;
         }
     }
@@ -38,58 +58,9 @@ public class CrateBoxControl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("tt");
-            light.SetActive(false);
             canInteract = false;
         }
     }
-
-    private void PlayAnimation()
-    {
-        animtor.SetTrigger("IsOpen");
-    }
-
-    private void Update()
-    {
-        if (canInteract && Input.GetKeyDown(triggerKey))
-        {
-
-            PlayAnimation();
-            canInteract = false;
-            if(Managers.Instance.IsGrab == false)
-            {
-                SpawnObj();
-                
-            }
-        }
-
-    }
-
-    public void SpawnObj()
-    {
-
-
-        GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        instance.transform.parent = playerObject.transform;
-        Managers.Instance.IsGrab = true;
-        Managers.Instance.IsDrop = false;
-        Invoke("SetIsPickPrawnTrue", 0.3f);
-
-
-    }
-
-    public void SetIsPickPrawnTrue()
-    {
-        Managers.Instance.IsPick_Prawn = true;
-        
-    }
-
-
-
-
-
-
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -98,11 +69,5 @@ public class CrateBoxControl : MonoBehaviour
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
         }
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    player = collision.gameObject.GetComponent<Player>();
-            
-        //}
     }
-
 }
