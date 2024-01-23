@@ -9,11 +9,15 @@ public class Player : StateMachine
     [HideInInspector]
     public Moving MovingState;
     [HideInInspector]
-    public Dash DashState;
-    [HideInInspector]
     public Chop ChopState;
+    [HideInInspector]
+    public Grab GrabState;
+    [HideInInspector]
+    public Grab_Idle GrabIdleState;
+    [HideInInspector]
+    public Grab_Moving GrabMovingState;
 
-    
+
     public CookingPlace Doma;
 
     public Animator Anim;
@@ -28,27 +32,26 @@ public class Player : StateMachine
 
     public bool Cutting = false;
 
-    private GameObject _lastTriggeredObject;
-    private GameObject _triggerExitObject;
+    
+    GameObject _lastTriggeredObject;
+    GameObject _triggerExitObject;
     
 
     private void Awake()
     {
         IdleState = new Idle(this);
         MovingState = new Moving(this);
-        DashState = new Dash(this);
         ChopState = new Chop(this);
+        GrabState = new Grab(this);
+        GrabIdleState = new Grab_Idle(this);
+        GrabMovingState = new Grab_Moving(this);
 
-        //AddState(idleState, StateName.Idle);
-        //AddState(movingState, StateName.Walk);
-        //AddState(dashState, StateName.Dash);
 
         Rigidbody = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
 
         Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit += HandleObjectTriggerExit;
-
     }
 
     protected override BaseState GetInitialState()

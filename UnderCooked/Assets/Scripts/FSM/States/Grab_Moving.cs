@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Moving : BaseState
+public class Grab_Moving : BaseState
 {
     protected Player _playerSM;
     private float _speed = 5.0f;
 
-
-    public Moving(Player stateMachine) : base("Moving", stateMachine) 
+    public Grab_Moving(Player stateMachine) : base("Grab_Moving", stateMachine)
     {
         _playerSM = (Player)stateMachine;
     }
@@ -20,25 +19,30 @@ public class Moving : BaseState
 
     public override void UpdateLogic()
     {
-        base.UpdateLogic();
-
-
-        if (Managers.Instance.IsGrab == true)
+        if (Input.GetKey(KeyCode.Space))
         {
-            _playerSM.Anim.SetBool("Grab", true);
-            _stateMachine.ChangeState(_playerSM.GrabState);
+            _playerSM.Anim.SetBool("Grab", false);
+
+            // 바닥에 놓을 때
+            if (_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
+            {
+                Managers.Instance.IsPick_Prawn = false;
+                Managers.Instance.IsGrab = false;
+                Managers.Instance.IsDrop = true;
+                Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
+                Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+            }
+
+            _stateMachine.ChangeState(_playerSM.IdleState);
         }
 
         if (Input.anyKey == false)
-            _stateMachine.ChangeState(_playerSM.IdleState);
-      
-        if (_playerSM.Cutting && Input.GetKey(KeyCode.LeftControl))
-            _stateMachine.ChangeState(_playerSM.ChopState);
+            _stateMachine.ChangeState(_playerSM.GrabIdleState);
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKey(KeyCode.LeftAlt))
             Dash();
-
     }
+
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
@@ -51,7 +55,7 @@ public class Moving : BaseState
         Vector3 moveDirection = Vector3.zero;
 
         _playerSM.Anim.SetFloat("speed", _speed);
-              
+
         if (Input.GetKey(KeyCode.UpArrow))
             moveDirection += Vector3.forward;
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -79,7 +83,5 @@ public class Moving : BaseState
         _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
         _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
     }
-
-
 
 }
