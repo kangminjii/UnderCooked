@@ -15,20 +15,19 @@ public class Grab_Moving : BaseState
     public override void Enter()
     {
         base.Enter();
+        _playerSM.Anim.SetFloat("speed", _speed);
     }
 
     public override void UpdateLogic()
     {
+        // Grab 해제
         if (Input.GetKey(KeyCode.Space))
         {
             _playerSM.Anim.SetBool("Grab", false);
 
-            // 바닥에 놓을 때
-            if (_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
+            if (_playerSM.Doma == null)
             {
-                Managers.Instance.IsPick_Prawn = false;
                 Managers.Instance.IsGrab = false;
-                Managers.Instance.IsDrop = true;
                 Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
             }

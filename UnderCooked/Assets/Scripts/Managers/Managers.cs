@@ -17,8 +17,6 @@ public class Managers : MonoBehaviour
     
 
     public bool IsGrab = false;
-    public bool IsPick_Prawn = false;
-    public bool IsDrop = false;
 
   
     static void Init()

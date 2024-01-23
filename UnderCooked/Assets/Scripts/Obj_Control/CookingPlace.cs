@@ -27,11 +27,9 @@ public class CookingPlace : MonoBehaviour
         {
             Managers.Instance.IsGrab = false;
             CookingKnife.SetActive(false);
-            if(Managers.Instance.IsPick_Prawn && !IsInDoma)
+            if(!IsInDoma)
             {
                 Instantiate(On_Prawn, this.SpawnPos.position, Quaternion.identity);
-                Managers.Instance.IsPick_Prawn = false;
-                Managers.Instance.IsDrop = true;
                 IsInDoma = true;
                 
             }

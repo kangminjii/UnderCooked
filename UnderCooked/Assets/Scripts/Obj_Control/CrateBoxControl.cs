@@ -38,14 +38,8 @@ public class CrateBoxControl : MonoBehaviour
         Managers.Resource.PlayerGrabItem.Add(instance);
 
         Managers.Instance.IsGrab = true;
-        Managers.Instance.IsDrop = false;
-        Invoke("SetIsPickPrawnTrue", 0.3f);
     }
 
-    public void SetIsPickPrawnTrue()
-    {
-        Managers.Instance.IsPick_Prawn = true;
-    }
 
     private void OnTriggerStay(Collider other)
     {
