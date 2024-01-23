@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CrateBoxControl : MonoBehaviour
 {
-    public KeyCode triggerKey = KeyCode.LeftControl;
-    public Animator animtor;
-   
+  private KeyCode triggerKey = KeyCode.Space;
+    
+    Animator _animtor;
     GameObject _playerObject;
     Transform _spawnPoint;
     bool canInteract = false;
@@ -14,9 +14,38 @@ public class CrateBoxControl : MonoBehaviour
 
     private void Start()
     {
-        animtor = GetComponent<Animator>();
+        _animtor = GetComponent<Animator>();
         _playerObject = GameObject.Find("Chef");
         _spawnPoint = _playerObject.transform.Find("SpawnPoint");
+    }
+    private void Update()
+    {
+        if (canInteract && Input.GetKeyDown(triggerKey))
+        {
+            _animtor.SetTrigger("IsOpen");
+            canInteract = false;
+            if (Managers.Instance.IsGrab == false)
+            {
+                SpawnObj();
+            }
+        }
+    }
+
+
+    public void SpawnObj()
+    {
+        GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _playerObject.transform);
+        Debug.Log("instance: " + instance);
+        Managers.Resource.PlayerPrawn.Add(instance);
+
+        Managers.Instance.IsGrab = true;
+        Managers.Instance.IsDrop = false;
+        Invoke("SetIsPickPrawnTrue", 0.3f);
+    }
+
+    public void SetIsPickPrawnTrue()
+    {
+        Managers.Instance.IsPick_Prawn = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,32 +62,6 @@ public class CrateBoxControl : MonoBehaviour
             canInteract = false;
         }
     }
-
-    private void PlayAnimation()
-    {
-        animtor.SetTrigger("IsOpen");
-    }
-
-    private void Update()
-    {
-        if (canInteract && Input.GetKeyDown(triggerKey))
-        {
-            PlayAnimation();
-            canInteract = false;
-            if(Managers.Instance.IsGrab == false)
-            {
-                SpawnObj();
-            }
-        }
-    }
-
-    public void SpawnObj()
-    {
-        GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _playerObject.transform);
-
-        Managers.Instance.IsGrab = true;
-    }
-
 
     private void OnCollisionEnter(Collision collision)
     {

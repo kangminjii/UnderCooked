@@ -386,6 +386,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsGrab: 0
+  IsPick_Prawn: 0
+  IsDrop: 0
+  PlayerSpawnPos: {fileID: 0}
+  PlayerPrawn: {fileID: 0}
 --- !u!4 &109829064
 Transform:
   m_ObjectHideFlags: 0

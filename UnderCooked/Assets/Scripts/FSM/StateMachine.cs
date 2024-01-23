@@ -4,22 +4,8 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    //public enum StateName
-    //{
-    //    Idle,
-    //    Walk,
-    //    Dash
-    //}
-    BaseState _currentState;
-    //Dictionary<StateName, BaseState> _playerStateDictionary;
 
-    //protected void AddState(BaseState newState, StateName name)
-    //{
-    //    if (!_playerStateDictionary.TryGetValue(name, out BaseState state))
-    //    {
-    //        _playerStateDictionary.Add(name, newState);
-    //    }
-    //}    
+    BaseState _currentState;
 
 
     private void OnGUI()
@@ -39,6 +25,9 @@ public class StateMachine : MonoBehaviour
     {
         if (_currentState != null)
             _currentState.UpdateLogic();
+
+        
+
     }
 
     private void LateUpdate()

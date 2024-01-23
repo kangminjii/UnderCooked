@@ -22,6 +22,7 @@ public class ResourceManager
     //    return Resources.Load<T>(path);
     //}
 
+    public List<GameObject> PlayerPrawn = new List<GameObject>();
 
     public GameObject Instantiate(string path, Vector3? pos, Quaternion? rot = null, Transform parent = null)
     {
@@ -41,6 +42,8 @@ public class ResourceManager
  
     public void Destroy(GameObject go)
     {
+        PlayerPrawn.RemoveAt(0);
+
         if (go == null)
             return;
 

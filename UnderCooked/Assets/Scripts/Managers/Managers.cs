@@ -17,6 +17,12 @@ public class Managers : MonoBehaviour
     
 
     public bool IsGrab = false;
+    public bool IsPick_Prawn = false;
+    public bool IsDrop = false;
+
+    public Transform PlayerSpawnPos;
+    public GameObject PlayerPrawn;
+    
 
 
   
@@ -38,4 +44,11 @@ public class Managers : MonoBehaviour
             _instance = go.GetComponent<Managers>();
         }
     }
+
+
+    public void SpawnPlayerPrawn()
+    {
+        Instantiate(PlayerPrawn, PlayerSpawnPos.position, Quaternion.identity);
+    }
+
 }

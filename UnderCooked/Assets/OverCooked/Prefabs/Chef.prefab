@@ -1609,11 +1609,11 @@ MonoBehaviour:
   Anim: {fileID: 0}
   Rigidbody: {fileID: 0}
   Knife: {fileID: 5260627731516699849}
+  PlayerPrawn: {fileID: 0}
   LookDir: {x: 0, y: 0, z: 0}
   DashCoolDown: 0.6
   LstDashTime: -Infinity
   Cutting: 0
-  LeftHand: {fileID: 0}
 --- !u!1 &1196512682497571478
 GameObject:
   m_ObjectHideFlags: 0
@@ -8635,7 +8635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4278041749091944701
 Transform:
   m_ObjectHideFlags: 0
@@ -9537,7 +9537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8584084909770699077
 Transform:
   m_ObjectHideFlags: 0
@@ -9578,7 +9578,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4604544030149713097, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
+  - {fileID: 2100000, guid: 305d7d69d24ab3d499718d28b9463e34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
