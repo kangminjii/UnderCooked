@@ -20,12 +20,11 @@ public class CrateBoxControl : MonoBehaviour
     }
     private void Update()
     {
-        if (canInteract && Input.GetKeyDown(triggerKey))
+        if (Input.GetKeyDown(triggerKey))
         {
-            _animtor.SetTrigger("IsOpen");
-            canInteract = false;
             if (Managers.Instance.IsGrab == false)
             {
+                _animtor.SetTrigger("IsOpen");
                 SpawnObj();
             }
         }
@@ -35,8 +34,7 @@ public class CrateBoxControl : MonoBehaviour
     public void SpawnObj()
     {
         GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _playerObject.transform);
-        Debug.Log("instance: " + instance);
-        Managers.Resource.PlayerPrawn.Add(instance);
+        Managers.Resource.PlayerGrabItem.Add(instance);
 
         Managers.Instance.IsGrab = true;
         Managers.Instance.IsDrop = false;
@@ -48,7 +46,7 @@ public class CrateBoxControl : MonoBehaviour
         Managers.Instance.IsPick_Prawn = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {

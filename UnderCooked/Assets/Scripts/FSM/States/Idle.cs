@@ -35,7 +35,7 @@ public class Idle : BaseState
                 Managers.Instance.IsDrop = true;
                 //Managers.Instance.SpawnPlayerPrawn();
                 Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
-                Managers.Resource.Destroy(Managers.Resource.PlayerPrawn[0]);
+                Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
 
             }
 
