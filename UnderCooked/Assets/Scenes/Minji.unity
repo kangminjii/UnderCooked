@@ -388,8 +388,6 @@ MonoBehaviour:
   IsGrab: 0
   IsPick_Prawn: 0
   IsDrop: 0
-  PlayerSpawnPos: {fileID: 0}
-  PlayerPrawn: {fileID: 0}
 --- !u!4 &109829064
 Transform:
   m_ObjectHideFlags: 0
@@ -4397,6 +4395,14 @@ PrefabInstance:
       propertyPath: prawn
       value: 
       objectReference: {fileID: 1548141362}
+    - target: {fileID: 8103671619851601266, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.477
+      objectReference: {fileID: 0}
+    - target: {fileID: 8103671619851601266, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8645995503557268768, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
       propertyPath: m_RootOrder
       value: 0

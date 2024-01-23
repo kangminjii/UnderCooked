@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-
     BaseState _currentState;
 
 
@@ -25,9 +24,6 @@ public class StateMachine : MonoBehaviour
     {
         if (_currentState != null)
             _currentState.UpdateLogic();
-
-        
-
     }
 
     private void LateUpdate()

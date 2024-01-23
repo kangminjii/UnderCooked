@@ -24,36 +24,10 @@ public class Idle : BaseState
         _playerSM.Anim.SetFloat("speed", 0);
 
 
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-
-            if(_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
-            {
-                Managers.Instance.IsPick_Prawn = false;
-                Managers.Instance.IsGrab = false;
-                Managers.Instance.IsDrop = true;
-                //Managers.Instance.SpawnPlayerPrawn();
-                Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
-                Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
-
-            }
-
-        }
-
-        if(Managers.Instance.IsGrab == false)
-        {
-            _stateMachine.ChangeState(_playerSM.IdleState);
-        }
-
         if (Managers.Instance.IsGrab == true)
         {
-            //_playerSM.Anim.Play("Idle_Holding");
             _playerSM.Anim.SetBool("Grab", true);
-        }
-        else
-        {
-            _playerSM.Anim.SetBool("Grab", false);
+            _stateMachine.ChangeState(_playerSM.GrabState);
         }
 
         if (_playerSM.Cutting && Input.GetKey(KeyCode.LeftControl))
@@ -64,9 +38,20 @@ public class Idle : BaseState
             _stateMachine.ChangeState(_playerSM.MovingState);
 
         if (Input.GetKey(KeyCode.LeftAlt))
-            _stateMachine.ChangeState(_playerSM.DashState);
+            Dash();
+    }
 
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+    }
 
+    public void Dash()
+    {
+        float dashForce = 6f;
+
+        _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
+        _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
     }
 
 

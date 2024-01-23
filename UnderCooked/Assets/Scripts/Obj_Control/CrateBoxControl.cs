@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CrateBoxControl : MonoBehaviour
 {
-  private KeyCode triggerKey = KeyCode.Space;
-    
     Animator _animtor;
     GameObject _playerObject;
     Transform _spawnPoint;
+
+    KeyCode triggerKey = KeyCode.Space;
     bool canInteract = false;
 
 
@@ -18,11 +18,12 @@ public class CrateBoxControl : MonoBehaviour
         _playerObject = GameObject.Find("Chef");
         _spawnPoint = _playerObject.transform.Find("SpawnPoint");
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(triggerKey))
         {
-            if (Managers.Instance.IsGrab == false)
+            if (canInteract && !Managers.Instance.IsGrab)
             {
                 _animtor.SetTrigger("IsOpen");
                 SpawnObj();
