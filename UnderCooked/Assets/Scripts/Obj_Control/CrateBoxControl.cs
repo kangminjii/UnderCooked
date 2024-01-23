@@ -68,27 +68,28 @@ public class CrateBoxControl : MonoBehaviour
     public void SpawnObj()
     {
 
-        //GameObject Instance = Instantiate(Prawn);
-
-        //spawnPoint.position = player.leftHand.transform.position;
-
-        //Debug.Log(spawnPoint.position);
-
-        //GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
-        //instance.transform.parent = player.transform;
 
         GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
-
-        // 플레이어가 prawn을 부착할 부모 객체입니다.
-        // 실제 플레이어 오브젝트 구조에 따라 조정해야 할 수 있습니다.
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-        // 생성된 객체를 플레이어의 자식으로 설정합니다.
         instance.transform.parent = playerObject.transform;
-
         Managers.Instance.IsGrab = true;
+        Managers.Instance.IsDrop = false;
+        //Managers.Instance.IsPick_Prawn = true;
+        Invoke("SetIsPickPrawnTrue", 0.3f);
+
 
     }
+
+    public void SetIsPickPrawnTrue()
+    {
+        Managers.Instance.IsPick_Prawn = true;
+        
+    }
+
+
+
+
+
 
 
     private void OnCollisionEnter(Collision collision)
