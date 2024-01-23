@@ -74,7 +74,6 @@ public class CrateBoxControl : MonoBehaviour
         instance.transform.parent = playerObject.transform;
         Managers.Instance.IsGrab = true;
         Managers.Instance.IsDrop = false;
-        //Managers.Instance.IsPick_Prawn = true;
         Invoke("SetIsPickPrawnTrue", 0.3f);
 
 
