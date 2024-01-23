@@ -473,8 +473,6 @@ MonoBehaviour:
   IsGrab: 0
   IsPick_Prawn: 0
   IsDrop: 0
-  PlayerSpawnPos: {fileID: 440015492}
-  PlayerPrawn: {fileID: 6240997415291314734, guid: c5dd8d4f2aced05408d5999dff34093b, type: 3}
 --- !u!4 &109829064
 Transform:
   m_ObjectHideFlags: 0
@@ -3205,12 +3203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151ad16247dd2524d8f2433532e3a9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animName: CrateBox
-  triggerKey: 32
-  Prawn: {fileID: 3506288439499941170, guid: ec038c3e76b932c43933c44ab5da7f8b, type: 3}
-  spawnPoint: {fileID: 440015492}
-  light: {fileID: 1158716906}
-  animtor: {fileID: 0}
 --- !u!65 &1495574560
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4147,7 +4139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
       propertyPath: m_Name
-      value: Chef (1)
+      value: Chef
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
       propertyPath: m_TagString

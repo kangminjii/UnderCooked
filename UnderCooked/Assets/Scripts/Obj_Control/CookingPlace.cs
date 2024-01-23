@@ -25,8 +25,10 @@ public class CookingPlace : MonoBehaviour
     {
         if (onDoma && Managers.Instance.IsGrab && Input.GetKeyDown(KeyCode.Space))
         {
+            // ÀÌ µÎÁÙ Fish¶û PrawnÀÌ¶û ³ª´²¾ßÇÔ
             Managers.Instance.IsGrab = false;
             CookingKnife.SetActive(false);
+            //
             if(Managers.Instance.IsPick_Prawn && !IsInDoma)
             {
                 Instantiate(On_Prawn, this.SpawnPos.position, Quaternion.identity);

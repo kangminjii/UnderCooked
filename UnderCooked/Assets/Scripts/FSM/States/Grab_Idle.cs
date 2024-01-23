@@ -14,6 +14,7 @@ public class Grab_Idle : BaseState
     public override void Enter()
     {
         base.Enter();
+        _playerSM.Anim.SetFloat("speed",0);
     }
 
     public override void UpdateLogic()
@@ -37,7 +38,10 @@ public class Grab_Idle : BaseState
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        {
             _stateMachine.ChangeState(_playerSM.GrabMovingState);
+
+        }
 
         if (Input.GetKey(KeyCode.LeftAlt))
             Dash();

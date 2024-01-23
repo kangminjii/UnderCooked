@@ -9,12 +9,14 @@ public class Grab_Moving : BaseState
 
     public Grab_Moving(Player stateMachine) : base("Grab_Moving", stateMachine)
     {
+        
         _playerSM = (Player)stateMachine;
     }
 
     public override void Enter()
     {
         base.Enter();
+        _playerSM.Anim.SetFloat("speed", _speed);
     }
 
     public override void UpdateLogic()
