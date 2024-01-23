@@ -22,18 +22,6 @@ public class ResourceManager
     //    return Resources.Load<T>(path);
     //}
 
-    //public GameObject Instantiate(string path, Transform parent = null)
-    //{
-    //    GameObject original = Resources.Load<GameObject>($"Prefabs/{path}");
-
-    //    if (original == null)
-    //    {
-    //        Debug.Log($"Failed to load prefab : {path}");
-    //        return null;
-    //    }
-
-    //    return Object.Instantiate(original, parent);
-    //}
 
     public GameObject Instantiate(string path, Vector3? pos, Quaternion? rot = null, Transform parent = null)
     {
@@ -47,17 +35,7 @@ public class ResourceManager
             return null;
         }
 
-        GameObject instance = Object.Instantiate(original, (Vector3)pos, (Quaternion)rot);
-
-        if (parent != null)
-        {
-            // parent가 null이 아닌 경우에만 부모 설정
-            instance.transform.parent = parent;
-        }
-
-        return instance;
-
-        //return Object.Instantiate(original, (Vector3)pos, (Quaternion)rot, parent);
+        return Object.Instantiate(original, (Vector3)pos, (Quaternion)rot, parent);
     }
 
  

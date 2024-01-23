@@ -4,31 +4,25 @@ using UnityEngine;
 
 public class CrateBoxControl : MonoBehaviour
 {
-    public string animName = "CrateBox";
     public KeyCode triggerKey = KeyCode.LeftControl;
-    public GameObject Prawn;
-    public Transform spawnPoint;
-    public GameObject light;
-
-    //private Player player;
-    public GameObject playerObject;
-
     public Animator animtor;
-
+   
+    GameObject _playerObject;
+    Transform _spawnPoint;
     bool canInteract = false;
+
 
     private void Start()
     {
         animtor = GetComponent<Animator>();
-        playerObject = GameObject.Find("Chef");
+        _playerObject = GameObject.Find("Chef");
+        _spawnPoint = _playerObject.transform.Find("SpawnPoint");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("tt");
-            light.SetActive(true);
             canInteract = true;
         }
     }
@@ -36,8 +30,6 @@ public class CrateBoxControl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("tt");
-            light.SetActive(false);
             canInteract = false;
         }
     }
@@ -51,35 +43,20 @@ public class CrateBoxControl : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(triggerKey))
         {
-
             PlayAnimation();
             canInteract = false;
             if(Managers.Instance.IsGrab == false)
             {
                 SpawnObj();
-                
             }
         }
-
     }
 
     public void SpawnObj()
     {
-        GameObject instance = Managers.Resource.Instantiate("Prawn", new Vector3(0f, 0.365f, 0.734f), Quaternion.identity, playerObject.transform);
-
-
-        //GameObject instance = Instantiate(Prawn, spawnPoint.position, Quaternion.identity);
-
-        // 플레이어가 prawn을 부착할 부모 객체입니다.
-        // 실제 플레이어 오브젝트 구조에 따라 조정해야 할 수 있습니다.
-        //GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-        // 생성된 객체를 플레이어의 자식으로 설정합니다.
-        //instance.transform.parent = playerObject.transform;
-
+        GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _playerObject.transform);
 
         Managers.Instance.IsGrab = true;
-
     }
 
 
@@ -90,11 +67,5 @@ public class CrateBoxControl : MonoBehaviour
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
         }
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    player = collision.gameObject.GetComponent<Player>();
-            
-        //}
     }
-
 }
