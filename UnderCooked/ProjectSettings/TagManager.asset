@@ -9,6 +9,8 @@ TagManager:
   - Table
   - Bin
   - Crate
+  - Prawn
+  - Plane
   layers:
   - Default
   - TransparentFX

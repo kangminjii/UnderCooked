@@ -10,8 +10,8 @@ public class Player : StateMachine
     public Moving MovingState;
     [HideInInspector]
     public Chop ChopState;
-    [HideInInspector]
-    public Grab GrabState;
+    //[HideInInspector]
+    //public Grab GrabState;
     [HideInInspector]
     public Grab_Idle GrabIdleState;
     [HideInInspector]
@@ -24,6 +24,8 @@ public class Player : StateMachine
     public Rigidbody Rigidbody;
     public GameObject Knife;
     public GameObject PlayerPrawn;
+
+    public Transform _playerSpawnPos;
 
 
     public Vector3 LookDir;
@@ -42,9 +44,10 @@ public class Player : StateMachine
         IdleState = new Idle(this);
         MovingState = new Moving(this);
         ChopState = new Chop(this);
-        GrabState = new Grab(this);
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
+
+        _playerSpawnPos = this.transform.Find("SpawnPoint");
 
 
         Rigidbody = GetComponent<Rigidbody>();
@@ -151,6 +154,9 @@ public class Player : StateMachine
                 return Define.Object.Default;
         }
     }
+
+
+
 
 
 }

@@ -21,7 +21,7 @@ public class Grab_Moving : BaseState
 
     public override void UpdateLogic()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _playerSM.Anim.SetBool("Grab", false);
 
@@ -30,18 +30,19 @@ public class Grab_Moving : BaseState
             {
                 Managers.Instance.IsPick_Prawn = false;
                 Managers.Instance.IsGrab = false;
-                Managers.Instance.IsDrop = true;
-                Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
+                Managers.Resource.Instantiate("Drop_Prawn", _playerSM._playerSpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+                Managers.Instance.CanPickBool();
             }
 
             _stateMachine.ChangeState(_playerSM.IdleState);
         }
 
-        if (Input.anyKey == false)
+        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) &&
+            !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
 
-        if (Input.GetKey(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
             Dash();
     }
 
@@ -56,7 +57,7 @@ public class Grab_Moving : BaseState
     {
         Vector3 moveDirection = Vector3.zero;
 
-        _playerSM.Anim.SetFloat("speed", _speed);
+
 
         if (Input.GetKey(KeyCode.UpArrow))
             moveDirection += Vector3.forward;

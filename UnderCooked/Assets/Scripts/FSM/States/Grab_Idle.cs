@@ -19,18 +19,19 @@ public class Grab_Idle : BaseState
 
     public override void UpdateLogic()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Anim.SetBool("Grab", false);
+            
 
             // 바닥에 놓을 때
             if (_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
             {
+                _playerSM.Anim.SetBool("Grab", false);
                 Managers.Instance.IsPick_Prawn = false;
                 Managers.Instance.IsGrab = false;
-                Managers.Instance.IsDrop = true;
-                Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
+                Managers.Resource.Instantiate("Drop_Prawn", _playerSM._playerSpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+                Managers.Instance.CanPickBool();
             }
 
             _stateMachine.ChangeState(_playerSM.IdleState);
@@ -43,7 +44,7 @@ public class Grab_Idle : BaseState
 
         }
 
-        if (Input.GetKey(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
             Dash();
     }
 

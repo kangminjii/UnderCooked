@@ -23,13 +23,14 @@ public class Moving : BaseState
         base.UpdateLogic();
 
 
-        if (Managers.Instance.IsGrab == true)
+        if (Managers.Instance.IsGrab)
         {
             _playerSM.Anim.SetBool("Grab", true);
-            _stateMachine.ChangeState(_playerSM.GrabState);
+            _stateMachine.ChangeState(_playerSM.GrabIdleState);
         }
 
-        if (Input.anyKey == false)
+        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) &&
+            !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
             _stateMachine.ChangeState(_playerSM.IdleState);
       
         if (_playerSM.Cutting && Input.GetKey(KeyCode.LeftControl))

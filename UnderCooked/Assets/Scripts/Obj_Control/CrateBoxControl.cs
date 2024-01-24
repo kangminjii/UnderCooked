@@ -5,8 +5,8 @@ using UnityEngine;
 public class CrateBoxControl : MonoBehaviour
 {
     Animator _animtor;
-    GameObject _playerObject;
-    Transform _spawnPoint;
+    public GameObject _playerObject;
+    public Transform _spawnPoint;
 
     KeyCode triggerKey = KeyCode.Space;
     bool canInteract = false;
@@ -37,9 +37,10 @@ public class CrateBoxControl : MonoBehaviour
         GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _playerObject.transform);
         Managers.Resource.PlayerGrabItem.Add(instance);
 
+
         Managers.Instance.IsGrab = true;
-        Managers.Instance.IsDrop = false;
         Invoke("SetIsPickPrawnTrue", 0.3f);
+        Managers.Instance.CanPickBool();
     }
 
     public void SetIsPickPrawnTrue()
@@ -59,15 +60,6 @@ public class CrateBoxControl : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canInteract = false;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        // 특정 조건을 검사하여 충돌을 무시
-        if (collision.gameObject.CompareTag("Food"))
-        {
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
         }
     }
 }

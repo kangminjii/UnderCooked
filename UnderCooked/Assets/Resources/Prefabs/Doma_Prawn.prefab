@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6633251077488889050}
   - component: {fileID: 6756104135586465735}
   m_Layer: 0
-  m_Name: Prawn2
+  m_Name: Doma_Prawn
   m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

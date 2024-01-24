@@ -24,10 +24,10 @@ public class Idle : BaseState
         _playerSM.Anim.SetFloat("speed", 0);
 
 
-        if (Managers.Instance.IsGrab == true)
+        if (Managers.Instance.IsGrab)
         {
             _playerSM.Anim.SetBool("Grab", true);
-            _stateMachine.ChangeState(_playerSM.GrabState);
+            _stateMachine.ChangeState(_playerSM.GrabIdleState);
         }
 
         if (_playerSM.Cutting && Input.GetKey(KeyCode.LeftControl))
@@ -37,7 +37,7 @@ public class Idle : BaseState
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
             _stateMachine.ChangeState(_playerSM.MovingState);
 
-        if (Input.GetKey(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
             Dash();
     }
 
