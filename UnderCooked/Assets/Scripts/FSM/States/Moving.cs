@@ -16,17 +16,17 @@ public class Moving : BaseState
     public override void Enter()
     {
         base.Enter();
+        _playerSM.Anim.SetFloat("speed", _speed);
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
 
-
-        if (Managers.Instance.IsGrab == true)
+        if (Managers.Resource.PlayerGrabItem.Count > 0)
         {
             _playerSM.Anim.SetBool("Grab", true);
-            _stateMachine.ChangeState(_playerSM.GrabState);
+            _stateMachine.ChangeState(_playerSM.GrabIdleState);
         }
 
         if (Input.anyKey == false)
@@ -34,24 +34,22 @@ public class Moving : BaseState
       
         if (_playerSM.Cutting && Input.GetKey(KeyCode.LeftControl))
             _stateMachine.ChangeState(_playerSM.ChopState);
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
-
     }
+
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
 
-        OnKeyboard();
+        PlayerMove();
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+            Dash();
     }
 
-    void OnKeyboard()
+    void PlayerMove()
     {
         Vector3 moveDirection = Vector3.zero;
 
-        _playerSM.Anim.SetFloat("speed", _speed);
-              
         if (Input.GetKey(KeyCode.UpArrow))
             moveDirection += Vector3.forward;
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -64,11 +62,13 @@ public class Moving : BaseState
         _playerSM.Rigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
 
         if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            _playerSM.transform.rotation = Quaternion.Slerp(_playerSM.transform.rotation, toRotation, 0.06f);
-        }
+            PlayerRotate(moveDirection);
+    }
 
+    void PlayerRotate(Vector3 moveDir)
+    {
+        Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+        _playerSM.transform.rotation = Quaternion.Slerp(_playerSM.transform.rotation, toRotation, 0.06f);
         _playerSM.LookDir = _playerSM.transform.forward;
     }
 

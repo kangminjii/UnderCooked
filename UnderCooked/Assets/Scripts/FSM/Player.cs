@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Player : StateMachine
 {
+    // ป๓ลย
     [HideInInspector]
     public Idle IdleState;
     [HideInInspector]
     public Moving MovingState;
     [HideInInspector]
     public Chop ChopState;
-    [HideInInspector]
-    public Grab GrabState;
     [HideInInspector]
     public Grab_Idle GrabIdleState;
     [HideInInspector]
@@ -22,9 +21,10 @@ public class Player : StateMachine
 
     public Animator Anim;
     public Rigidbody Rigidbody;
+
     public GameObject Knife;
     public GameObject PlayerPrawn;
-
+    public Transform SpawnPoint;
 
     public Vector3 LookDir;
     public float DashCoolDown = 0.6f;
@@ -42,13 +42,13 @@ public class Player : StateMachine
         IdleState = new Idle(this);
         MovingState = new Moving(this);
         ChopState = new Chop(this);
-        GrabState = new Grab(this);
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
 
 
         Rigidbody = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
+        SpawnPoint = this.transform.Find("SpawnPoint");
 
         Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit += HandleObjectTriggerExit;
@@ -130,7 +130,6 @@ public class Player : StateMachine
             case Define.Object.Default:
                 break;
         }
-
     }
 
     private Define.Object GetObjectFromTag(string tag)
@@ -151,6 +150,4 @@ public class Player : StateMachine
                 return Define.Object.Default;
         }
     }
-
-
 }

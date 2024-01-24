@@ -23,9 +23,8 @@ public class CookingPlace : MonoBehaviour
 
     private void Update()
     {
-        if (onDoma && Managers.Instance.IsGrab && Input.GetKeyDown(KeyCode.Space))
+        if (onDoma && Input.GetKeyDown(KeyCode.Space))
         {
-            Managers.Instance.IsGrab = false;
             CookingKnife.SetActive(false);
             if(!IsInDoma)
             {

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Grab_Idle : BaseState
 {
     protected Player _playerSM;
+    GameObject _ingredient;
+
 
     public Grab_Idle(Player stateMachine) : base("Grab_Idle", stateMachine)
     {
@@ -20,25 +22,30 @@ public class Grab_Idle : BaseState
     public override void UpdateLogic()
     {
         // Grab «ÿ¡¶
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _playerSM.Anim.SetBool("Grab", false);
+            _stateMachine.ChangeState(_playerSM.IdleState);
 
             if (_playerSM.Doma == null)
             {
-                Managers.Instance.IsGrab = false;
-                Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
+                _ingredient = Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+                _ingredient.layer = LayerMask.NameToLayer("Default");
             }
-
-            _stateMachine.ChangeState(_playerSM.IdleState);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
             _stateMachine.ChangeState(_playerSM.GrabMovingState);
 
-        if (Input.GetKey(KeyCode.LeftAlt))
+    }
+
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
             Dash();
     }
 

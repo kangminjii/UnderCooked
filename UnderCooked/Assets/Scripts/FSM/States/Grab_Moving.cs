@@ -5,7 +5,8 @@ using UnityEngine;
 public class Grab_Moving : BaseState
 {
     protected Player _playerSM;
-    private float _speed = 5.0f;
+    float _speed = 5.0f;
+    GameObject _ingredient;
 
     public Grab_Moving(Player stateMachine) : base("Grab_Moving", stateMachine)
     {
@@ -21,39 +22,37 @@ public class Grab_Moving : BaseState
     public override void UpdateLogic()
     {
         // Grab «ÿ¡¶
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _playerSM.Anim.SetBool("Grab", false);
+            _stateMachine.ChangeState(_playerSM.IdleState);
 
             if (_playerSM.Doma == null)
             {
-                Managers.Instance.IsGrab = false;
-                Managers.Resource.Instantiate("Prawn", Vector3.zero, Quaternion.identity);
+                _ingredient = Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+                _ingredient.layer = LayerMask.NameToLayer("Default");
             }
-
-            _stateMachine.ChangeState(_playerSM.IdleState);
         }
 
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
-
-        if (Input.GetKey(KeyCode.LeftAlt))
-            Dash();
+   
     }
 
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
 
-        OnKeyboard();
+        PlayerMove();
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+            Dash();
     }
 
-    void OnKeyboard()
+    void PlayerMove()
     {
         Vector3 moveDirection = Vector3.zero;
-
-        _playerSM.Anim.SetFloat("speed", _speed);
 
         if (Input.GetKey(KeyCode.UpArrow))
             moveDirection += Vector3.forward;
@@ -67,11 +66,13 @@ public class Grab_Moving : BaseState
         _playerSM.Rigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
 
         if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            _playerSM.transform.rotation = Quaternion.Slerp(_playerSM.transform.rotation, toRotation, 0.06f);
-        }
+            PlayerRotate(moveDirection);
+    }
 
+    void PlayerRotate(Vector3 moveDir)
+    {
+        Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+        _playerSM.transform.rotation = Quaternion.Slerp(_playerSM.transform.rotation, toRotation, 0.06f);
         _playerSM.LookDir = _playerSM.transform.forward;
     }
 

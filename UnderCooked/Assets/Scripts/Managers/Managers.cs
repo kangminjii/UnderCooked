@@ -16,12 +16,8 @@ public class Managers : MonoBehaviour
     public static ResourceManager Resource { get { return Instance._resource; } }
     
 
-    public bool IsGrab = false;
-
-  
     static void Init()
     {
-        //√ ±‚»≠
         if (_instance == null)
         {
             GameObject go = GameObject.Find("@Managers");

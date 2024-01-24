@@ -6,11 +6,13 @@ public class PrawnScripts : MonoBehaviour
 {
     public int Count = 10;
 
-    //void Update()
+    //private void OnCollisionEnter(Collision collision)
     //{
-    //    if(Managers.Instance.IsDrop)
+    //    // 특정 조건을 검사하여 충돌을 무시
+    //    if (collision.gameObject.CompareTag("Player"))
     //    {
-    //        Destroy(this.gameObject);
+    //        Debug.Log(GetComponent<Collider>());
+    //        Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
     //    }
     //}
 }
