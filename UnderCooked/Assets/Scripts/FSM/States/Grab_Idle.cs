@@ -21,7 +21,6 @@ public class Grab_Idle : BaseState
 
     public override void UpdateLogic()
     {
-        // Grab 해제
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _playerSM.Anim.SetBool("Grab", false);
@@ -31,6 +30,8 @@ public class Grab_Idle : BaseState
             {
                 _ingredient = Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+                
+                // 아이템이 떨어진후 layer를 바꾸는 방법 필요
                 _ingredient.layer = LayerMask.NameToLayer("Default");
             }
         }

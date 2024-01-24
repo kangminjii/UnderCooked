@@ -9,6 +9,8 @@ TagManager:
   - Table
   - Bin
   - Crate
+  - PlateReturn
+  - Passing
   layers:
   - Default
   - TransparentFX

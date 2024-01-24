@@ -69,13 +69,39 @@ public class Player : StateMachine
         }
     }
 
+    private List<MeshRenderer> FindMeshRenderer(List<MeshRenderer> prefabMesh, Transform parent)
+    {
+        if (parent == null)
+            return prefabMesh;
+
+        MeshRenderer meshRenderer = parent.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+            prefabMesh.Add(meshRenderer);
+
+        foreach(Transform child in parent)
+        {
+            FindMeshRenderer(prefabMesh, child);
+        }
+
+        return prefabMesh;
+    }
+
     private void HandleObjectTriggerEnter(GameObject triggeredObject)
     {
+        TriggeredObject(triggeredObject);
+
         // 다른 Table로 Trigger될때
         if (_lastTriggeredObject != null && triggeredObject.name != _lastTriggeredObject.name)
         {
-            Searching interactingObject = triggeredObject.GetComponent<Searching>();
-            interactingObject.EnableColor();
+            List<MeshRenderer> MeshList = new List<MeshRenderer>();
+            MeshList = FindMeshRenderer(MeshList, triggeredObject.transform);
+
+            for(int i = 0; i < MeshList.Count; i++)
+            {
+                Debug.Log("MeshList.Count: " + MeshList.Count);
+                Searching interactingObject = MeshList[i].GetComponent<Searching>();
+                interactingObject.EnableColor();
+            }
 
             if (_lastTriggeredObject != null)
             {
