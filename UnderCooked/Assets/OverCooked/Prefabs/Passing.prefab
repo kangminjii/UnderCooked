@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7479588643217773661}
-  - component: {fileID: 4098734535627232978}
   m_Layer: 0
   m_Name: Passing
   m_TagString: Passing
@@ -36,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4098734535627232978
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7479588643217773658}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2.11}
-  m_Center: {x: -0.44, y: 0.37, z: 0}
 --- !u!1 &7479588643760919672
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +47,7 @@ GameObject:
   - component: {fileID: 7479588643760919677}
   - component: {fileID: 7479588643760919674}
   - component: {fileID: 7239608652109267494}
+  - component: {fileID: 2221436360884995726}
   m_Layer: 0
   m_Name: m_sk_the_pass_red_01_0
   m_TagString: Passing
@@ -147,6 +134,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2336630945920376181, guid: 74e54ab8dbb96a3438cea214cd5c3467, type: 3}
+--- !u!65 &2221436360884995726
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479588643760919672}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3965385, y: 2.53131, z: 2.124523}
+  m_Center: {x: 7.9289314e-16, y: 1.265655, z: 0.18079486}
 --- !u!1 &7479588643936599703
 GameObject:
   m_ObjectHideFlags: 0

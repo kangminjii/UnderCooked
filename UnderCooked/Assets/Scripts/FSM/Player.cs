@@ -50,6 +50,8 @@ public class Player : StateMachine
         Anim = GetComponent<Animator>();
         SpawnPoint = this.transform.Find("SpawnPoint");
 
+        Searching.ObjectTriggerEnter -= HandleObjectTriggerEnter;
+        Searching.ObjectTriggerExit -= HandleObjectTriggerExit;
         Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit += HandleObjectTriggerExit;
     }
@@ -61,7 +63,6 @@ public class Player : StateMachine
 
     public void CheckDoma(Transform target)
     {
-
         if (Doma != target)
         {
             Cutting = false;
@@ -69,50 +70,37 @@ public class Player : StateMachine
         }
     }
 
-    private List<MeshRenderer> FindMeshRenderer(List<MeshRenderer> prefabMesh, Transform parent)
-    {
-        if (parent == null)
-            return prefabMesh;
-
-        MeshRenderer meshRenderer = parent.GetComponent<MeshRenderer>();
-        if (meshRenderer != null)
-            prefabMesh.Add(meshRenderer);
-
-        foreach(Transform child in parent)
-        {
-            FindMeshRenderer(prefabMesh, child);
-        }
-
-        return prefabMesh;
-    }
-
     private void HandleObjectTriggerEnter(GameObject triggeredObject)
     {
         TriggeredObject(triggeredObject);
 
         // 다른 Table로 Trigger될때
-        if (_lastTriggeredObject != null && triggeredObject.name != _lastTriggeredObject.name)
+        if (_lastTriggeredObject != null)
         {
-            List<MeshRenderer> MeshList = new List<MeshRenderer>();
-            MeshList = FindMeshRenderer(MeshList, triggeredObject.transform);
-
-            for(int i = 0; i < MeshList.Count; i++)
+            //// 같은 layer인 object일 때
+            //if (_lastTriggeredObject.layer == triggeredObject.layer)
+            //{
+            //    if(_lastTriggeredObject.layer.ToString() != "Table")
+            //    {
+            //        Searching interactingObject = triggeredObject.GetComponent<Searching>();
+            //        interactingObject.EnableColor();
+            //        Searching pastObject = _lastTriggeredObject.GetComponent<Searching>();
+            //        pastObject.EnableColor();
+            //    }
+            //}
+            if(triggeredObject.name != _lastTriggeredObject.name)
             {
-                Debug.Log("MeshList.Count: " + MeshList.Count);
-                Searching interactingObject = MeshList[i].GetComponent<Searching>();
+                Searching interactingObject = triggeredObject.GetComponent<Searching>();
                 interactingObject.EnableColor();
-            }
 
-            if (_lastTriggeredObject != null)
-            {
                 // TriggerExit으로 안꺼진 Object 처리
                 Searching pastObject = _lastTriggeredObject.GetComponent<Searching>();
                 pastObject.DisableColor();
             }
         }
-        // 같은 Table로 Trigger될때
         else
         {
+            // 같은 Table로 Trigger될때
             if (_triggerExitObject == triggeredObject)
             {
                 Searching interactingObject = triggeredObject.GetComponent<Searching>();
