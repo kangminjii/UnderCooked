@@ -17,17 +17,11 @@ public class Searching : MonoBehaviour
     public static event ObjectTriggeredHandler ObjectTriggerEnter;
     public static event ObjectTriggeredHandler ObjectTriggerExit;
 
-
-
-
     private void Start()
     {
         _commonMaterial = GetComponent<MeshRenderer>().material;
         _instanceMaterial = Instantiate(_commonMaterial);
         GetComponent<MeshRenderer>().material = _instanceMaterial;
-
-
-
 
     }
 

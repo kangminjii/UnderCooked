@@ -56,21 +56,18 @@ public class PrawnScripts : MonoBehaviour
             Ok = true;       
         }
 
-        if (other.CompareTag("Plane"))
-        {
-            MeshCollider meshCollider = GetComponent<MeshCollider>();
-            //MeshCollider mesh = this.gameObject.GetComponent<MeshCollider>();
+        //if (other.CompareTag("Plane"))
+        //{
+        //    MeshCollider meshCollider = GetComponent<MeshCollider>();
+        //    //MeshCollider mesh = this.gameObject.GetComponent<MeshCollider>();
 
-            if (meshCollider != null)
-            {
-                meshCollider.convex = true;
-            }
-        }
+        //    if (meshCollider != null)
+        //    {
+        //        meshCollider.convex = true;
+        //    }
+        //}
 
     }
-
-
-
 
     private void OnTriggerExit(Collider other)
     {

@@ -23,17 +23,18 @@ public class Grab_Moving : BaseState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Anim.SetBool("Grab", false);
-
             // 바닥에 놓을 때
             if (_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
             {
+                _playerSM.Anim.SetBool("Grab", false);
                 Managers.Instance.IsPick_Prawn = false;
                 Managers.Instance.IsGrab = false;
                 Managers.Resource.Instantiate("Drop_Prawn", _playerSM._playerSpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
                 Managers.Instance.CanPickBool();
             }
+            if (!Managers.Instance.IsGrab)
+                _playerSM.Anim.SetBool("Grab", false);
 
             _stateMachine.ChangeState(_playerSM.IdleState);
         }

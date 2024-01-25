@@ -21,8 +21,6 @@ public class Grab_Idle : BaseState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            
-
             // 바닥에 놓을 때
             if (_playerSM.Doma == null && Managers.Instance.IsGrab && Managers.Instance.IsPick_Prawn)
             {
@@ -33,6 +31,8 @@ public class Grab_Idle : BaseState
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
                 Managers.Instance.CanPickBool();
             }
+            if (!Managers.Instance.IsGrab)
+                _playerSM.Anim.SetBool("Grab", false);
 
             _stateMachine.ChangeState(_playerSM.IdleState);
         }

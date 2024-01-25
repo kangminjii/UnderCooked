@@ -3,13 +3,15 @@ using UnityEngine;
 public class CookingPlace : MonoBehaviour
 {
     private Player player;
+    private GameObject OBJ;
     private GameObject _cuttingBoard;
     private GameObject _cookingKnife;
-    private GameObject _onDomaObject;
+    private PrawnScripts _onDomaObject;
     private Transform _spawnPos;
+
     public int guage;
-    private bool onDoma;
-    private bool IsInDoma = false;
+    private bool IsPlayer_InDoma;
+    private bool IsFood_InDoma = false;
 
 
     //private GameObject[] Food;
@@ -20,31 +22,33 @@ public class CookingPlace : MonoBehaviour
             
         _cookingKnife = _cuttingBoard.transform.Find("CuttingBoard_Knife").gameObject;//this.transform.Find("CuttingBoard_Knife").gameObject;
         _spawnPos = _cuttingBoard.transform.Find("SpawnPos");
-        //player = GetComponent<Player>();
-        //_playerObject = GameObject.Find("Chef");
-       
-
     }
 
     private void Update()
     {
-        if (onDoma && Managers.Instance.IsGrab && Input.GetKeyDown(KeyCode.Space))
+        if (IsPlayer_InDoma && Managers.Instance.IsGrab && Input.GetKeyDown(KeyCode.Space))
         {
             // ÀÌ µÎÁÙ Fish¶û PrawnÀÌ¶û ³ª´²¾ßÇÔ
             Managers.Instance.IsGrab = false;
             _cookingKnife.SetActive(false);
             //
-            if(Managers.Instance.IsPick_Prawn && !IsInDoma)
+            if(Managers.Instance.IsPick_Prawn && !IsFood_InDoma)
             {
-                GameObject instance = Managers.Resource.Instantiate("Doma_Prawn", _spawnPos.position, Quaternion.identity, _cuttingBoard.transform);
-                _onDomaObject = instance;
+                Managers.Resource.Instantiate("Doma_Prawn", _spawnPos.position, Quaternion.identity, _cuttingBoard.transform);
+                //_onDomaObject = instance;
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
 
                 Managers.Instance.IsPick_Prawn = false;
-                IsInDoma = true;
+                //_onDomaObject = _cuttingBoard.transform.Find("Doma_Prawn(Clone)").gameObject;
+                IsFood_InDoma = true;
                 
             }
+            
+        }
 
+        if(IsFood_InDoma && _onDomaObject != null)
+        {
+            Debug.Log(_onDomaObject);
         }
     }
 
@@ -55,14 +59,18 @@ public class CookingPlace : MonoBehaviour
         {
             Debug.Log("doma on");
             player = other.transform.GetComponent<Player>();
-
             
             player.Doma = this;
             player.Cutting = true;
-            onDoma = true;
-
-
+            IsPlayer_InDoma = true;
         }
+
+        if (other.CompareTag("Prawn"))
+        {
+            _onDomaObject = other.transform.GetComponent<PrawnScripts>();
+            Debug.Log(OBJ);
+        }
+
 
     }
 
@@ -77,10 +85,11 @@ public class CookingPlace : MonoBehaviour
                 //Debug.Log("doma out");
                 //player.CheckDoma(this.transform);
                 player = null;
-                onDoma = false;
+                IsPlayer_InDoma = false;
             }
             
         }
+
 
     }
 

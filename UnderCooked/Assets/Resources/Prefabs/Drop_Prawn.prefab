@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4195848946600496070}
   - component: {fileID: 4320689534922637531}
   - component: {fileID: 2204106873275649975}
-  - component: {fileID: -8751509543353339477}
   - component: {fileID: 5007288577054745625}
   - component: {fileID: -2945881210989459867}
+  - component: {fileID: 2570063450449280704}
+  - component: {fileID: 9178804409870121629}
   m_Layer: 0
   m_Name: Drop_Prawn
   m_TagString: Prawn
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6240997415291314734}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.98, y: 0, z: -0.131}
+  m_LocalPosition: {x: 11.039, y: 0, z: -0.169}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101,22 +102,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6361824972356386417, guid: 5c9870763d0f2c24491acdb39e39df6f, type: 3}
---- !u!54 &-8751509543353339477
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6240997415291314734}
-  serializedVersion: 2
-  m_Mass: 0.5
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &5007288577054745625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -128,8 +113,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0925751, y: 1.5502088, z: 1.0665029}
-  m_Center: {x: 0.22087955, y: 0.21991232, z: 0.07860917}
+  m_Size: {x: 0.5301542, y: 0.47324783, z: 0.8630221}
+  m_Center: {x: -0.08174467, y: 0.493044, z: 0.005773172}
 --- !u!114 &-2945881210989459867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,3 +129,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Count: 10
   _selectPrawn: {fileID: 0}
+--- !u!54 &2570063450449280704
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6240997415291314734}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &9178804409870121629
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6240997415291314734}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5301542, y: 0.47324783, z: 0.8630221}
+  m_Center: {x: -0.08174467, y: 0.493044, z: 0.005773172}

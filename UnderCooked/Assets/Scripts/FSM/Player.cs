@@ -27,6 +27,8 @@ public class Player : StateMachine
 
     public Transform _playerSpawnPos;
 
+    public int ChopCook;
+
 
     public Vector3 LookDir;
     public float DashCoolDown = 0.6f;
