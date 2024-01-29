@@ -9,6 +9,10 @@ public class Searching : MonoBehaviour
     private Material _commonMaterial;
     private Material _instanceMaterial;
 
+    private GameObject Table;
+    private Transform Table_Spawn;
+
+
     // 이벤트 호출
     public delegate void ObjectTriggeredHandler(GameObject gameObject);
     public static event ObjectTriggeredHandler ObjectTriggerEnter;
@@ -31,9 +35,20 @@ public class Searching : MonoBehaviour
         {
             ObjectTriggerEnter(this.gameObject);
         }
+
+        if (other.tag == "Prawn")
+        {
+            GameObject prawnObject = other.gameObject;
+            Destroy(prawnObject);
+            Table = this.gameObject;
+            Table_Spawn = this.transform.Find("SpawnPos");
+            Managers.Resource.Instantiate("Prawn", Table_Spawn.position, Quaternion.identity, Table_Spawn);
+            //Managers.Instance.IsGrab = false;
+            //Managers.Instance.IsPick_Prawn = false;
+        }
     }
 
-    private void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {

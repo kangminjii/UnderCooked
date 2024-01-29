@@ -5343,8 +5343,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate_Prawn
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8103671619671283838, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
 --- !u!1001 &8317247803443541339
 PrefabInstance:

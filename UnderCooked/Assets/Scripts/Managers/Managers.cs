@@ -34,4 +34,29 @@ public class Managers : MonoBehaviour
         }
     }
 
+    //public bool IsGrab = false;
+    //public bool IsPick_Prawn = false;
+    //public bool IsCan_Pick = false;
+
+
+    //public void SetIsPickPrawnTrue()
+    //{
+    //    Managers.Instance.IsPick_Prawn = true;
+    //}
+
+    //public void SetPrawnBool()
+    //{
+    //    Invoke("SetIsPickPrawnTrue", 0.5f);
+    //}
+
+    //public void CanPick()
+    //{
+    //    Managers.Instance.IsCan_Pick = true;
+    //}
+
+    //public void CanPickBool()
+    //{
+    //    Invoke("CanPick", 0.5f);
+    //}
+
 }
