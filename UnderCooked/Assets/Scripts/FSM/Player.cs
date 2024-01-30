@@ -25,8 +25,8 @@ public class Player : StateMachine
     public Vector3 LookDir;
     public bool canCut;
 
-    public GameObject EnterTriggeredObject; // 감지중인 물체
-    public GameObject ExitTriggeredObject;   // 감지끝난 물체
+    public GameObject EnterTriggeredObject = null; // 감지중인 물체
+    public GameObject ExitTriggeredObject = null;   // 감지끝난 물체
 
 
     private void Awake()

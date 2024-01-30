@@ -1519,6 +1519,7 @@ GameObject:
   - component: {fileID: 2069834705226764069}
   - component: {fileID: 2069834705226764074}
   - component: {fileID: 2069834705226764071}
+  - component: {fileID: 1447040409}
   m_Layer: 7
   m_Name: Chef
   m_TagString: Player
@@ -1607,12 +1608,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 0}
   Rigidbody: {fileID: 0}
-  SpawnPoint: {fileID: 0}
+  SpawnPos: {fileID: 0}
   Knife: {fileID: 5260627731516699849}
   LookDir: {x: 0, y: 0, z: 0}
   canCut: 0
   EnterTriggeredObject: {fileID: 0}
   ExitTriggeredObject: {fileID: 0}
+--- !u!114 &1447040409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186960611942983899}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf46d0c1caca5044aae1196bc96982d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0.5
+  maxDistance: 1
+  layermask:
+    serializedVersion: 2
+    m_Bits: 512
+  Short_Obj: {fileID: 0}
 --- !u!1 &1196512682497571478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3426,7 +3445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069834705864232291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.365, z: 0.734}
+  m_LocalPosition: {x: 0, y: 0.76, z: 0.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

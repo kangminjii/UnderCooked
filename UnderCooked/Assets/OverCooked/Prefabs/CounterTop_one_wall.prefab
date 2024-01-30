@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5034370327707877450}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2812537552981141745}
   - component: {fileID: 205223365315287152}
   - component: {fileID: 399018790527778483}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CounterTop_one_wall
   m_TagString: Table
   m_Icon: {fileID: 0}
