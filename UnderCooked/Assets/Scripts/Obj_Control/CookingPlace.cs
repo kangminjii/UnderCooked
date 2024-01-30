@@ -83,7 +83,7 @@ public class CookingPlace : MonoBehaviour
             player.CheckDoma(this.transform);
             if (player.Doma != this)
             {
-                //player.Cutting = false;
+                player.Cutting = false;
                 //Debug.Log("doma out");
                 //player.CheckDoma(this.transform);
                 player = null;
@@ -94,8 +94,6 @@ public class CookingPlace : MonoBehaviour
 
 
     }
-
-
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
