@@ -17,6 +17,8 @@ public class Define
         Crate,
         PlateReturn,
         Passing,
+        CuttingBoard,
+        Food,
         Default,
     }
 

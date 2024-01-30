@@ -5,7 +5,6 @@ using UnityEngine;
 public class Grab_Idle : BaseState
 {
     protected Player _playerSM;
-    GameObject _ingredient;
 
 
     public Grab_Idle(Player stateMachine) : base("Grab_Idle", stateMachine)
@@ -16,24 +15,31 @@ public class Grab_Idle : BaseState
     public override void Enter()
     {
         base.Enter();
-        _playerSM.Anim.SetFloat("speed", 0);
+        _playerSM.Animator.SetFloat("speed", 0);
     }
 
     public override void UpdateLogic()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Anim.SetBool("Grab", false);
+            _playerSM.Animator.SetBool("Grab", false);
             _stateMachine.ChangeState(_playerSM.IdleState);
 
-            if (_playerSM.Doma == null)
+            Transform table = _playerSM.EnterTriggeredObject.transform.Find("SpawnPos");
+            //string clone = "(clone)";
+            //string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
+            //grabObjectName = grabObjectName.Substring(0, grabObjectName.LastIndexOf(clone));
+
+            if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject) // 땅바닥
             {
-                _ingredient = Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
-                Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
-                
-                // 아이템이 떨어진후 layer를 바꾸는 방법 필요
-                _ingredient.layer = LayerMask.NameToLayer("Default");
+                Managers.Resource.Instantiate("Prawn_Drop"/*grabObjectName + "_Drop"*/, _playerSM.SpawnPos.position, Quaternion.identity);
             }
+            else // 테이블
+            {
+                Managers.Resource.Instantiate("Prawn"/*grabObjectName*/, table.position, Quaternion.identity, table);
+            }
+
+            Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
