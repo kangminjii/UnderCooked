@@ -17,25 +17,17 @@ public class Player : StateMachine
     public Grab_Moving GrabMovingState;
 
 
-    public CookingPlace Doma;
-
-    public Animator Anim;
+    public Animator Animator;
     public Rigidbody Rigidbody;
-
-    public GameObject Knife;
-    public GameObject PlayerPrawn;
     public Transform SpawnPoint;
+    public GameObject Knife;
 
     public Vector3 LookDir;
-    public float DashCoolDown = 0.6f;
-    public float LstDashTime = -Mathf.Infinity;
+    public bool canCut;
 
-    public bool Cutting = false;
+    public GameObject EnterTriggeredObject; // 감지중인 물체
+    public GameObject ExitTriggeredObject;   // 감지끝난 물체
 
-    
-    GameObject _lastTriggeredObject;
-    GameObject _triggerExitObject;
-    
 
     private void Awake()
     {
@@ -45,9 +37,8 @@ public class Player : StateMachine
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
 
-
         Rigidbody = GetComponent<Rigidbody>();
-        Anim = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         SpawnPoint = this.transform.Find("SpawnPoint");
 
         Searching.ObjectTriggerEnter -= HandleObjectTriggerEnter;
@@ -61,53 +52,61 @@ public class Player : StateMachine
         return IdleState;
     }
 
-    public void CheckDoma(Transform target)
-    {
-        if (Doma != target)
-        {
-            Cutting = false;
-            Doma = null;
-        }
-    }
+  
 
     private void HandleObjectTriggerEnter(GameObject triggeredObject)
     {
         TriggeredObject(triggeredObject);
 
         // 다른 Table로 Trigger될때
-        if (_lastTriggeredObject != null)
+        if (EnterTriggeredObject != null)
         {
-            if(triggeredObject.name != _lastTriggeredObject.name)
+            if(triggeredObject.name != EnterTriggeredObject.name)
             {
                 Searching interactingObject = triggeredObject.GetComponent<Searching>();
                 interactingObject.EnableColor();
 
                 // TriggerExit으로 안꺼진 Object 처리
-                Searching pastObject = _lastTriggeredObject.GetComponent<Searching>();
+                Searching pastObject = EnterTriggeredObject.GetComponent<Searching>();
                 pastObject.DisableColor();
             }
         }
+        // 같은 Table로 Trigger될때
         else
         {
-            // 같은 Table로 Trigger될때
-            if (_triggerExitObject == triggeredObject)
+            if (ExitTriggeredObject == triggeredObject)
             {
                 Searching interactingObject = triggeredObject.GetComponent<Searching>();
                 interactingObject.EnableColor();
             }
         }
 
-        _lastTriggeredObject = triggeredObject;
+        EnterTriggeredObject = triggeredObject;
     }
 
     private void HandleObjectTriggerExit(GameObject triggeredObject)
     {
+        TriggeredObjectExit(triggeredObject);
+
         Searching interactingObject = triggeredObject.GetComponent<Searching>();
         interactingObject.DisableColor();
 
-        _triggerExitObject = triggeredObject;
+        ExitTriggeredObject = triggeredObject;
     }
 
+    private void TriggeredObjectExit(GameObject triggeredObject)
+    {
+        Define.Object objectType = GetObjectFromTag(triggeredObject.tag);
+
+        switch (objectType)
+        {
+            case Define.Object.CuttingBoard:
+                canCut = false;
+                break;
+            case Define.Object.Default:
+                break;
+        }
+    }
 
     private void TriggeredObject(GameObject triggeredObject)
     {
@@ -115,20 +114,10 @@ public class Player : StateMachine
 
         switch (objectType)
         {
-            case Define.Object.Table:
-                Debug.Log("Table감지");
+            case Define.Object.CuttingBoard:
+                canCut = true;
                 break;
-            case Define.Object.Bin:
-                Debug.Log("Bin감지");
-                break;
-            case Define.Object.Crate:
-                Debug.Log("Crate감지");
-                break;
-            case Define.Object.PlateReturn:
-                Debug.Log("PlateReturn감지");
-                break;
-            case Define.Object.Passing:
-                Debug.Log("Passing감지");
+            case Define.Object.Food:
                 break;
             case Define.Object.Default:
                 break;
@@ -149,6 +138,10 @@ public class Player : StateMachine
                 return Define.Object.PlateReturn;
             case "Passing":
                 return Define.Object.Passing;
+            case "CuttingBoard":
+                return Define.Object.CuttingBoard;
+            case "Food":
+                return Define.Object.Food;
             default:
                 return Define.Object.Default;
         }

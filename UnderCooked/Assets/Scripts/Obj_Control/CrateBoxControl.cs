@@ -21,7 +21,7 @@ public class CrateBoxControl : MonoBehaviour
 
     private void Update()
     {
-        if (canInteract && Input.GetKeyDown(triggerKey))
+        if (canInteract && Input.GetKeyUp(triggerKey))
         {
             _animtor.SetTrigger("IsOpen");
             SpawnObj();

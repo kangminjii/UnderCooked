@@ -16,7 +16,7 @@ public class Moving : BaseState
     public override void Enter()
     {
         base.Enter();
-        _playerSM.Anim.SetFloat("speed", _speed);
+        _playerSM.Animator.SetFloat("speed", _speed);
     }
 
     public override void UpdateLogic()
@@ -25,14 +25,14 @@ public class Moving : BaseState
 
         if (Managers.Resource.PlayerGrabItem.Count > 0)
         {
-            _playerSM.Anim.SetBool("Grab", true);
+            _playerSM.Animator.SetBool("Grab", true);
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
         }
 
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.IdleState);
       
-        if (_playerSM.Cutting && Input.GetKey(KeyCode.LeftControl))
+        if (_playerSM.canCut && Input.GetKey(KeyCode.LeftControl))
             _stateMachine.ChangeState(_playerSM.ChopState);
     }
 

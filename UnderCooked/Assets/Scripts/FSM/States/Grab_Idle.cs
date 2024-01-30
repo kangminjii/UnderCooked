@@ -5,7 +5,6 @@ using UnityEngine;
 public class Grab_Idle : BaseState
 {
     protected Player _playerSM;
-    GameObject _ingredient;
 
 
     public Grab_Idle(Player stateMachine) : base("Grab_Idle", stateMachine)
@@ -16,24 +15,28 @@ public class Grab_Idle : BaseState
     public override void Enter()
     {
         base.Enter();
-        _playerSM.Anim.SetFloat("speed", 0);
+        _playerSM.Animator.SetFloat("speed", 0);
     }
 
     public override void UpdateLogic()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Anim.SetBool("Grab", false);
+            _playerSM.Animator.SetBool("Grab", false);
             _stateMachine.ChangeState(_playerSM.IdleState);
 
-            if (_playerSM.Doma == null)
+            Transform table = _playerSM.EnterTriggeredObject.transform.Find("SpawnPos");
+
+            if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject)
             {
-                _ingredient = Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
-                Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
-                
-                // 아이템이 떨어진후 layer를 바꾸는 방법 필요
-                _ingredient.layer = LayerMask.NameToLayer("Default");
+                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
             }
+            else
+            {
+                Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+            }
+
+            Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||

@@ -9,22 +9,21 @@ public class Searching : MonoBehaviour
     private Material _commonMaterial;
     private Material _instanceMaterial;
 
-    private GameObject Table;
-    private Transform Table_Spawn;
-
-
     // 이벤트 호출
     public delegate void ObjectTriggeredHandler(GameObject gameObject);
     public static event ObjectTriggeredHandler ObjectTriggerEnter;
     public static event ObjectTriggeredHandler ObjectTriggerExit;
-
-
+    
+    // 아이템과 상호작용
+    private Transform _spawnPosition;
 
     private void Start()
     {
         _commonMaterial = GetComponent<MeshRenderer>().material;
         _instanceMaterial = Instantiate(_commonMaterial);
         GetComponent<MeshRenderer>().material = _instanceMaterial;
+
+        _spawnPosition = transform.Find("SpawnPos");
     }
 
 
@@ -34,22 +33,9 @@ public class Searching : MonoBehaviour
         {
             ObjectTriggerEnter(this.gameObject);
         }
-
-        if (other.tag == "Food")
-        {
-            GameObject prawnObject = other.gameObject;
-            Destroy(prawnObject);
-
-
-            Table = this.gameObject;
-            Table_Spawn = this.transform.Find("SpawnPos");
-            Managers.Resource.Instantiate("Prawn", Table_Spawn.position, Quaternion.identity, Table_Spawn);
-            //Managers.Instance.IsGrab = false;
-            //Managers.Instance.IsPick_Prawn = false;
-        }
     }
 
-        private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {

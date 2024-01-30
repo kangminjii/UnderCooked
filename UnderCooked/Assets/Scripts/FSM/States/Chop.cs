@@ -18,37 +18,39 @@ public class Chop : BaseState
         base.Enter();
 
         _playerSM.Knife.SetActive(true);
-        _playerSM.Anim.Play("Chop");
-        _playerSM.Anim.SetBool("Cutting", true);
+        _playerSM.Animator.Play("Chop");
+        _playerSM.Animator.SetBool("Cutting", true);
+        _playerSM.Animator.SetFloat("speed", 0);
     }
 
     public override void Exit()
     {
         base.Exit();
         _playerSM.Knife.SetActive(false);
-        _playerSM.Anim.SetBool("Cutting", false);
+        _playerSM.Animator.SetBool("Cutting", false);
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        if (!_playerSM.Cutting)
-        {
+
+        if (!_playerSM.canCut)
             _stateMachine.ChangeState(_playerSM.IdleState);
-        }
         
     }
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
-        OnKeyboard();
+
+        PlayerMove();
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+            Dash();
     }
 
-    void OnKeyboard()
+    void PlayerMove()
     {
         Vector3 moveDirection = Vector3.zero;
-
-        _playerSM.Anim.SetFloat("speed", _speed);
 
         if (Input.GetKey(KeyCode.UpArrow))
             moveDirection += Vector3.forward;
@@ -62,12 +64,23 @@ public class Chop : BaseState
         _playerSM.Rigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
 
         if (moveDirection != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            _playerSM.transform.rotation = Quaternion.Slerp(_playerSM.transform.rotation, toRotation, 0.06f);
-        }
+            PlayerRotate(moveDirection);
+    }
 
+    void PlayerRotate(Vector3 moveDir)
+    {
+        Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+        _playerSM.transform.rotation = Quaternion.Slerp(_playerSM.transform.rotation, toRotation, 0.06f);
         _playerSM.LookDir = _playerSM.transform.forward;
     }
+
+    public void Dash()
+    {
+        float dashForce = 6f;
+
+        _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
+        _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
+    }
+
 }
 
