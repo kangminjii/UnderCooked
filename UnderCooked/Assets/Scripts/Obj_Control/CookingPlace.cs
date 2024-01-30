@@ -66,11 +66,12 @@ public class CookingPlace : MonoBehaviour
             IsPlayer_InDoma = true;
         }
 
-        if (other.CompareTag("Prawn"))
-        {
-            _onDomaObject = other.transform.GetComponent<PrawnScripts>();
-            Debug.Log(OBJ);
-        }
+        // 잠시 주석
+        //if (other.CompareTag("Prawn"))
+        //{
+        //    _onDomaObject = other.transform.GetComponent<PrawnScripts>();
+        //    Debug.Log(OBJ);
+        //}
 
 
     }

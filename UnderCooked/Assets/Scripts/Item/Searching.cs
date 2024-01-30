@@ -20,7 +20,6 @@ public class Searching : MonoBehaviour
 
 
 
-
     private void Start()
     {
         _commonMaterial = GetComponent<MeshRenderer>().material;
@@ -36,10 +35,12 @@ public class Searching : MonoBehaviour
             ObjectTriggerEnter(this.gameObject);
         }
 
-        if (other.tag == "Prawn")
+        if (other.tag == "Food")
         {
             GameObject prawnObject = other.gameObject;
             Destroy(prawnObject);
+
+
             Table = this.gameObject;
             Table_Spawn = this.transform.Find("SpawnPos");
             Managers.Resource.Instantiate("Prawn", Table_Spawn.position, Quaternion.identity, Table_Spawn);

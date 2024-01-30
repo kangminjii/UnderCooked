@@ -50,15 +50,4 @@ public class CrateBoxControl : MonoBehaviour
             canInteract = false;
         }
     }
-
-  
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    // 특정 조건을 검사하여 충돌을 무시
-    //    if (collision.gameObject.CompareTag("Food"))
-    //    {
-    //        Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
-    //    }
-    //}
 }

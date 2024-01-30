@@ -77,17 +77,6 @@ public class Player : StateMachine
         // 다른 Table로 Trigger될때
         if (_lastTriggeredObject != null)
         {
-            //// 같은 layer인 object일 때
-            //if (_lastTriggeredObject.layer == triggeredObject.layer)
-            //{
-            //    if(_lastTriggeredObject.layer.ToString() != "Table")
-            //    {
-            //        Searching interactingObject = triggeredObject.GetComponent<Searching>();
-            //        interactingObject.EnableColor();
-            //        Searching pastObject = _lastTriggeredObject.GetComponent<Searching>();
-            //        pastObject.EnableColor();
-            //    }
-            //}
             if(triggeredObject.name != _lastTriggeredObject.name)
             {
                 Searching interactingObject = triggeredObject.GetComponent<Searching>();
