@@ -16,14 +16,8 @@ public class Managers : MonoBehaviour
     public static ResourceManager Resource { get { return Instance._resource; } }
     
 
-    public bool IsGrab = false;
-    public bool IsPick_Prawn = false;
-    public bool IsDrop = false;
-
-  
     static void Init()
     {
-        //√ ±‚»≠
         if (_instance == null)
         {
             GameObject go = GameObject.Find("@Managers");
@@ -39,5 +33,30 @@ public class Managers : MonoBehaviour
             _instance = go.GetComponent<Managers>();
         }
     }
+
+    //public bool IsGrab = false;
+    //public bool IsPick_Prawn = false;
+    //public bool IsCan_Pick = false;
+
+
+    //public void SetIsPickPrawnTrue()
+    //{
+    //    Managers.Instance.IsPick_Prawn = true;
+    //}
+
+    //public void SetPrawnBool()
+    //{
+    //    Invoke("SetIsPickPrawnTrue", 0.5f);
+    //}
+
+    //public void CanPick()
+    //{
+    //    Managers.Instance.IsCan_Pick = true;
+    //}
+
+    //public void CanPickBool()
+    //{
+    //    Invoke("CanPick", 0.5f);
+    //}
 
 }

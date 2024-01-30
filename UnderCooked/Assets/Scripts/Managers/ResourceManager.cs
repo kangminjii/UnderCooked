@@ -46,6 +46,8 @@ public class ResourceManager
             return;
 
         Object.Destroy(go);
-        PlayerGrabItem.Remove(go);
+
+        if(PlayerGrabItem.Contains(go))
+            PlayerGrabItem.Remove(go);
     }
 }

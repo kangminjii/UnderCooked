@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 538894917672360159}
   - component: {fileID: 4997180512540846195}
   - component: {fileID: 1401206651254254279}
+  - component: {fileID: 1731734809}
   m_Layer: 0
   m_Name: Plate_Return
-  m_TagString: Untagged
+  m_TagString: PlateReturn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,3 +99,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8136092033596242350, guid: b0077526035fbf446a60d0093edf3cfb, type: 3}
+--- !u!65 &1731734809
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470950403174921113}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4323273, y: 0.502504, z: 1.199719}
+  m_Center: {x: -0.116220474, y: 0.251252, z: -0.0001039505}

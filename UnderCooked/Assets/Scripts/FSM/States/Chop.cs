@@ -27,7 +27,6 @@ public class Chop : BaseState
         base.Exit();
         _playerSM.Knife.SetActive(false);
         _playerSM.Anim.SetBool("Cutting", false);
-        
     }
 
     public override void UpdateLogic()

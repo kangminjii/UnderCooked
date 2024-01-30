@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Player : StateMachine
 {
+    // 상태
     [HideInInspector]
     public Idle IdleState;
     [HideInInspector]
     public Moving MovingState;
     [HideInInspector]
     public Chop ChopState;
-    [HideInInspector]
-    public Grab GrabState;
     [HideInInspector]
     public Grab_Idle GrabIdleState;
     [HideInInspector]
@@ -22,9 +21,10 @@ public class Player : StateMachine
 
     public Animator Anim;
     public Rigidbody Rigidbody;
+
     public GameObject Knife;
     public GameObject PlayerPrawn;
-
+    public Transform SpawnPoint;
 
     public Vector3 LookDir;
     public float DashCoolDown = 0.6f;
@@ -42,14 +42,16 @@ public class Player : StateMachine
         IdleState = new Idle(this);
         MovingState = new Moving(this);
         ChopState = new Chop(this);
-        GrabState = new Grab(this);
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
 
 
         Rigidbody = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
+        SpawnPoint = this.transform.Find("SpawnPoint");
 
+        Searching.ObjectTriggerEnter -= HandleObjectTriggerEnter;
+        Searching.ObjectTriggerExit -= HandleObjectTriggerExit;
         Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit += HandleObjectTriggerExit;
     }
@@ -61,7 +63,6 @@ public class Player : StateMachine
 
     public void CheckDoma(Transform target)
     {
-
         if (Doma != target)
         {
             Cutting = false;
@@ -71,22 +72,24 @@ public class Player : StateMachine
 
     private void HandleObjectTriggerEnter(GameObject triggeredObject)
     {
-        // 다른 Table로 Trigger될때
-        if (_lastTriggeredObject != null && triggeredObject.name != _lastTriggeredObject.name)
-        {
-            Searching interactingObject = triggeredObject.GetComponent<Searching>();
-            interactingObject.EnableColor();
+        TriggeredObject(triggeredObject);
 
-            if (_lastTriggeredObject != null)
+        // 다른 Table로 Trigger될때
+        if (_lastTriggeredObject != null)
+        {
+            if(triggeredObject.name != _lastTriggeredObject.name)
             {
+                Searching interactingObject = triggeredObject.GetComponent<Searching>();
+                interactingObject.EnableColor();
+
                 // TriggerExit으로 안꺼진 Object 처리
                 Searching pastObject = _lastTriggeredObject.GetComponent<Searching>();
                 pastObject.DisableColor();
             }
         }
-        // 같은 Table로 Trigger될때
         else
         {
+            // 같은 Table로 Trigger될때
             if (_triggerExitObject == triggeredObject)
             {
                 Searching interactingObject = triggeredObject.GetComponent<Searching>();
@@ -130,7 +133,6 @@ public class Player : StateMachine
             case Define.Object.Default:
                 break;
         }
-
     }
 
     private Define.Object GetObjectFromTag(string tag)
@@ -151,6 +153,4 @@ public class Player : StateMachine
                 return Define.Object.Default;
         }
     }
-
-
 }
