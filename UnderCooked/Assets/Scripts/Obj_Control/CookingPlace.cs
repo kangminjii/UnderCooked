@@ -14,39 +14,40 @@ public class CookingPlace : MonoBehaviour
     private bool IsFood_InDoma = false;
 
 
+
     //private GameObject[] Food;
 
     private void Start()
     {
         _cuttingBoard = this.transform.gameObject;
-            
+
         _cookingKnife = _cuttingBoard.transform.Find("CuttingBoard_Knife").gameObject;//this.transform.Find("CuttingBoard_Knife").gameObject;
         _spawnPos = _cuttingBoard.transform.Find("SpawnPos");
     }
 
     private void Update()
     {
-        if (IsPlayer_InDoma && Managers.Instance.IsGrab && Input.GetKeyDown(KeyCode.Space))
+        if (IsPlayer_InDoma /*&& Managers.Instance.IsGrab*/ && Input.GetKeyDown(KeyCode.Space))
         {
             // ¿Ã µŒ¡Ÿ Fish∂˚ Prawn¿Ã∂˚ ≥™¥≤æﬂ«‘
-            Managers.Instance.IsGrab = false;
+            //Managers.Instance.IsGrab = false;
             _cookingKnife.SetActive(false);
             //
-            if(Managers.Instance.IsPick_Prawn && !IsFood_InDoma)
+            if (/*Managers.Instance.IsPick_Prawn &&*/ !IsFood_InDoma)
             {
                 Managers.Resource.Instantiate("Doma_Prawn", _spawnPos.position, Quaternion.identity, _cuttingBoard.transform);
                 //_onDomaObject = instance;
                 Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
 
-                Managers.Instance.IsPick_Prawn = false;
+                //Managers.Instance.IsPick_Prawn = false;
                 //_onDomaObject = _cuttingBoard.transform.Find("Doma_Prawn(Clone)").gameObject;
                 IsFood_InDoma = true;
-                
+
             }
-            
+
         }
 
-        if(IsFood_InDoma && _onDomaObject != null)
+        if (IsFood_InDoma && _onDomaObject != null)
         {
             Debug.Log(_onDomaObject);
         }
@@ -59,17 +60,18 @@ public class CookingPlace : MonoBehaviour
         {
             Debug.Log("doma on");
             player = other.transform.GetComponent<Player>();
-            
+
             player.Doma = this;
             player.Cutting = true;
             IsPlayer_InDoma = true;
         }
 
-        if (other.CompareTag("Prawn"))
-        {
-            _onDomaObject = other.transform.GetComponent<PrawnScripts>();
-            Debug.Log(OBJ);
-        }
+        // ¿·Ω√ ¡÷ºÆ
+        //if (other.CompareTag("Prawn"))
+        //{
+        //    _onDomaObject = other.transform.GetComponent<PrawnScripts>();
+        //    Debug.Log(OBJ);
+        //}
 
 
     }
@@ -87,7 +89,7 @@ public class CookingPlace : MonoBehaviour
                 player = null;
                 IsPlayer_InDoma = false;
             }
-            
+
         }
 
 

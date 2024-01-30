@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3555536202244795475}
   - component: {fileID: 1882794473}
   - component: {fileID: 1882794476}
+  - component: {fileID: 5531585619832853757}
   m_Layer: 0
   m_Name: CuttingBoard
   m_TagString: CuttingBoard
@@ -114,6 +115,18 @@ MonoBehaviour:
   On_Prawn: {fileID: 0}
   guage: 0
   SpawnPos: {fileID: 0}
+--- !u!114 &5531585619832853757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5761031507792625008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4738d7109f396b4083abe663b182cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1208184795
 PrefabInstance:
   m_ObjectHideFlags: 0

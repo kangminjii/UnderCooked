@@ -15,16 +15,14 @@ public class Idle : BaseState
     public override void Enter()
     {
         base.Enter();
+        _playerSM.Anim.SetFloat("speed", 0);
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
 
-        _playerSM.Anim.SetFloat("speed", 0);
-
-
-        if (Managers.Instance.IsGrab)
+        if (Managers.Resource.PlayerGrabItem.Count > 0)
         {
             _playerSM.Anim.SetBool("Grab", true);
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
@@ -36,14 +34,14 @@ public class Idle : BaseState
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
             _stateMachine.ChangeState(_playerSM.MovingState);
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
     }
 
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+            Dash();
     }
 
     public void Dash()

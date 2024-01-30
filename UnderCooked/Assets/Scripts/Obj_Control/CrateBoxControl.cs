@@ -5,8 +5,8 @@ using UnityEngine;
 public class CrateBoxControl : MonoBehaviour
 {
     Animator _animtor;
-    public GameObject _playerObject;
-    public Transform _spawnPoint;
+    GameObject _playerObject;
+    Transform _spawnPoint;
 
     KeyCode triggerKey = KeyCode.Space;
     bool canInteract = false;
@@ -21,13 +21,10 @@ public class CrateBoxControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(triggerKey))
+        if (canInteract && Input.GetKeyDown(triggerKey))
         {
-            if (canInteract && !Managers.Instance.IsGrab)
-            {
-                _animtor.SetTrigger("IsOpen");
-                SpawnObj();
-            }
+            _animtor.SetTrigger("IsOpen");
+            SpawnObj();
         }
     }
 
@@ -36,17 +33,8 @@ public class CrateBoxControl : MonoBehaviour
     {
         GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _playerObject.transform);
         Managers.Resource.PlayerGrabItem.Add(instance);
-
-
-        Managers.Instance.IsGrab = true;
-        Invoke("SetIsPickPrawnTrue", 0.3f);
-        Managers.Instance.CanPickBool();
     }
 
-    public void SetIsPickPrawnTrue()
-    {
-        Managers.Instance.IsPick_Prawn = true;
-    }
 
     private void OnTriggerStay(Collider other)
     {
