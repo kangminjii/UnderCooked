@@ -36,7 +36,6 @@ public class PrawnScripts : MonoBehaviour
     private void PickSpawn()
     {
         GameObject instance = Managers.Resource.Instantiate("Prawn", _spawnPoint.position, Quaternion.identity, _spawnPoint);
-        Managers.Resource.PlayerGrabItem.Add(instance);
 
 
         //Managers.Instance.IsGrab = true;

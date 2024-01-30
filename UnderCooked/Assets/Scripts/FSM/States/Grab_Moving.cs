@@ -30,14 +30,14 @@ public class Grab_Moving : BaseState
 
             if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject)
             {
-                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
+                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
             }
             else
             {
                 Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
             }
 
-            Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+            Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
         }
 
         if (Input.anyKey == false)

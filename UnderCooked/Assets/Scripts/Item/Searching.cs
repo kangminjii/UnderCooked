@@ -14,16 +14,12 @@ public class Searching : MonoBehaviour
     public static event ObjectTriggeredHandler ObjectTriggerEnter;
     public static event ObjectTriggeredHandler ObjectTriggerExit;
     
-    // 아이템과 상호작용
-    private Transform _spawnPosition;
 
     private void Start()
     {
         _commonMaterial = GetComponent<MeshRenderer>().material;
         _instanceMaterial = Instantiate(_commonMaterial);
         GetComponent<MeshRenderer>().material = _instanceMaterial;
-
-        _spawnPosition = transform.Find("SpawnPos");
     }
 
 

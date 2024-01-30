@@ -26,17 +26,20 @@ public class Grab_Idle : BaseState
             _stateMachine.ChangeState(_playerSM.IdleState);
 
             Transform table = _playerSM.EnterTriggeredObject.transform.Find("SpawnPos");
+            //string clone = "(clone)";
+            //string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
+            //grabObjectName = grabObjectName.Substring(0, grabObjectName.LastIndexOf(clone));
 
-            if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject)
+            if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject) // ¶¥¹Ù´Ú
             {
-                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPoint.position, Quaternion.identity);
+                Managers.Resource.Instantiate("Prawn_Drop"/*grabObjectName + "_Drop"*/, _playerSM.SpawnPos.position, Quaternion.identity);
             }
-            else
+            else // Å×ÀÌºí
             {
-                Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                Managers.Resource.Instantiate("Prawn"/*grabObjectName*/, table.position, Quaternion.identity, table);
             }
 
-            Managers.Resource.Destroy(Managers.Resource.PlayerGrabItem[0]);
+            Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||

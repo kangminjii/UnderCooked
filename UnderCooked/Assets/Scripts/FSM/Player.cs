@@ -19,7 +19,7 @@ public class Player : StateMachine
 
     public Animator Animator;
     public Rigidbody Rigidbody;
-    public Transform SpawnPoint;
+    public Transform SpawnPos;
     public GameObject Knife;
 
     public Vector3 LookDir;
@@ -39,7 +39,7 @@ public class Player : StateMachine
 
         Rigidbody = GetComponent<Rigidbody>();
         Animator = GetComponent<Animator>();
-        SpawnPoint = this.transform.Find("SpawnPoint");
+        SpawnPos = this.transform.Find("SpawnPos");
 
         Searching.ObjectTriggerEnter -= HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit -= HandleObjectTriggerExit;
@@ -118,6 +118,7 @@ public class Player : StateMachine
                 canCut = true;
                 break;
             case Define.Object.Food:
+                // Àç·á Å½Áö½Ã
                 break;
             case Define.Object.Default:
                 break;

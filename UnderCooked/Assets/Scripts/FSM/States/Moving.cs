@@ -23,7 +23,7 @@ public class Moving : BaseState
     {
         base.UpdateLogic();
 
-        if (Managers.Resource.PlayerGrabItem.Count > 0)
+        if (_playerSM.transform.Find("SpawnPos").childCount > 0)
         {
             _playerSM.Animator.SetBool("Grab", true);
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
