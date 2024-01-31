@@ -28,13 +28,17 @@ public class Grab_Moving : BaseState
 
             Transform table = _playerSM.EnterTriggeredObject.transform.Find("SpawnPos");
 
+            string clone = "(Clone)";
+            string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
+            grabObjectName = grabObjectName.Replace(clone, "");
+
             if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject)
             {
-                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
             }
             else
             {
-                Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
             }
 
             Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
