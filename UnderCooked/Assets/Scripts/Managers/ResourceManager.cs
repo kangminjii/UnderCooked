@@ -22,8 +22,6 @@ public class ResourceManager
     //    return Resources.Load<T>(path);
     //}
 
-    public List<GameObject> PlayerGrabItem = new List<GameObject>();
-
     public GameObject Instantiate(string path, Vector3? pos, Quaternion? rot = null, Transform parent = null)
     {
         GameObject original = Resources.Load<GameObject>($"Prefabs/{path}");
@@ -46,8 +44,5 @@ public class ResourceManager
             return;
 
         Object.Destroy(go);
-
-        if(PlayerGrabItem.Contains(go))
-            PlayerGrabItem.Remove(go);
     }
 }
