@@ -45,14 +45,18 @@ public class Player : StateMachine
         Searching.ObjectTriggerExit -= HandleObjectTriggerExit;
         Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit += HandleObjectTriggerExit;
+
+
+        //Overlap.EnterObj -= HandleEnterObject;
+        //Overlap.ExitObj -= HandleExitObject;
+        //Overlap.EnterObj += HandleEnterObject;
+        //Overlap.ExitObj += HandleExitObject;
     }
 
     protected override BaseState GetInitialState()
     {
         return IdleState;
     }
-
-  
 
     private void HandleObjectTriggerEnter(GameObject triggeredObject)
     {
