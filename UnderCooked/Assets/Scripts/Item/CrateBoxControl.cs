@@ -7,8 +7,6 @@ public class CrateBoxControl : MonoBehaviour
     Animator _animtor;
     Transform _spawnPoint;
 
-    KeyCode triggerKey = KeyCode.Space;
-
     bool canInteract = false;
     string _foodName;
 
@@ -21,7 +19,7 @@ public class CrateBoxControl : MonoBehaviour
 
     private void Update()
     {
-        if (canInteract && Input.GetKeyDown(triggerKey))
+        if (canInteract && Input.GetKeyDown(KeyCode.Space))
         {
             _animtor.SetTrigger("IsOpen");
             SpawnObj(_foodName);

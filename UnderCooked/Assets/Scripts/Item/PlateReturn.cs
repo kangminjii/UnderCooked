@@ -4,51 +4,53 @@ using UnityEngine;
 
 public class PlateReturn : MonoBehaviour
 {
-
-    public int PlateNumber;
-
-
-    float _spawnTime = 1.0f;
-    int _maxNumber = 2;
+    // :: private
+    float _plateSpawnTime = 1.0f;
+    int _maxPlateNumber = 2;
     string _plateName = "Plate";
-    Transform _spawnPos;
-    Transform _playerSpawnPoint;
-    KeyCode triggerKey = KeyCode.Space;
     bool canInteract = false;
-    
-    List<GameObject> PlateList = new List<GameObject>();
+
+    Transform _plateSpawnPos;
+    Transform _playerSpawnPos;
+
+
+    // :: public
+    public int CurrentPlateNumber = 0;
+    public List<GameObject> PlateList = new List<GameObject>();
+
 
 
     private void Start()
     {
-        _spawnPos = this.transform.Find("SpawnPos");
+        _plateSpawnPos = this.transform.Find("SpawnPos");
         StartCoroutine(SpawnPlate());
     }
 
     private void Update()
     {
-        if (canInteract && Input.GetKeyDown(triggerKey))
+        if (canInteract && Input.GetKeyDown(KeyCode.Space))
         {
-            if(PlateNumber > 0)
+            Debug.Log("CurrentPlateNumber: " + CurrentPlateNumber);
+            if(CurrentPlateNumber > 0)
             {
-                Managers.Resource.Instantiate(_plateName, _playerSpawnPoint.position, Quaternion.identity, _playerSpawnPoint.transform);
-                Managers.Resource.Destroy(PlateList[PlateNumber - 1]);
-                PlateList.RemoveAt(PlateNumber - 1);
-                PlateNumber--;
+                Managers.Resource.Instantiate(_plateName, _playerSpawnPos.position, Quaternion.identity, _playerSpawnPos.transform);
+                Managers.Resource.Destroy(PlateList[CurrentPlateNumber - 1]);
+                PlateList.RemoveAt(CurrentPlateNumber - 1);
             }
         }
     }
 
+
     IEnumerator SpawnPlate()
     {
-        PlateNumber++;
+        CurrentPlateNumber++;
 
-        yield return new WaitForSeconds(_spawnTime);
+        yield return new WaitForSeconds(_plateSpawnTime);
 
-        GameObject plate = Managers.Resource.Instantiate(_plateName, _spawnPos.position + new Vector3(0, (PlateNumber-1) * 0.05f, 0), Quaternion.identity);
+        GameObject plate = Managers.Resource.Instantiate(_plateName, _plateSpawnPos.position + new Vector3(0, (CurrentPlateNumber-1) * 0.05f, 0), Quaternion.identity);
         PlateList.Add(plate);
 
-        if (PlateNumber < _maxNumber)
+        if (CurrentPlateNumber < _maxPlateNumber)
             StartCoroutine(SpawnPlate());
     }
 
@@ -57,7 +59,7 @@ public class PlateReturn : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canInteract = true;
-            _playerSpawnPoint = other.transform.Find("SpawnPos");
+            _playerSpawnPos = other.transform.Find("SpawnPos");
         }
     }
 
@@ -68,6 +70,5 @@ public class PlateReturn : MonoBehaviour
             canInteract = false;
         }
     }
-
 
 }
