@@ -56,14 +56,6 @@ public class Grab_Idle : BaseState
         base.UpdatePhysics();
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
-    }
-
-    public void Dash()
-    {
-        float dashForce = 6f;
-
-        _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
-        _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
+            _playerSM.Dash();
     }
 }
