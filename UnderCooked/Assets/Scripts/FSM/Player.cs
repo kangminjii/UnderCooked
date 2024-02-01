@@ -16,7 +16,7 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-
+    [SerializeField] Overlap overlap;
     public Animator Animator;
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
@@ -28,6 +28,11 @@ public class Player : StateMachine
     public GameObject EnterTriggeredObject = null; // 감지중인 물체
     public GameObject ExitTriggeredObject = null;   // 감지끝난 물체
 
+
+    public delegate void ObjectSelectHandler(GameObject gameObject);
+    public static event ObjectSelectHandler ObjectSelectEnter;
+
+    public GameObject SelectObj = null; // 선택된 물체
 
     private void Awake()
     {
@@ -46,11 +51,35 @@ public class Player : StateMachine
         Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
         Searching.ObjectTriggerExit += HandleObjectTriggerExit;
 
+
+        Overlap.ObjectSelectEnter -= Select;
+        Overlap.ObjectSelectEnter += Select;
+
+
     }
+
 
     protected override BaseState GetInitialState()
     {
         return IdleState;
+    }
+
+    private void Select(GameObject Obj)
+    {
+        if(Obj == null)
+        {
+            Debug.Log("Exit");
+            canCut = false;
+            return;
+        }
+        Debug.Log(Obj.name);
+        CookingPlace place = Obj.GetComponent<CookingPlace>();
+        if (place != null) 
+            canCut = true;
+
+        
+       
+        // !TODO : 오브젝트가 들어왔을 때 로직을 작성
     }
 
    
@@ -147,4 +176,5 @@ public class Player : StateMachine
                 return Define.Object.Default;
         }
     }
+
 }

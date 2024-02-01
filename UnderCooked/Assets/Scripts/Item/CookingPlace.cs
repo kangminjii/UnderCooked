@@ -4,12 +4,13 @@ public class CookingPlace : MonoBehaviour
 {
     private GameObject _cookingKnife;
     private Transform _spawnPos;
+    private GameObject _onFood;
 
-    [SerializeField] int ChopCount = 0;
+    public int _chopCount = 0;
 
-    public delegate void Chop_Food(GameObject gameObject);
-    public static event Chop_Food Food_Enter;
-    //public static event Chop_Food Food_Exit;
+    //public delegate void Chop_Food(GameObject gameObject);
+    //public static event Chop_Food Food_Enter;
+    ////public static event Chop_Food Food_Exit;
 
 
     private void Start()
@@ -23,21 +24,22 @@ public class CookingPlace : MonoBehaviour
        if(_spawnPos.childCount > 0)
         {
             _cookingKnife.SetActive(false);
-            Food_Enter(this.transform.GetChild(0).gameObject);
+            _onFood = _spawnPos.transform.GetChild(0).gameObject;
+           // Food_Enter(this.transform.GetChild(0).gameObject);
         }
        else
             _cookingKnife.SetActive(true);
 
-       if(ChopCount >= 10)
+       if(_chopCount >= 10)
         {
-            Food_Enter(null);
-            ChopCount = 0;
+            Destroy(_onFood);
+            _chopCount = 0;
         }
     }
 
     public void CuttingFood()
     {
-        ChopCount++;
+        this._chopCount++;
     }    
 
 }

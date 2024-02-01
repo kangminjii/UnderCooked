@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Overlap : MonoBehaviour
@@ -6,10 +7,19 @@ public class Overlap : MonoBehaviour
     public float _maxDistance = 0.1f; // 정면으로 체크할 최대 거리
     public LayerMask layermask;
     private Collider _short_Obj;
+
+    private GameObject prevSelectedGameObject;
     public GameObject SelectGameObject;
 
     private GameObject selectedObject;
     private Color originalColor;
+
+
+    //public delegate void ObjectSelectHandler(GameObject gameObject);
+    //public static event ObjectSelectHandler ObjectSelectEnter;
+    //public static event ObjectSelectHandler ObjectSelectExit;
+
+    public static Action<GameObject> ObjectSelectEnter;
 
 
     void Update()
@@ -27,6 +37,7 @@ public class Overlap : MonoBehaviour
 
         if (Physics.SphereCast(playerPosition, _radius, playerForward, out hit, _maxDistance, layermask))
         {
+
             _short_Obj = hit.collider; // 충돌한 콜라이더를 Short_Obj에 할당
             SelectGameObject = _short_Obj.gameObject;
 
@@ -39,6 +50,7 @@ public class Overlap : MonoBehaviour
             {
 
                 selectedObject = SelectGameObject;
+
                 originalColor = objRenderer.material.color;
 
                 objRenderer.material.SetColor("_EmissionColor", new Color(0.5f, 0.45f, 0.4f, 0f));
@@ -53,9 +65,22 @@ public class Overlap : MonoBehaviour
 
             _short_Obj = null; // 충돌한 콜라이더가 없으면 Short_Obj를 null로 설정
             SelectGameObject = null;
+            //ObjectSelectEnter(null);
+        }
+        if(prevSelectedGameObject != SelectGameObject)
+        {
+            Select();
+            prevSelectedGameObject = SelectGameObject;
         }
     }
 
+
+    private void Select()
+    {
+        //ObjectSelectEnter(SelectGameObject.gameObject);
+        ObjectSelectEnter?.Invoke(SelectGameObject);
+    }
+    
 
     private void RestoreObjectColor()
     {

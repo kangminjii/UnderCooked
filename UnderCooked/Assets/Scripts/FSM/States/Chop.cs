@@ -24,8 +24,8 @@ public class Chop : BaseState
         _playerSM.Animator.SetBool("Cutting", true);
         _playerSM.Animator.SetFloat("speed", 0);
 
-        CookingPlace.Food_Enter -= Choping;
-        CookingPlace.Food_Enter += Choping;
+        //CookingPlace.Food_Enter -= Choping;
+        //CookingPlace.Food_Enter += Choping;
     }
 
     public override void Exit()
