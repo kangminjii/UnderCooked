@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 35936f802163a694fb1ff685e48452b0, type: 2}
+  - {fileID: 2100000, guid: f90fee25f78baeb488c24e5eeb599aa5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,7 +171,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e4df1e6e85dda7244a579f6971cd4cfc, type: 2}
+  - {fileID: 2100000, guid: d15f652478c89bb4db148a40bc3390fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -330,7 +330,7 @@ PrefabInstance:
     - target: {fileID: 7495829665206156815, guid: 794a6bda0b2765848b7ed3ed7208a71a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 35936f802163a694fb1ff685e48452b0, type: 2}
+      objectReference: {fileID: 2100000, guid: f90fee25f78baeb488c24e5eeb599aa5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794a6bda0b2765848b7ed3ed7208a71a, type: 3}
 --- !u!4 &5770299416281217110 stripped

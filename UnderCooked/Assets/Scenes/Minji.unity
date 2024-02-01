@@ -133,7 +133,7 @@ PrefabInstance:
     - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
+      objectReference: {fileID: 2100000, guid: 83798fdfb378d74498293a4fc5e69072, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board (2)
@@ -1509,7 +1509,7 @@ PrefabInstance:
     - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
+      objectReference: {fileID: 2100000, guid: 83798fdfb378d74498293a4fc5e69072, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board (3)
@@ -1953,10 +1953,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1881870354}
     m_Modifications:
-    - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board (1)
@@ -2067,10 +2063,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2194446103229186238, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e5c4061d25ac6e54f9058629d34540a1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
 --- !u!1001 &1265231152
@@ -3219,10 +3211,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5169460283506452078, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 150751e1d34a7cb48a87faaf2c47e98c, type: 2}
     - target: {fileID: 5230309993868486451, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
       propertyPath: m_Name
       value: Bin
@@ -3607,10 +3595,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1881870354}
     m_Modifications:
-    - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board
