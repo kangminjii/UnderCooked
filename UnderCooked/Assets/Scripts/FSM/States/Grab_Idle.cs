@@ -41,7 +41,6 @@ public class Grab_Idle : BaseState
             {
                 if(_playerSM.EnterTriggeredObject.tag == "Table")
                     Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
-                    
             }
 
             Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);

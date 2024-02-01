@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PassingGate : MonoBehaviour
+public class Bin : MonoBehaviour
 {
-
     bool canInteract = false;
     Transform _playerSpawnPos;
 
@@ -21,14 +20,14 @@ public class PassingGate : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(KeyCode.Space))
         {
-           if(_playerSpawnPos.childCount > 0)
-           {
+            if (_playerSpawnPos.childCount > 0)
+            {
                 plateReturn.PlateList.RemoveAt(plateReturn.CurrentPlateNumber - 1);
                 plateReturn.CurrentPlateNumber--;
 
                 StartCoroutine(plateReturn.SpawnPlate());
-           }
-           
+            }
+
         }
     }
 

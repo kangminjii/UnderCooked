@@ -30,24 +30,25 @@ public class PlateReturn : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("CurrentPlateNumber: " + CurrentPlateNumber);
             if(CurrentPlateNumber > 0)
             {
                 Managers.Resource.Instantiate(_plateName, _playerSpawnPos.position, Quaternion.identity, _playerSpawnPos.transform);
-                Managers.Resource.Destroy(PlateList[CurrentPlateNumber - 1]);
-                PlateList.RemoveAt(CurrentPlateNumber - 1);
+                Managers.Resource.Destroy(_plateSpawnPos.GetChild(_plateSpawnPos.childCount-1).gameObject);
             }
         }
+
+
     }
 
 
-    IEnumerator SpawnPlate()
+    public IEnumerator SpawnPlate()
     {
         CurrentPlateNumber++;
 
         yield return new WaitForSeconds(_plateSpawnTime);
 
-        GameObject plate = Managers.Resource.Instantiate(_plateName, _plateSpawnPos.position + new Vector3(0, (CurrentPlateNumber-1) * 0.05f, 0), Quaternion.identity);
+        Vector3 spwanPlatePos = _plateSpawnPos.position + new Vector3(0, (_plateSpawnPos.childCount - 1) * 0.05f, 0);
+        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, _plateSpawnPos);
         PlateList.Add(plate);
 
         if (CurrentPlateNumber < _maxPlateNumber)
