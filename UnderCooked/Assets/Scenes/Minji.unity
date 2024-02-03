@@ -130,10 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1881870354}
     m_Modifications:
-    - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board (2)
@@ -1645,24 +1641,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8714315526173388766, guid: 2173135ea6cb562449856e4c10d28fd9, type: 3}
   m_PrefabInstance: {fileID: 664638148}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &677923761 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5230309993868486451, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
-  m_PrefabInstance: {fileID: 385461397740545232}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &677923768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 677923761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 173904f666824e74eafeadbbb7ff29c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plateReturn: {fileID: 421749849}
 --- !u!1001 &692535025
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2296,25 +2274,6 @@ Transform:
   m_Father: {fileID: 290870210}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &841828197 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7891473237355131779, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-  m_PrefabInstance: {fileID: 1225248750}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &841828200
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841828197}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2959467708922500008, guid: ca7e09399ba574e49a21645484528c0e, type: 3}
 --- !u!224 &857242485 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8834685048126362152, guid: 97c5e11b2c82d5941845653d3b026e7d, type: 3}
@@ -2389,10 +2348,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1881870354}
     m_Modifications:
-    - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board (3)
@@ -3111,10 +3066,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1881870354}
     m_Modifications:
-    - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board (1)
@@ -3177,6 +3128,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1447040409, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1186960611942983899, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
       propertyPath: m_Name
       value: Chef
@@ -3224,26 +3179,6 @@ PrefabInstance:
     - target: {fileID: 1959979325366055521, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2194446103229186238, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2194446103229186238, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e5c4061d25ac6e54f9058629d34540a1, type: 2}
-    - target: {fileID: 2194446103229186238, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: e5c4061d25ac6e54f9058629d34540a1, type: 2}
-    - target: {fileID: 8065919444604791896, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.00057
-      objectReference: {fileID: 0}
-    - target: {fileID: 8065919444604791896, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.00149
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
@@ -5056,6 +4991,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 677923768, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
+      propertyPath: plateReturn
+      value: 
+      objectReference: {fileID: 421749849}
     - target: {fileID: 3983856332467845870, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -5100,10 +5039,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5169460283506452078, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 150751e1d34a7cb48a87faaf2c47e98c, type: 2}
     - target: {fileID: 5230309993868486451, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
       propertyPath: m_Name
       value: Bin
@@ -5785,10 +5720,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1592834266, guid: 97ec39c47cba25d49854abc7f916bdfc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 1470950403174921113, guid: 97ec39c47cba25d49854abc7f916bdfc, type: 3}
       propertyPath: m_Name
       value: Plate_Return
@@ -5957,18 +5888,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 700049515}
     m_Modifications:
-    - target: {fileID: 694056615645300198, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 35936f802163a694fb1ff685e48452b0, type: 2}
-    - target: {fileID: 1761064936827118932, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 35936f802163a694fb1ff685e48452b0, type: 2}
-    - target: {fileID: 8103671619851601267, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e4df1e6e85dda7244a579f6971cd4cfc, type: 2}
     - target: {fileID: 8645995503557268768, guid: 74b15bed69297854181ed6a0cf8303ff, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -6088,18 +6007,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate_Fish
       objectReference: {fileID: 0}
-    - target: {fileID: 3889749066287031719, guid: 01e0e9ad49b1c6947bceadf0a4cf6cc4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 35936f802163a694fb1ff685e48452b0, type: 2}
-    - target: {fileID: 7556940158594436985, guid: 01e0e9ad49b1c6947bceadf0a4cf6cc4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 35936f802163a694fb1ff685e48452b0, type: 2}
-    - target: {fileID: 8317247804272735258, guid: 01e0e9ad49b1c6947bceadf0a4cf6cc4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: af92922011025fe4b82a2a68559c0b93, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01e0e9ad49b1c6947bceadf0a4cf6cc4, type: 3}
 --- !u!1 &8440964093956380530
@@ -6402,10 +6309,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1881870354}
     m_Modifications:
-    - target: {fileID: 112505826153423526, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: eefc2592355cc3d46b7671199bcf5c2a, type: 2}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board

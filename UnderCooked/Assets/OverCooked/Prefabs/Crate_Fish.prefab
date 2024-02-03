@@ -58,7 +58,6 @@ GameObject:
   - component: {fileID: 4201800903048964800}
   - component: {fileID: 2273016749603520892}
   - component: {fileID: 7556940158594436985}
-  - component: {fileID: 4538127332715382056}
   - component: {fileID: 237555019}
   m_Layer: 0
   m_Name: m_sk_crate_01_Body_0
@@ -132,18 +131,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4538127332715382056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4305938127758746576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4738d7109f396b4083abe663b182cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &237555019
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -381,18 +368,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -8916441673860549660, guid: 794a6bda0b2765848b7ed3ed7208a71a, type: 3}
   m_PrefabInstance: {fileID: 6772749147909954472}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3044478197901912830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6467112983688243276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4738d7109f396b4083abe663b182cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &562132887
 BoxCollider:
   m_ObjectHideFlags: 0
