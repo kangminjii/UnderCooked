@@ -25,29 +25,38 @@ public class Grab_Moving : BaseState
             _playerSM.Animator.SetBool("Grab", false);
             _stateMachine.ChangeState(_playerSM.IdleState);
 
-            Transform table = _playerSM.EnterTriggeredObject.transform.Find("SpawnPos");
 
             string clone = "(Clone)";
             string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
             grabObjectName = grabObjectName.Replace(clone, "");
 
-            // ¶¥¹Ù´Ú
-            if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject)
+           
+            if (_playerSM.SelectObj == null /*_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject*/)
             {
-                Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                _playerSM.Animator.SetBool("Grab", false);
+                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                _stateMachine.ChangeState(_playerSM.IdleState);
             }
             // Å×ÀÌºí
             else
             {
-                if (_playerSM.EnterTriggeredObject.tag == "Table")
-                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
-            }
+                Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
 
-            Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                if (table.childCount < 1)
+                {
+                    _playerSM.Animator.SetBool("Grab", false);
+                    Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                    Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                    _stateMachine.ChangeState(_playerSM.IdleState);
+                }
+            }
+                
         }
 
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
+
     }
 
     public override void UpdatePhysics()

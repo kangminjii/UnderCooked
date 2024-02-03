@@ -11,6 +11,8 @@ TagManager:
   - Crate
   - PlateReturn
   - Passing
+  - Plane
+  - Prawn
   layers:
   - Default
   - TransparentFX
@@ -22,11 +24,11 @@ TagManager:
   - Player
   - Food
   - Table
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Crate
+  - Bin
+  - Passing
+  - PlateReturn
+  - CuttingBoard
   - 
   - 
   - 
