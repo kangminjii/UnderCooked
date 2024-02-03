@@ -22,24 +22,27 @@ public class Grab_Idle : BaseState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Animator.SetBool("Grab", false);
-            _stateMachine.ChangeState(_playerSM.IdleState);
-
-            Transform table = _playerSM.EnterTriggeredObject.transform.Find("SpawnPos");
-            //string clone = "(clone)";
-            //string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
-            //grabObjectName = grabObjectName.Substring(0, grabObjectName.LastIndexOf(clone));
-
-            if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject) // ¶¥¹Ù´Ú
+            if (_playerSM.SelectObj == null /*_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject*/)
             {
-                Managers.Resource.Instantiate("Prawn_Drop"/*grabObjectName + "_Drop"*/, _playerSM.SpawnPos.position, Quaternion.identity);
+                _playerSM.Animator.SetBool("Grab", false);
+                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                _stateMachine.ChangeState(_playerSM.IdleState);
             }
-            else // Å×ÀÌºí
+            else
             {
-                Managers.Resource.Instantiate("Prawn"/*grabObjectName*/, table.position, Quaternion.identity, table);
+                Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
+
+                if (table.childCount < 1)
+                {
+                    _playerSM.Animator.SetBool("Grab", false);
+                    Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                    Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                    _stateMachine.ChangeState(_playerSM.IdleState);
+                }
             }
 
-            Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+            
         }
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||

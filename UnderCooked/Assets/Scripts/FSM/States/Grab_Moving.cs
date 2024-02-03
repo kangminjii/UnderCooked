@@ -23,25 +23,30 @@ public class Grab_Moving : BaseState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Animator.SetBool("Grab", false);
-            _stateMachine.ChangeState(_playerSM.IdleState);
-
-            Transform table = _playerSM.EnterTriggeredObject.transform.Find("SpawnPos");
-
-            if (_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject)
+            if (_playerSM.SelectObj == null /*_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject*/)
             {
+                _playerSM.Animator.SetBool("Grab", false);
                 Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                _stateMachine.ChangeState(_playerSM.IdleState);
             }
             else
             {
-                Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
-            }
+                Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
 
-            Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                if (table.childCount < 1)
+                {
+                    _playerSM.Animator.SetBool("Grab", false);
+                    Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                    Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                    _stateMachine.ChangeState(_playerSM.IdleState);
+                }
+            }
         }
 
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
+
     }
 
     public override void UpdatePhysics()
