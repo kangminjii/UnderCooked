@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1592834266}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SpawnPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1401206651254254279}
   - component: {fileID: 1731734809}
   - component: {fileID: 1731734816}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Plate_Return
   m_TagString: PlateReturn
   m_Icon: {fileID: 0}

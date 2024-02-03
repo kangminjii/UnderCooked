@@ -282,6 +282,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CuttingBoard
       objectReference: {fileID: 0}
+    - target: {fileID: 5761031507792625008, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3997082168578087544, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}
     - {fileID: 5531585619832853757, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}

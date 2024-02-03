@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class Player : StateMachine
 {
-    // 상태
+    [SerializeField]
+    Overlap overlap;
+
+
     [HideInInspector]
     public Idle IdleState;
     [HideInInspector]
@@ -17,12 +20,12 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-    [SerializeField] Overlap overlap;
-
+    
     public Animator Animator;
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
     public GameObject Knife;
+    public GameObject SelectObj = null; // 선택된 물체
 
     public Vector3 LookDir;
     public bool canCut;
@@ -32,7 +35,6 @@ public class Player : StateMachine
     public delegate void ObjectSelectHandler(GameObject gameObject);
     public static event ObjectSelectHandler ObjectSelectEnter;
 
-    public GameObject SelectObj = null; // 선택된 물체
 
 
 
@@ -50,8 +52,6 @@ public class Player : StateMachine
 
         Overlap.ObjectSelectEnter -= Select;
         Overlap.ObjectSelectEnter += Select;
-
-
     }
 
 
@@ -102,7 +102,6 @@ public class Player : StateMachine
         if(Obj != null)
         {
             SelectObj = Obj;
-            
         }
         else
         {

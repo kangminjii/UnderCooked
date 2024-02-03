@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7479588643217773661}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Passing
   m_TagString: Passing
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 7239608652109267494}
   - component: {fileID: 2221436360884995726}
   - component: {fileID: 160057472}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: m_sk_the_pass_red_01_0
   m_TagString: Passing
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7479588643936599702}
   - component: {fileID: 7479588643936599785}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Point Light
   m_TagString: Passing
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 7479588644359843592}
   - component: {fileID: 7479588644359843594}
   - component: {fileID: 7479588644359843595}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: m_sk_the_pass_red_01_2
   m_TagString: Passing
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 7479588644804716288}
   - component: {fileID: 7479588644804716290}
   - component: {fileID: 7479588644804716291}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: m_sk_the_pass_red_01_1
   m_TagString: Passing
   m_Icon: {fileID: 0}
