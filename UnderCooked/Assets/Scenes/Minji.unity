@@ -3132,6 +3132,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1447040409, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
+      propertyPath: _maxDistance
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1447040409, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
+      propertyPath: layermask.m_Bits
+      value: 32512
+      objectReference: {fileID: 0}
     - target: {fileID: 1186960611942983899, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
       propertyPath: m_Name
       value: Chef
