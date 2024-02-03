@@ -5,7 +5,6 @@ using UnityEngine;
 public class Grab_Moving : BaseState
 {
     protected Player _playerSM;
-    float _speed = 5.0f;
 
 
     public Grab_Moving(Player stateMachine) : base("Grab_Moving", stateMachine)
@@ -16,13 +15,22 @@ public class Grab_Moving : BaseState
     public override void Enter()
     {
         base.Enter();
-        _playerSM.Animator.SetFloat("speed", _speed);
+        _playerSM.Animator.SetFloat("speed", _playerSM._speed);
     }
 
     public override void UpdateLogic()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            _playerSM.Animator.SetBool("Grab", false);
+            _stateMachine.ChangeState(_playerSM.IdleState);
+
+
+            string clone = "(Clone)";
+            string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
+            grabObjectName = grabObjectName.Replace(clone, "");
+
+           
             if (_playerSM.SelectObj == null /*_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject*/)
             {
                 _playerSM.Animator.SetBool("Grab", false);
@@ -30,6 +38,7 @@ public class Grab_Moving : BaseState
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                 _stateMachine.ChangeState(_playerSM.IdleState);
             }
+            // Å×ÀÌºí
             else
             {
                 Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
@@ -42,6 +51,7 @@ public class Grab_Moving : BaseState
                     _stateMachine.ChangeState(_playerSM.IdleState);
                 }
             }
+                
         }
 
         if (Input.anyKey == false)
@@ -53,44 +63,9 @@ public class Grab_Moving : BaseState
     {
         base.UpdatePhysics();
 
-        PlayerMove();
+        _playerSM.PlayerMove();
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
+            _playerSM.Dash();
     }
-
-    void PlayerMove()
-    {
-        Vector3 moveDirection = Vector3.zero;
-
-        if (Input.GetKey(KeyCode.UpArrow))
-            moveDirection += Vector3.forward;
-        if (Input.GetKey(KeyCode.LeftArrow))
-            moveDirection += Vector3.left;
-        if (Input.GetKey(KeyCode.DownArrow))
-            moveDirection += Vector3.back;
-        if (Input.GetKey(KeyCode.RightArrow))
-            moveDirection += Vector3.right;
-
-        _playerSM.Rigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
-
-        if (moveDirection != Vector3.zero)
-            PlayerRotate(moveDirection);
-    }
-
-    void PlayerRotate(Vector3 moveDir)
-    {
-        Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-        _playerSM.transform.rotation = Quaternion.Slerp(_playerSM.transform.rotation, toRotation, 0.06f);
-        _playerSM.LookDir = _playerSM.transform.forward;
-    }
-
-    public void Dash()
-    {
-        float dashForce = 6f;
-
-        _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
-        _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
-    }
-
 }

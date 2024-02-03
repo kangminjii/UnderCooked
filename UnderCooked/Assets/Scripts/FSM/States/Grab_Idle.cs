@@ -22,10 +22,15 @@ public class Grab_Idle : BaseState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (_playerSM.SelectObj == null /*_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject*/)
+            string clone = "(Clone)";
+            string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
+            grabObjectName = grabObjectName.Replace(clone, "");
+
+           
+            if (_playerSM.SelectObj == null)
             {
                 _playerSM.Animator.SetBool("Grab", false);
-                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                 _stateMachine.ChangeState(_playerSM.IdleState);
             }
@@ -36,14 +41,13 @@ public class Grab_Idle : BaseState
                 if (table.childCount < 1)
                 {
                     _playerSM.Animator.SetBool("Grab", false);
-                    Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
                     Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                     _stateMachine.ChangeState(_playerSM.IdleState);
                 }
             }
-
-            
         }
+
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
@@ -56,14 +60,6 @@ public class Grab_Idle : BaseState
         base.UpdatePhysics();
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
-    }
-
-    public void Dash()
-    {
-        float dashForce = 6f;
-
-        _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
-        _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
+            _playerSM.Dash();
     }
 }

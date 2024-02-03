@@ -6,7 +6,6 @@ public class Idle : BaseState
 {
     protected Player _playerSM;
 
-
     public Idle(Player stateMachine) : base("Idle", stateMachine) 
     {
         _playerSM = (Player)stateMachine;
@@ -41,16 +40,7 @@ public class Idle : BaseState
         base.UpdatePhysics();
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
+            _playerSM.Dash();
     }
-
-    public void Dash()
-    {
-        float dashForce = 6f;
-
-        _playerSM.Rigidbody.velocity = _playerSM.LookDir * dashForce;
-        _playerSM.Rigidbody.AddForce(_playerSM.LookDir * dashForce, ForceMode.Force);
-    }
-
 
 }

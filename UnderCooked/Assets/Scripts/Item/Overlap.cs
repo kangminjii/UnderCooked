@@ -8,6 +8,7 @@ public class Overlap : MonoBehaviour
     public LayerMask layermask;
     private Collider _short_Obj;
 
+
     private GameObject prevSelectedGameObject;
     public GameObject SelectGameObject;
 
@@ -41,7 +42,9 @@ public class Overlap : MonoBehaviour
             // 충돌한 객체의 Renderer 가져오기
             MeshRenderer objRenderer = SelectGameObject.GetComponent<MeshRenderer>();
 
-            if(objRenderer != null && objRenderer.material != null)
+
+
+            if (objRenderer != null && objRenderer.material != null)
             {
 
                 selectedObject = SelectGameObject;
@@ -51,32 +54,28 @@ public class Overlap : MonoBehaviour
                 objRenderer.material.SetColor("_EmissionColor", new Color(0.5f, 0.45f, 0.4f, 0f));
                 objRenderer.material.EnableKeyword("_EMISSION");
             }
+            else
+            {
 
-        }
-        else
-        {
+                RestoreObjectColor();
 
-            RestoreObjectColor();
+                _short_Obj = null; // 충돌한 콜라이더가 없으면 Short_Obj를 null로 설정
+                SelectGameObject = null;
+            }
+            if (prevSelectedGameObject != SelectGameObject)
+            {
+                Select();
+                prevSelectedGameObject = SelectGameObject;
+            }
 
-            _short_Obj = null; // 충돌한 콜라이더가 없으면 Short_Obj를 null로 설정
-            SelectGameObject = null;
-            //ObjectSelectEnter(null);
-        }
-        if(prevSelectedGameObject != SelectGameObject)
-        {
-            Select();
-            prevSelectedGameObject = SelectGameObject;
         }
     }
-
 
     private void Select()
     {
         //ObjectSelectEnter(SelectGameObject.gameObject);
         ObjectSelectEnter?.Invoke(SelectGameObject);
     }
-    
-
     private void RestoreObjectColor()
     {
         if (selectedObject != null)

@@ -1612,6 +1612,7 @@ MonoBehaviour:
   Knife: {fileID: 5260627731516699849}
   LookDir: {x: 0, y: 0, z: 0}
   canCut: 0
+  _speed: 5
   EnterTriggeredObject: {fileID: 0}
   ExitTriggeredObject: {fileID: 0}
 --- !u!114 &1447040409
@@ -1626,12 +1627,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf46d0c1caca5044aae1196bc96982d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.5
-  maxDistance: 1
+  _radius: 0.5
+  _maxDistance: 0.1
   layermask:
     serializedVersion: 2
     m_Bits: 512
-  Short_Obj: {fileID: 0}
+  SelectGameObject: {fileID: 0}
 --- !u!1 &1196512682497571478
 GameObject:
   m_ObjectHideFlags: 0
