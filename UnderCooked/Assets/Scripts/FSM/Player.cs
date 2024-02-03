@@ -18,7 +18,8 @@ public class Player : StateMachine
     public Grab_Moving GrabMovingState;
 
     [SerializeField] Overlap overlap;
-
+    public CookingPlace Cook;
+   
     public Animator Animator;
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
@@ -50,7 +51,6 @@ public class Player : StateMachine
 
         Overlap.ObjectSelectEnter -= Select;
         Overlap.ObjectSelectEnter += Select;
-
 
     }
 
@@ -98,7 +98,7 @@ public class Player : StateMachine
 
     private void Select(GameObject Obj)
     {
-        //SelectObj = null;
+       
         if(Obj != null)
         {
             SelectObj = Obj;
@@ -109,31 +109,24 @@ public class Player : StateMachine
            // Debug.Log("Exit");
             canCut = false;
             SelectObj = null;
-            return;
+            //return;
         }
         //Debug.Log(Obj.name);
-        CookingPlace place = Obj.GetComponent<CookingPlace>();
-        if (place != null)
+        //CookingPlace place = Obj.GetComponent<CookingPlace>();
+        Cook = Obj.GetComponent<CookingPlace>();
+        if (Cook.OnFood != null)
+        {
             canCut = true;
 
-
-        //if (Obj == null)
-        //{
-        //    Debug.Log("Exit");
-        //    canCut = false;
-        //    SelectObj = null;
-        //    return;
-        //}
-
-
-
-
-
+        }
 
         // !TODO : 오브젝트가 들어왔을 때 로직을 작성
     }
 
-
+    public void Cutting()
+    {
+        Cook.CuttingFood();
+    }
 
     private Define.Object GetObjectFromTag(string tag)
     {

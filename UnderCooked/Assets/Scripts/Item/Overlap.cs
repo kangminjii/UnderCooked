@@ -74,7 +74,9 @@ public class Overlap : MonoBehaviour
     private void Select()
     {
         //ObjectSelectEnter(SelectGameObject.gameObject);
-        ObjectSelectEnter?.Invoke(SelectGameObject);
+
+        prevSelectedGameObject = SelectGameObject;
+
     }
     private void RestoreObjectColor()
     {
