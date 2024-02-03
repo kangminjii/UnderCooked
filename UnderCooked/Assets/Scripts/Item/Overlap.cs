@@ -14,11 +14,6 @@ public class Overlap : MonoBehaviour
     private GameObject selectedObject;
     private Color originalColor;
 
-
-    //public delegate void ObjectSelectHandler(GameObject gameObject);
-    //public static event ObjectSelectHandler ObjectSelectEnter;
-    //public static event ObjectSelectHandler ObjectSelectExit;
-
     public static Action<GameObject> ObjectSelectEnter;
 
 

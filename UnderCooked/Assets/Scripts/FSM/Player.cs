@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class Player : StateMachine
@@ -25,8 +26,8 @@ public class Player : StateMachine
     public Vector3 LookDir;
     public bool canCut;
 
-    public GameObject EnterTriggeredObject = null; // 감지중인 물체
-    public GameObject ExitTriggeredObject = null;   // 감지끝난 물체
+    //public GameObject EnterTriggeredObject = null; // 감지중인 물체
+    //public GameObject ExitTriggeredObject = null;   // 감지끝난 물체
 
 
     public delegate void ObjectSelectHandler(GameObject gameObject);
@@ -46,10 +47,10 @@ public class Player : StateMachine
         Animator = GetComponent<Animator>();
         SpawnPos = this.transform.Find("SpawnPos");
 
-        Searching.ObjectTriggerEnter -= HandleObjectTriggerEnter;
-        Searching.ObjectTriggerExit -= HandleObjectTriggerExit;
-        Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
-        Searching.ObjectTriggerExit += HandleObjectTriggerExit;
+        //Searching.ObjectTriggerEnter -= HandleObjectTriggerEnter;
+        //Searching.ObjectTriggerExit -= HandleObjectTriggerExit;
+        //Searching.ObjectTriggerEnter += HandleObjectTriggerEnter;
+        //Searching.ObjectTriggerExit += HandleObjectTriggerExit;
 
 
         Overlap.ObjectSelectEnter -= Select;
@@ -66,93 +67,112 @@ public class Player : StateMachine
 
     private void Select(GameObject Obj)
     {
-        if(Obj == null)
+        //SelectObj = null;
+        if(Obj != null)
         {
-            Debug.Log("Exit");
+            SelectObj = Obj;
+            
+        }
+        else
+        {
+           // Debug.Log("Exit");
             canCut = false;
+            SelectObj = null;
             return;
         }
-        Debug.Log(Obj.name);
+        //Debug.Log(Obj.name);
         CookingPlace place = Obj.GetComponent<CookingPlace>();
-        if (place != null) 
+        if (place != null)
             canCut = true;
 
-        
-       
+
+        //if (Obj == null)
+        //{
+        //    Debug.Log("Exit");
+        //    canCut = false;
+        //    SelectObj = null;
+        //    return;
+        //}
+
+
+
+
+
+
         // !TODO : 오브젝트가 들어왔을 때 로직을 작성
     }
 
    
-    private void HandleObjectTriggerEnter(GameObject triggeredObject)
-    {
-        TriggeredObject(triggeredObject);
+    //private void HandleObjectTriggerEnter(GameObject triggeredObject)
+    //{
+    //    TriggeredObject(triggeredObject);
 
-        // 다른 Table로 Trigger될때
-        if (EnterTriggeredObject != null)
-        {
-            if(triggeredObject.name != EnterTriggeredObject.name)
-            {
-                Searching interactingObject = triggeredObject.GetComponent<Searching>();
-                interactingObject.EnableColor();
+    //    // 다른 Table로 Trigger될때
+    //    if (EnterTriggeredObject != null)
+    //    {
+    //        if(triggeredObject.name != EnterTriggeredObject.name)
+    //        {
+    //            Searching interactingObject = triggeredObject.GetComponent<Searching>();
+    //            interactingObject.EnableColor();
 
-                // TriggerExit으로 안꺼진 Object 처리
-                Searching pastObject = EnterTriggeredObject.GetComponent<Searching>();
-                pastObject.DisableColor();
-            }
-        }
-        // 같은 Table로 Trigger될때
-        else
-        {
-            if (ExitTriggeredObject == triggeredObject)
-            {
-                Searching interactingObject = triggeredObject.GetComponent<Searching>();
-                interactingObject.EnableColor();
-            }
-        }
+    //            // TriggerExit으로 안꺼진 Object 처리
+    //            Searching pastObject = EnterTriggeredObject.GetComponent<Searching>();
+    //            pastObject.DisableColor();
+    //        }
+    //    }
+    //    // 같은 Table로 Trigger될때
+    //    else
+    //    {
+    //        if (ExitTriggeredObject == triggeredObject)
+    //        {
+    //            Searching interactingObject = triggeredObject.GetComponent<Searching>();
+    //            interactingObject.EnableColor();
+    //        }
+    //    }
 
-        EnterTriggeredObject = triggeredObject;
-    }
+    //    EnterTriggeredObject = triggeredObject;
+    //}
 
-    private void HandleObjectTriggerExit(GameObject triggeredObject)
-    {
-        TriggeredObjectExit(triggeredObject);
+    //private void HandleObjectTriggerExit(GameObject triggeredObject)
+    //{
+    //    TriggeredObjectExit(triggeredObject);
 
-        Searching interactingObject = triggeredObject.GetComponent<Searching>();
-        interactingObject.DisableColor();
+    //    Searching interactingObject = triggeredObject.GetComponent<Searching>();
+    //    interactingObject.DisableColor();
 
-        ExitTriggeredObject = triggeredObject;
-    }
+    //    ExitTriggeredObject = triggeredObject;
+    //}
 
-    private void TriggeredObjectExit(GameObject triggeredObject)
-    {
-        Define.Object objectType = GetObjectFromTag(triggeredObject.tag);
+    //private void TriggeredObjectExit(GameObject triggeredObject)
+    //{
+    //    Define.Object objectType = GetObjectFromTag(triggeredObject.tag);
 
-        switch (objectType)
-        {
-            case Define.Object.CuttingBoard:
-                canCut = false;
-                break;
-            case Define.Object.Default:
-                break;
-        }
-    }
+    //    switch (objectType)
+    //    {
+    //        case Define.Object.CuttingBoard:
+    //            canCut = false;
+    //            break;
+    //        case Define.Object.Default:
+    //            break;
+    //    }
+    //}
 
-    private void TriggeredObject(GameObject triggeredObject)
-    {
-        Define.Object objectType = GetObjectFromTag(triggeredObject.tag);
+    //private void TriggeredObject(GameObject triggeredObject)
+    //{
+    //    Define.Object objectType = GetObjectFromTag(triggeredObject.tag);
 
-        switch (objectType)
-        {
-            case Define.Object.CuttingBoard:
-                canCut = true;
-                break;
-            case Define.Object.Food:
-                // 재료 탐지시
-                break;
-            case Define.Object.Default:
-                break;
-        }
-    }
+    //    switch (objectType)
+    //    {
+    //        case Define.Object.CuttingBoard:
+    //            canCut = true;
+    //            break;
+    //        case Define.Object.Food:
+    //            // 재료 탐지시
+    //            break;
+    //        case Define.Object.Default:
+    //            break;
+    //    }
+    //}
 
     private Define.Object GetObjectFromTag(string tag)
     {
