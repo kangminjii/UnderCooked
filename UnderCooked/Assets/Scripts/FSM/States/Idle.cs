@@ -27,6 +27,31 @@ public class Idle : BaseState
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(_playerSM.transform.Find("SpawnPos").childCount < 1)
+            {
+
+                if (_playerSM.SelectObj != null && _playerSM.SelectObj.transform.Find("SpawnPos").childCount == 1)
+                {
+                    
+                    string clone = "(Clone)";
+                    string TableObjectName = _playerSM.SelectObj.transform.Find("SpawnPos").GetChild(0).name;
+                    TableObjectName = TableObjectName.Replace(clone, "");
+
+                    Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
+
+                    _playerSM.Animator.SetBool("Grab", true);
+                    Managers.Resource.Instantiate(TableObjectName, _playerSM.SpawnPos.position, Quaternion.identity, _playerSM.SpawnPos);
+                    Managers.Resource.Destroy(table.GetChild(0).gameObject);
+                    _stateMachine.ChangeState(_playerSM.GrabIdleState);
+
+
+                }
+            }
+            
+        }
+
         if (_playerSM.canCut && Input.GetKey(KeyCode.LeftControl))
             _stateMachine.ChangeState(_playerSM.ChopState);
 

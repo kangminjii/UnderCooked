@@ -305,7 +305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 794a6bda0b2765848b7ed3ed7208a71a, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 794a6bda0b2765848b7ed3ed7208a71a, type: 3}
       propertyPath: m_IsActive
@@ -858,7 +858,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
-      value: Doma_Table3
+      value: Doma_Table
       objectReference: {fileID: 0}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Layer
@@ -920,7 +920,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8909983586948276039, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
 --- !u!4 &299812918 stripped
 Transform:
@@ -2874,7 +2875,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
-      value: Doma_Table1
+      value: Doma_Table
       objectReference: {fileID: 0}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Layer
@@ -2887,6 +2888,22 @@ PrefabInstance:
     - target: {fileID: 1494587765882225107, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319702491014521278, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319702491014521278, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319702491014521278, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319702491014521278, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5027029705911376937, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Layer
@@ -2940,7 +2957,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8909983586948276039, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
 --- !u!1 &1335449495 stripped
 GameObject:
@@ -2979,7 +2997,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
-      value: Doma_Table2
+      value: Doma_Table
       objectReference: {fileID: 0}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Layer
@@ -3045,7 +3063,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8909983586948276039, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
 --- !u!1001 &1400966839
 PrefabInstance:
@@ -3993,7 +4012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bebd4ff3cb4c842800e5e1bece7d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlap: {fileID: 0}
   Cook: {fileID: 0}
   Animator: {fileID: 0}
   Rigidbody: {fileID: 0}
@@ -4923,7 +4941,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
-      value: Doma_Table4
+      value: Doma_Table
       objectReference: {fileID: 0}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Layer
@@ -4989,7 +5007,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8909983586948276039, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
 --- !u!1001 &1809329248
 PrefabInstance:
@@ -5346,7 +5365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4c822d257ea08794ebb13852bbeb5e9f, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3118637283374731924, guid: 4c822d257ea08794ebb13852bbeb5e9f, type: 3}
       propertyPath: m_LocalPosition.x

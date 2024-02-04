@@ -25,8 +25,7 @@ public class Grab_Idle : BaseState
             string clone = "(Clone)";
             string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
             grabObjectName = grabObjectName.Replace(clone, "");
-
-           
+ 
             if (_playerSM.SelectObj == null)
             {
                 _playerSM.Animator.SetBool("Grab", false);

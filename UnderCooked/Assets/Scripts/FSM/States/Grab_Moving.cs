@@ -22,23 +22,17 @@ public class Grab_Moving : BaseState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Animator.SetBool("Grab", false);
-            _stateMachine.ChangeState(_playerSM.IdleState);
-
-
             string clone = "(Clone)";
             string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
             grabObjectName = grabObjectName.Replace(clone, "");
 
-           
-            if (_playerSM.SelectObj == null /*_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject*/)
+            if (_playerSM.SelectObj == null)
             {
                 _playerSM.Animator.SetBool("Grab", false);
-                Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                 _stateMachine.ChangeState(_playerSM.IdleState);
             }
-            // Å×ÀÌºí
             else
             {
                 Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
@@ -46,13 +40,14 @@ public class Grab_Moving : BaseState
                 if (table.childCount < 1)
                 {
                     _playerSM.Animator.SetBool("Grab", false);
-                    Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
                     Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                     _stateMachine.ChangeState(_playerSM.IdleState);
                 }
             }
-                
         }
+
+
 
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
