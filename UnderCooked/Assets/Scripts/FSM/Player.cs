@@ -27,6 +27,7 @@ public class Player : StateMachine
 
     public Vector3 LookDir;
     public bool canCut;
+    public bool FoodGrab;
     public float _speed = 5.0f;
 
 
@@ -110,17 +111,19 @@ public class Player : StateMachine
             {
                 Transform SpawnPos = place.transform.Find("SpawnPos");
 
-                if (SpawnPos.childCount == 1 && place.SliceFood == null)
+                if (SpawnPos.childCount == 1 && !place.SliceFoodbool)
                 {
                     canCut = true;
                 }
-                if (place.SliceFoodbool)
-                {
+                else
                     canCut = false;
-                }
 
+                if (place._chopCount > 0)
+                    FoodGrab = false;
+                else FoodGrab = true;
+                
             }
-            //else canCut = false;
+            else canCut = false;
         }
         else
         {

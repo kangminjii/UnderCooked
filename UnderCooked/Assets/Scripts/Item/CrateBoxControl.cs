@@ -32,7 +32,14 @@ public class CrateBoxControl : MonoBehaviour
         string boxName = "Crate_";
         name = name.Remove(0, boxName.Length);
 
+        if(name == "Fish")
+        {
+            Vector3 newPosition = _spawnPoint.position + new Vector3(0f, 0.3f, 0f); // y값을 1만큼 올림
+            Managers.Resource.Instantiate(name, newPosition, Quaternion.identity, _spawnPoint.transform);
+        }
+        else
         Managers.Resource.Instantiate(name, _spawnPoint.position, Quaternion.identity, _spawnPoint.transform);
+
     }
 
 

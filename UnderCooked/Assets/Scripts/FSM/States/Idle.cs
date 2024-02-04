@@ -29,12 +29,28 @@ public class Idle : BaseState
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(_playerSM.transform.Find("SpawnPos").childCount < 1)
+            if (_playerSM.SelectObj == null)
+                return;
+
+            if (_playerSM.transform.Find("SpawnPos").childCount < 1)
             {
+
+                if (_playerSM.SelectObj.tag == "Food") // Tag를 이용해 바닥에 떨어져있는 Food 줍기코드
+                {
+                    string clone = "_Drop(Clone)";
+                    string FallingObjectName = _playerSM.SelectObj.transform.name;
+                    FallingObjectName = FallingObjectName.Replace(clone, "");
+
+                    Managers.Resource.Instantiate(FallingObjectName , _playerSM.SpawnPos.position, Quaternion.identity, _playerSM.SpawnPos);
+                    Managers.Resource.Destroy(_playerSM.SelectObj);
+                    return;
+                }
+
+                if (_playerSM.SelectObj.name == "Doma_Table" && _playerSM.FoodGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
+                    return;
 
                 if (_playerSM.SelectObj != null && _playerSM.SelectObj.transform.Find("SpawnPos").childCount == 1)
                 {
-                    
                     string clone = "(Clone)";
                     string TableObjectName = _playerSM.SelectObj.transform.Find("SpawnPos").GetChild(0).name;
                     TableObjectName = TableObjectName.Replace(clone, "");
@@ -45,11 +61,10 @@ public class Idle : BaseState
                     Managers.Resource.Instantiate(TableObjectName, _playerSM.SpawnPos.position, Quaternion.identity, _playerSM.SpawnPos);
                     Managers.Resource.Destroy(table.GetChild(0).gameObject);
                     _stateMachine.ChangeState(_playerSM.GrabIdleState);
-
-
                 }
+               
             }
-            
+
         }
 
         if (_playerSM.canCut && Input.GetKey(KeyCode.LeftControl))

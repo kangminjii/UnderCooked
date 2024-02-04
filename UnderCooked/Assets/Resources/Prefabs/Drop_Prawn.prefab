@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: -2945881210989459867}
   - component: {fileID: 2570063450449280704}
   - component: {fileID: 9178804409870121629}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Drop_Prawn
-  m_TagString: Prawn
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

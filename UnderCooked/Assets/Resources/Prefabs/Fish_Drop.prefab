@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: -8437188343173270260}
   - component: {fileID: 8082719979494950801}
   - component: {fileID: 2663387059032451941}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fish_Drop
-  m_TagString: Untagged
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

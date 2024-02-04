@@ -29,9 +29,10 @@ public class Grab_Idle : BaseState
             if (_playerSM.SelectObj == null)
             {
                 _playerSM.Animator.SetBool("Grab", false);
+                _stateMachine.ChangeState(_playerSM.IdleState);
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
-                _stateMachine.ChangeState(_playerSM.IdleState);
+                
             }
             else
             {
@@ -40,9 +41,17 @@ public class Grab_Idle : BaseState
                 if (table.childCount < 1)
                 {
                     _playerSM.Animator.SetBool("Grab", false);
-                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
-                    Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                     _stateMachine.ChangeState(_playerSM.IdleState);
+                    if (grabObjectName == "Fish") // Fish 일때 Y값 증가
+                    {
+                        Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 1만큼 올림
+                        Managers.Resource.Instantiate(grabObjectName, newPosition, Quaternion.identity, table);
+                    }
+                    else
+                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
+
+                    Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                    
                 }
             }
         }

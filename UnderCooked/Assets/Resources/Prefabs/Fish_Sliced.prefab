@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4792166633166905599}
   - component: {fileID: 4124155807561670283}
   - component: {fileID: 8548849690845389548}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fish_Sliced
-  m_TagString: Untagged
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
