@@ -26,13 +26,24 @@ public class Grab_Idle : BaseState
             string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
             grabObjectName = grabObjectName.Replace(clone, "");
  
-            if (_playerSM.SelectObj == null)
+            if(_playerSM.SelectObj != null && _playerSM.SelectObj.tag == "Food")
             {
                 _playerSM.Animator.SetBool("Grab", false);
                 _stateMachine.ChangeState(_playerSM.IdleState);
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
-                
+                return;
+            }
+
+            if (_playerSM.SelectObj == null)
+            {
+
+                _playerSM.Animator.SetBool("Grab", false);
+                _stateMachine.ChangeState(_playerSM.IdleState);
+                Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
+                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                return;
+
             }
             else
             {
@@ -44,7 +55,7 @@ public class Grab_Idle : BaseState
                     _stateMachine.ChangeState(_playerSM.IdleState);
                     if (grabObjectName == "Fish") // Fish 일때 Y값 증가
                     {
-                        Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 1만큼 올림
+                        Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
                         Managers.Resource.Instantiate(grabObjectName, newPosition, Quaternion.identity, table);
                     }
                     else
@@ -55,7 +66,6 @@ public class Grab_Idle : BaseState
                 }
             }
         }
-
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
