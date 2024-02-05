@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PassingGate : MonoBehaviour
 {
-
-    bool canInteract = false;
     Transform _playerSpawnPos;
+    public bool canInteract = false;
 
 
     public PlateReturn plateReturn;
@@ -14,15 +13,16 @@ public class PassingGate : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     private void Update()
     {
         if (canInteract && Input.GetKeyDown(KeyCode.Space))
         {
-           if(_playerSpawnPos.childCount > 0)
+           if(_playerSpawnPos.childCount > 0 && _playerSpawnPos.GetChild(0).tag == "Plate")
            {
+                Debug.Log("dsf");
                 plateReturn.PlateList.RemoveAt(plateReturn.CurrentPlateNumber - 1);
                 plateReturn.CurrentPlateNumber--;
 

@@ -8,8 +8,6 @@ public class Overlap : MonoBehaviour
     public LayerMask layermask;
     private Collider _short_Obj;
 
-
-    private GameObject prevSelectedGameObject;
     public GameObject SelectGameObject;
 
     private GameObject selectedObject;
@@ -62,7 +60,7 @@ public class Overlap : MonoBehaviour
         {
             _short_Obj = null; // 충돌한 콜라이더가 없으면 Short_Obj를 null로 설정
             SelectGameObject = null;
-            prevSelectedGameObject = null;
+
             RestoreObjectColor();
             Select();
         }

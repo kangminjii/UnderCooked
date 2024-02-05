@@ -20,6 +20,9 @@ public class Grab_Moving : BaseState
 
     public override void UpdateLogic()
     {
+        if(_playerSM.SpawnPos.childCount < 1)
+            SetState();
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             string clone = "(Clone)";
@@ -28,31 +31,31 @@ public class Grab_Moving : BaseState
 
             if (_playerSM.SelectObj != null && _playerSM.SelectObj.tag == "Food")
             {
-                _playerSM.Animator.SetBool("Grab", false);
-                _stateMachine.ChangeState(_playerSM.IdleState);
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                 return;
             }
 
             if (_playerSM.SelectObj == null)
-            {
-
-                _playerSM.Animator.SetBool("Grab", false);
-                _stateMachine.ChangeState(_playerSM.IdleState);
+            {;
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                 return;
 
             }
+
+            if (_playerSM.SelectObj.tag == "Passing" && _playerSM.SpawnPos.GetChild(0).tag == "Plate")
+            {
+                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+            }
             else
             {
                 Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
 
-                if (table.childCount < 1)
+                if (table!= null && table.childCount < 1)
                 {
-                    _playerSM.Animator.SetBool("Grab", false);
-                    _stateMachine.ChangeState(_playerSM.IdleState);
+                    if (_playerSM.SelectObj.tag == "PlateReturn" || _playerSM.SelectObj.tag == "Passing")
+                        return;
                     if (grabObjectName == "Fish") // Fish 일때 Y값 증가
                     {
                         Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
@@ -80,5 +83,11 @@ public class Grab_Moving : BaseState
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
             _playerSM.Dash();
+    }
+
+    private void SetState()
+    {
+        _playerSM.Animator.SetBool("Grab", false);
+        _stateMachine.ChangeState(_playerSM.MovingState);
     }
 }

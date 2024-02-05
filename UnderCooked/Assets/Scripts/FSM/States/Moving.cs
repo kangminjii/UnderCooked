@@ -24,7 +24,7 @@ public class Moving : BaseState
         if (_playerSM.transform.Find("SpawnPos").childCount > 0)
         {
             _playerSM.Animator.SetBool("Grab", true);
-            _stateMachine.ChangeState(_playerSM.GrabIdleState);
+            _stateMachine.ChangeState(_playerSM.GrabMovingState);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -49,13 +49,17 @@ public class Moving : BaseState
                 if (_playerSM.SelectObj.name == "Doma_Table" && _playerSM.FoodGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
                     return;
 
-                if (_playerSM.SelectObj != null && _playerSM.SelectObj.transform.Find("SpawnPos").childCount == 1)
+
+                if (_playerSM.SelectObj.transform.Find("SpawnPos") == null)
+                    return;
+                else if (_playerSM.SelectObj.transform.Find("SpawnPos").childCount == 1)
                 {
+
+                    Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
                     string clone = "(Clone)";
                     string TableObjectName = _playerSM.SelectObj.transform.Find("SpawnPos").GetChild(0).name;
                     TableObjectName = TableObjectName.Replace(clone, "");
 
-                    Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
 
                     _playerSM.Animator.SetBool("Grab", true);
                     Managers.Resource.Instantiate(TableObjectName, _playerSM.SpawnPos.position, Quaternion.identity, _playerSM.SpawnPos);

@@ -30,7 +30,7 @@ public class PlateReturn : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(KeyCode.Space))
         {
-            if(CurrentPlateNumber > 0)
+            if(CurrentPlateNumber > 0 && _playerSpawnPos.childCount < 1)
             {
                 Managers.Resource.Instantiate(_plateName, _playerSpawnPos.position, Quaternion.identity, _playerSpawnPos.transform);
                 Managers.Resource.Destroy(_plateSpawnPos.GetChild(_plateSpawnPos.childCount-1).gameObject);

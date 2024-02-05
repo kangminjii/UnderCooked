@@ -13,6 +13,7 @@ TagManager:
   - Passing
   - Plane
   - Prawn
+  - Plate
   layers:
   - Default
   - TransparentFX
