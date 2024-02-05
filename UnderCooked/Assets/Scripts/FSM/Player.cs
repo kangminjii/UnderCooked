@@ -50,8 +50,12 @@ public class Player : StateMachine
         Animator = GetComponent<Animator>();
         SpawnPos = this.transform.Find("SpawnPos");
 
-        Overlap.ObjectSelectEnter -= Select;
         Overlap.ObjectSelectEnter += Select;
+    }
+
+    private void OnDestroy()
+    {
+        Overlap.ObjectSelectEnter -= Select;
     }
 
 
@@ -130,31 +134,6 @@ public class Player : StateMachine
 
 
         // !TODO : 오브젝트가 들어왔을 때 로직을 작성
-    }
-
-
-
-    private Define.Object GetObjectFromTag(string tag)
-    {
-        switch (tag)
-        {
-            case "Table":
-                return Define.Object.Table;
-            case "Bin":
-                return Define.Object.Bin;
-            case "Crate":
-                return Define.Object.Crate;
-            case "PlateReturn":
-                return Define.Object.PlateReturn;
-            case "Passing":
-                return Define.Object.Passing;
-            case "CuttingBoard":
-                return Define.Object.CuttingBoard;
-            case "Food":
-                return Define.Object.Food;
-            default:
-                return Define.Object.Default;
-        }
     }
 
 }

@@ -22,31 +22,35 @@ public class Grab_Moving : BaseState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerSM.Animator.SetBool("Grab", false);
-            _stateMachine.ChangeState(_playerSM.IdleState);
-
-
             string clone = "(Clone)";
             string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
             grabObjectName = grabObjectName.Replace(clone, "");
 
            
-            if (_playerSM.SelectObj == null /*_playerSM.EnterTriggeredObject == _playerSM.ExitTriggeredObject*/)
+            if (_playerSM.SelectObj == null)
             {
                 _playerSM.Animator.SetBool("Grab", false);
                 Managers.Resource.Instantiate("Prawn_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                 _stateMachine.ChangeState(_playerSM.IdleState);
             }
-            // 테이블
             else
             {
                 Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
 
-                if (table.childCount < 1)
+                if (table != null)
+                {
+                    if (table.childCount < 1)
+                    {
+                        _playerSM.Animator.SetBool("Grab", false);
+                        Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
+                        Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                        _stateMachine.ChangeState(_playerSM.IdleState);
+                    }
+                }
+                else // spawnpos 없는 passing
                 {
                     _playerSM.Animator.SetBool("Grab", false);
-                    Managers.Resource.Instantiate("Prawn", table.position, Quaternion.identity, table);
                     Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                     _stateMachine.ChangeState(_playerSM.IdleState);
                 }

@@ -37,11 +37,20 @@ public class Grab_Idle : BaseState
             else
             {
                 Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
-
-                if (table.childCount < 1)
+                
+                if(table != null)
+                {
+                    if (table.childCount < 1)
+                    {
+                        _playerSM.Animator.SetBool("Grab", false);
+                        Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
+                        Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                        _stateMachine.ChangeState(_playerSM.IdleState);
+                    }
+                }
+                else // spawnpos พ๘ดย passing 
                 {
                     _playerSM.Animator.SetBool("Grab", false);
-                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
                     Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
                     _stateMachine.ChangeState(_playerSM.IdleState);
                 }
