@@ -1267,6 +1267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Fish_Order: {fileID: 1993187867}
   Prawn_Order: {fileID: 675606929}
+  testvec: {x: 0, y: 0}
 --- !u!1001 &523437827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3112,6 +3113,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prawn_Order
       objectReference: {fileID: 0}
+    - target: {fileID: 7366348848054291030, guid: 1b7f2239a88e66c4b85f5d624ca31bac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b7f2239a88e66c4b85f5d624ca31bac, type: 3}
 --- !u!1001 &1218658332
@@ -4203,7 +4208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 703943409856468234, guid: 027ac52928f4a1a42a17362266f64121, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 027ac52928f4a1a42a17362266f64121, type: 3}
