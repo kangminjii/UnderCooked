@@ -6,51 +6,25 @@ public class OrderUI : MonoBehaviour
 {
     // x : -342~342 , y : 9
 
-    RectTransform _prawnPos;
-
-    float _speed = 3.0f;
-    float _maxLength = 342.0f;
-    float _distance = 70.0f;
-    float _originHeight = 9.0f;
+    float _speed = 4.0f;
 
     List<GameObject> OrderList = new List<GameObject>();
 
 
-    public GameObject Fish_Order;
-    public GameObject Prawn_Order;
     public delegate void OrderCheck();
     public static event OrderCheck FoodOrderCheck;
 
 
-    GameObject test_fish;
-    RectTransform _fishPos;
-
 
     void Start()
     {
-        // 초반 위치 설정
-        //_fishPos = Fish_Order.GetComponent<RectTransform>();
-        //_prawnPos = Prawn_Order.GetComponent<RectTransform>();
-
-        //_fishPos.anchoredPosition = new Vector2(_maxLength - _distance * 1, 9);     // #1
-        //_prawnPos.anchoredPosition = new Vector2(_maxLength - _distance * 0, 9);    // #2
-
-        // 리스트 추가
-        //OrderList.Add(Fish_Order);
-        //OrderList.Add(Prawn_Order);
-
         // 반납되는 음식이 들어올 때 이벤트 구독
         PassingGate.FoodOrderCheck += OrderListChecking;
 
-        // distance는 list의 index값에 따라 달라짐
-        //StartCoroutine(PrawnOrderAnimation(-_maxLength + _distance));
+        StartCoroutine(FishOrderAnimation(-342, MakeOrderObject(0)));
+        StartCoroutine(FishOrderAnimation(-272, MakeOrderObject(1)));
+        StartCoroutine(FishOrderAnimation(-202, MakeOrderObject(1)));
 
-
-
-        test_fish = Managers.Resource.Instantiate("Fish_Order", new Vector2(1920,970), null, this.transform);
-        OrderList.Add(test_fish);
-        _fishPos = test_fish.GetComponent<RectTransform>();
-        StartCoroutine(FishOrderAnimation(-342));
 
     }
 
@@ -60,35 +34,34 @@ public class OrderUI : MonoBehaviour
     }
 
 
-    IEnumerator FishOrderAnimation(float distance)
+    RectTransform MakeOrderObject(int num)
     {
-        //while(_fishPos.anchoredPosition.x > distance)
-        //{
-        //    _fishPos.anchoredPosition -= new Vector2(_speed, 0);
-        //    yield return null;
-        //}
+        GameObject orderObj;
 
-        //_fishPos.anchoredPosition = new Vector2(distance, _originHeight);
+        if (num == 0)
+            orderObj = Managers.Resource.Instantiate("Fish_Order", null, null, this.transform);
+        else
+            orderObj = Managers.Resource.Instantiate("Prawn_Order", null, null, this.transform);
 
-        while (_fishPos.anchoredPosition.x > distance)
+        OrderList.Add(orderObj);
+        
+        return orderObj.GetComponent<RectTransform>();
+    }
+
+
+    IEnumerator FishOrderAnimation(float xPos, RectTransform orderPos)
+    {
+        orderPos.anchoredPosition = new Vector2(342, 9); // 처음 시작 구역
+
+        while (orderPos.anchoredPosition.x > xPos)
         {
-            _fishPos.anchoredPosition -= new Vector2(_speed, 0);
+            orderPos.anchoredPosition -= new Vector2(_speed, 0);
             yield return null;
         }
 
-        _fishPos.anchoredPosition = new Vector2(distance, 9);
+        orderPos.anchoredPosition = new Vector2(xPos, 9);
     }
 
-    IEnumerator PrawnOrderAnimation(float distance)
-    {
-        while (_prawnPos.anchoredPosition.x > distance)
-        {
-            _prawnPos.anchoredPosition -= new Vector2(_speed, 0);
-            yield return null;
-        }
-
-        _prawnPos.anchoredPosition = new Vector2(distance, _originHeight);
-    }
 
     void OrderListChecking()
     {
