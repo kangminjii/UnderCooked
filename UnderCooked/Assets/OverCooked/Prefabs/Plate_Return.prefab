@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1592834266}
   m_Layer: 0
-  m_Name: SpawnPos
+  m_Name: PlateSpawnPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,9 +44,8 @@ GameObject:
   - component: {fileID: 4997180512540846195}
   - component: {fileID: 1401206651254254279}
   - component: {fileID: 1731734809}
-  - component: {fileID: 1731734810}
   - component: {fileID: 1731734816}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Plate_Return
   m_TagString: PlateReturn
   m_Icon: {fileID: 0}
@@ -144,20 +143,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4323273, y: 0.502504, z: 1.199719}
-  m_Center: {x: -0.116220474, y: 0.251252, z: -0.0001039505}
---- !u!114 &1731734810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470950403174921113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4738d7109f396b4083abe663b182cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Size: {x: 1.1459179, y: 0.502504, z: 0.9736359}
+  m_Center: {x: 0.026984215, y: 0.251252, z: -0.018927217}
 --- !u!114 &1731734816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,3 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a601a9cefd503774a9fbc84e45df72fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlateSpawnPos: {fileID: 0}
+  CurrentPlateNumber: 0
+  PlateList: []

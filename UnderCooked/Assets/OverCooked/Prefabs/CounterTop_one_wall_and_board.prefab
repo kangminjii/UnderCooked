@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 1225892328582488620}
   - component: {fileID: 6424142582500215045}
   - component: {fileID: 9004417716206680452}
-  - component: {fileID: 8909983586948276039}
   - component: {fileID: 5313421595696929193}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: CounterTop_one_wall_and_board
   m_TagString: CuttingBoard
   m_Icon: {fileID: 0}
@@ -117,18 +116,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.64897114, z: 2.3}
   m_Center: {x: 12, y: 0.3244855, z: 1.130408}
---- !u!114 &8909983586948276039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076218644926528685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4738d7109f396b4083abe663b182cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5313421595696929193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f62df7d75dc7d4d98c603f3fedd8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnFood: {fileID: 0}
+  _chopCount: 0
+  SliceFoodbool: 0
 --- !u!1 &5027029705911376937
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4319702491014521278}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SpawnPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5027029705911376937}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.95, y: 0.48, z: 1.114}
+  m_LocalPosition: {x: 11.95, y: 0.48, z: 1.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -226,6 +216,10 @@ PrefabInstance:
     - target: {fileID: 8771958216004325177, guid: aca99840ab83db44b9715ea39a7f1b36, type: 3}
       propertyPath: m_Name
       value: CuttingBoard_Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771958216004325177, guid: aca99840ab83db44b9715ea39a7f1b36, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aca99840ab83db44b9715ea39a7f1b36, type: 3}
@@ -288,6 +282,10 @@ PrefabInstance:
     - target: {fileID: 5761031507792625008, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}
       propertyPath: m_Name
       value: CuttingBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5761031507792625008, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3997082168578087544, guid: 2af67c4793be2cd4984c3e3730a672e0, type: 3}

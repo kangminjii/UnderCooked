@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3030491372688979770}
   - component: {fileID: 9198868692112708253}
   - component: {fileID: 2395381639241351954}
-  - component: {fileID: 3997082169517700515}
   m_Layer: 0
   m_Name: CuttingBoard_Knife
   m_TagString: Untagged
@@ -84,15 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3997082169517700515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8771958216004325177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4738d7109f396b4083abe663b182cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
