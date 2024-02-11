@@ -44,6 +44,9 @@ public class Grab_Idle : BaseState
                 return;
             }
 
+            if (selectObj != null && selectObj.tag == "CuttingBoard" && playerSpawnPos.GetChild(0).tag.Contains("Plate")) //도마 접시위에 올라가지않게 막음
+                return;
+
             if (_playerSM.SelectObj == null)
             {
 
@@ -65,7 +68,6 @@ public class Grab_Idle : BaseState
 
                     Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
 
-                    FoodOrderCheck.Invoke(playerSpawnPos.GetChild(0).gameObject);
                 }
                
             }
@@ -103,8 +105,6 @@ public class Grab_Idle : BaseState
 
                 if (table != null && table.childCount < 1)
                 {
-                    //if (selectObj.tag == "PlateReturn" || selectObj.tag == "Passing")
-                    //    return;
                     if (grabObjectName == "Fish") // Fish 일때 Y값 증가
                     {
                         Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림

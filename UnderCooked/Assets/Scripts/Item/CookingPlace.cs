@@ -5,8 +5,12 @@ public class CookingPlace : MonoBehaviour
 {
     private GameObject _cookingKnife;
     private Transform _spawnPos;
+    public Slider _slider;
+
+
     public GameObject OnFood;
 
+    
 
     string PrawnObjectName = "Prawn(Clone)";
     string FishObjectName = "Fish(Clone)";
@@ -20,6 +24,10 @@ public class CookingPlace : MonoBehaviour
     {
         _cookingKnife = transform.Find("CuttingBoard_Knife").gameObject;
         _spawnPos = transform.Find("SpawnPos");
+        _slider = GetComponentInChildren<Slider>();
+
+        _slider.minValue = 0;
+        _slider.maxValue = 10;
     }
 
 
@@ -43,6 +51,13 @@ public class CookingPlace : MonoBehaviour
         }
         else
             _cookingKnife.SetActive(true);
+
+        if (OnFood != null && !SliceFoodbool)
+        {
+            _slider.gameObject.SetActive(true);
+            _slider.value = (float)_chopCount;
+        }
+        else _slider.gameObject.SetActive(false);
 
         if (_chopCount >= 10)
         {

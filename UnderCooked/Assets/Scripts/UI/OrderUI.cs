@@ -68,7 +68,7 @@ public class OrderUI : MonoBehaviour
     {
         for(int i = 0; i < OrderList.Count; i++)
         {
-            Debug.Log("林巩 眉农");
+            Debug.Log("林巩 眉农 : " + foodCheck.name);
         }
     }
 }
