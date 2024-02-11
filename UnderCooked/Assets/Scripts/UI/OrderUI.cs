@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,9 @@ public class OrderUI : MonoBehaviour
 
     // score
     int _addingScore = 100;
-    int _totalScore = 0;
     Text _scoreText;
     GameObject _scorePanel;
+    public int TotalScore = 0;
 
 
 
@@ -23,7 +24,7 @@ public class OrderUI : MonoBehaviour
 
     public delegate void OrderCheck(string foodName);
     public event OrderCheck FoodOrderCheck;
-
+    public static Action<bool> TimeStart;
 
 
     void Start()
@@ -98,8 +99,10 @@ public class OrderUI : MonoBehaviour
                     Managers.Resource.Destroy(OrderList[i]);
                     OrderList.RemoveAt(i);
 
-                    _totalScore += _addingScore;
-                    _scoreText.text = _totalScore.ToString();
+                    TotalScore += _addingScore;
+                    _scoreText.text = TotalScore.ToString();
+
+                    TimeStart.Invoke(true);
                     break;
                 }
             }
