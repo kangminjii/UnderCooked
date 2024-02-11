@@ -11,11 +11,6 @@ public class Bin : MonoBehaviour
     public PlateReturn plateReturn;
 
 
-    void Start()
-    {
-
-    }
-
     private void Update()
     {
         if (canInteract && Input.GetKeyDown(KeyCode.Space))
