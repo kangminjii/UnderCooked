@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,26 +12,26 @@ public class OrderUI : MonoBehaviour
     List<GameObject> OrderList = new List<GameObject>();
 
 
-    public delegate void OrderCheck();
-    public static event OrderCheck FoodOrderCheck;
+    public delegate void OrderCheck(GameObject foodCheck);
+    public event OrderCheck FoodOrderCheck;
 
 
 
     void Start()
     {
         // 반납되는 음식이 들어올 때 이벤트 구독
-        PassingGate.FoodOrderCheck += OrderListChecking;
+        Grab_Idle.FoodOrderCheck += OrderListChecking;
 
-        StartCoroutine(FishOrderAnimation(-342, MakeOrderObject(0)));
-        StartCoroutine(FishOrderAnimation(-272, MakeOrderObject(1)));
-        StartCoroutine(FishOrderAnimation(-202, MakeOrderObject(1)));
+        StartCoroutine(OrderAnimation(-342, MakeOrderObject(0)));
+        StartCoroutine(OrderAnimation(-272, MakeOrderObject(1)));
+        StartCoroutine(OrderAnimation(-202, MakeOrderObject(1)));
 
 
     }
 
     void OnDestroy()
     {
-        PassingGate.FoodOrderCheck -= OrderListChecking;
+        Grab_Idle.FoodOrderCheck -= OrderListChecking;
     }
 
 
@@ -49,7 +50,7 @@ public class OrderUI : MonoBehaviour
     }
 
 
-    IEnumerator FishOrderAnimation(float xPos, RectTransform orderPos)
+    IEnumerator OrderAnimation(float xPos, RectTransform orderPos)
     {
         orderPos.anchoredPosition = new Vector2(342, 9); // 처음 시작 구역
 
@@ -63,7 +64,7 @@ public class OrderUI : MonoBehaviour
     }
 
 
-    void OrderListChecking()
+    void OrderListChecking(GameObject foodCheck)
     {
         for(int i = 0; i < OrderList.Count; i++)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class Grab_Idle : BaseState
 {
     protected Player _playerSM;
+
+    public static Action<GameObject> FoodOrderCheck;
 
 
     public Grab_Idle(Player stateMachine) : base("Grab_Idle", stateMachine)
@@ -61,6 +64,8 @@ public class Grab_Idle : BaseState
                     PassingGate.plateReturn.CurrentPlateNumber--;
 
                     Managers.Resource.Destroy(PlayerSpawnPos.GetChild(0).gameObject);
+
+                    FoodOrderCheck.Invoke(PlayerSpawnPos.GetChild(0).gameObject);
                 }
                
             }
