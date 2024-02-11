@@ -1606,6 +1606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bebd4ff3cb4c842800e5e1bece7d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlap: {fileID: 0}
   Animator: {fileID: 0}
   Rigidbody: {fileID: 0}
   SpawnPos: {fileID: 0}
@@ -1613,8 +1614,7 @@ MonoBehaviour:
   LookDir: {x: 0, y: 0, z: 0}
   canCut: 0
   _speed: 5
-  EnterTriggeredObject: {fileID: 0}
-  ExitTriggeredObject: {fileID: 0}
+  SelectObj: {fileID: 0}
 --- !u!114 &1447040409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14059,7 +14059,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7891473237355131779}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0039, y: 0, z: 0}
+  m_LocalPosition: {x: -0.00057, y: 0, z: 0.00149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

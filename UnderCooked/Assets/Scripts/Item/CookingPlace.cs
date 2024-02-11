@@ -8,9 +8,6 @@ public class CookingPlace : MonoBehaviour
     public GameObject OnFood;
 
 
-    //public Slider CutSlider;
-    
-
     string PrawnObjectName = "Prawn(Clone)";
     string FishObjectName = "Fish(Clone)";
 
@@ -23,30 +20,11 @@ public class CookingPlace : MonoBehaviour
     {
         _cookingKnife = transform.Find("CuttingBoard_Knife").gameObject;
         _spawnPos = transform.Find("SpawnPos");
-       // CutSlider = GameObject.Find("Canvas").transform.Find("Slider").GetComponent<Slider>();
-
-
-        //CutSlider.minValue = 0;
-        //CutSlider.maxValue = 10;
-       
-
-
     }
+
 
     private void Update()
     {
-
-        //CutSlider.value = _chopCount;
-
-        //if (CutSlider.value == 0)
-        //{
-        //    CutSlider.gameObject.SetActive(false);
-        //}
-        //else
-        //    CutSlider.gameObject.SetActive(true);
-
-
-
         if (_spawnPos.childCount > 0)
         {
             _cookingKnife.SetActive(false);
@@ -68,8 +46,6 @@ public class CookingPlace : MonoBehaviour
 
         if (_chopCount >= 10)
         {
-            
-            //onFood slicefood 설정안되는거 수정해야함
             string clone = "(Clone)";
             string SliceObjectName = _spawnPos.GetChild(0).name;
             SliceObjectName = SliceObjectName.Replace(clone, "");
@@ -80,13 +56,9 @@ public class CookingPlace : MonoBehaviour
 
             SliceFoodbool = true;
             _chopCount = 0;
-            //CutSlider.value = 0;
-
         }
-
-        
-
     }
+
 
     public void CuttingFood()
     {

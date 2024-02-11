@@ -9,9 +9,9 @@ public class ResourceManager
     //    if (typeof(T) == typeof(GameObject))
     //    {
     //        string name = path;
-    //        //int index = name.LastIndexOf('/');
-    //        //if (index >= 0)
-    //        //    name = name.Substring(index + 1);
+    //        int index = name.LastIndexOf('/');
+    //        if (index >= 0)
+    //            name = name.Substring(index + 1);
 
     //        //GameObject go = Managers.Pool.GetOriginal(name);
     //        GameObject go = Resources.Load(name) as GameObject;
@@ -22,7 +22,7 @@ public class ResourceManager
     //    return Resources.Load<T>(path);
     //}
 
-    public GameObject Instantiate(string path, Vector3? pos, Quaternion? rot = null, Transform parent = null)
+    public GameObject Instantiate(string path, Vector3? pos = null, Quaternion? rot = null, Transform parent = null)
     {
         GameObject original = Resources.Load<GameObject>($"Prefabs/{path}");
         pos = pos ?? Vector3.zero;

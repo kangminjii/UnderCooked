@@ -47,13 +47,7 @@ public class Overlap : MonoBehaviour
             objRenderer.material.SetColor("_EmissionColor", new Color(0.5f, 0.45f, 0.4f, 0f));
             objRenderer.material.EnableKeyword("_EMISSION");
 
-
-            //if (prevSelectedGameObject != SelectGameObject)
-            //{
-            //    prevSelectedGameObject = SelectGameObject;
-            //}
-
-                Select();
+            ObjectSelectEnter.Invoke(SelectGameObject);
         }
 
         else
@@ -62,17 +56,11 @@ public class Overlap : MonoBehaviour
             SelectGameObject = null;
 
             RestoreObjectColor();
-            Select();
+            ObjectSelectEnter.Invoke(SelectGameObject);
         }
     }
 
-    private void Select()
-    {
-        //ObjectSelectEnter(SelectGameObject.gameObject);
-        ObjectSelectEnter.Invoke(SelectGameObject);
-        
 
-    }
     private void RestoreObjectColor()
     {
         if (selectedObject != null)
