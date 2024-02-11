@@ -1378,6 +1378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e75e5130486ac9458542791ef41ae3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OrderList: []
 --- !u!114 &505634604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6307,10 +6308,6 @@ PrefabInstance:
     - target: {fileID: 8886852236936629995, guid: 97732f08f3bbcc04a977deea183c28d9, type: 3}
       propertyPath: m_Name
       value: GameScore
-      objectReference: {fileID: 0}
-    - target: {fileID: 8886852237416660567, guid: 97732f08f3bbcc04a977deea183c28d9, type: 3}
-      propertyPath: m_Name
-      value: ProgressBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97732f08f3bbcc04a977deea183c28d9, type: 3}

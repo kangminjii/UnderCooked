@@ -5,35 +5,46 @@ using UnityEngine.UI;
 
 public class OrderUI : MonoBehaviour
 {
-    // x : -342~342 , y : 9
-
+    // animation
     int _speed = 4;
     int _startPos = -342;
-
-    List<GameObject> _orderList = new List<GameObject>();
     GridLayoutGroup _grid;
+    GameObject _orderPanel;
+
+    // score
+    int _addingScore = 100;
+    int _totalScore = 0;
+    Text _scoreText;
+    GameObject _scorePanel;
 
 
+
+    public List<GameObject> OrderList = new List<GameObject>();
 
     public delegate void OrderCheck(string foodName);
     public event OrderCheck FoodOrderCheck;
 
 
+
     void Start()
     {
-        _grid = this.GetComponent<GridLayoutGroup>();
-        _grid.enabled = false;
-
-        // 반납되는 음식이 들어올 때 이벤트 구독
-        Grab_Idle.FoodOrderCheck += OrderListChecking;
-
-        for (int i = 0; i < 3; i++)
+        _orderPanel = Managers.UI.FindDeepChild(transform, "Order_Panel").gameObject;
+        _scorePanel = Managers.UI.FindDeepChild(transform, "Score_Panel").gameObject;
+        _scoreText = Managers.UI.FindDeepChild(_scorePanel.transform, "Score").GetComponent<Text>();
+        _grid = _orderPanel.GetComponent<GridLayoutGroup>();
+        
+        
+        for (int i = 0; i < 2; i++)
         {
             System.Random rand = new System.Random();
             RectTransform position = MakeOrderObject(rand.Next(0, 2));
 
             StartCoroutine(OrderAnimation(_startPos + 70 * i, position));
         }
+
+        _grid.enabled = false;
+
+        Grab_Idle.FoodOrderCheck += OrderListChecking;
     }
 
 
@@ -48,11 +59,11 @@ public class OrderUI : MonoBehaviour
         GameObject orderObj;
 
         if (num == 0)
-            orderObj = Managers.Resource.Instantiate("Fish_Order", null, null, this.transform);
+            orderObj = Managers.Resource.Instantiate("Fish_Order", null, null, _orderPanel.transform);
         else
-            orderObj = Managers.Resource.Instantiate("Prawn_Order", null, null, this.transform);
+            orderObj = Managers.Resource.Instantiate("Prawn_Order", null, null, _orderPanel.transform);
 
-        _orderList.Add(orderObj);
+        OrderList.Add(orderObj);
         
         return orderObj.GetComponent<RectTransform>();
     }
@@ -78,28 +89,21 @@ public class OrderUI : MonoBehaviour
             _grid.enabled = true;
 
 
-        for (int i = 0; i < _orderList.Count; i++)
+        for (int i = 0; i < OrderList.Count; i++)
         {
-            if(foodName == "Prawn")
+            if(foodName == "Prawn" || foodName == "Fish")
             {
-                if(_orderList[i].name.Contains(foodName))
+                if(OrderList[i].name.Contains(foodName))
                 {
-                    Managers.Resource.Destroy(_orderList[i]);
-                    _orderList.RemoveAt(i);
-                    break;
-                }
-            }
-            else if(foodName == "Fish")
-            {
-                if (_orderList[i].name.Contains(foodName))
-                {
-                    Managers.Resource.Destroy(_orderList[i]);
-                    _orderList.RemoveAt(i);
+                    Managers.Resource.Destroy(OrderList[i]);
+                    OrderList.RemoveAt(i);
+
+                    _totalScore += _addingScore;
+                    _scoreText.text = _totalScore.ToString();
                     break;
                 }
             }
         }
     }
-
 
 }
