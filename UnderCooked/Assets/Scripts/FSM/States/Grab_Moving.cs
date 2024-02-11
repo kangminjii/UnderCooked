@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class Grab_Moving : BaseState
 {
     protected Player _playerSM;
+    
+    public static Action<string> FoodOrderCheck;
 
 
     public Grab_Moving(Player stateMachine) : base("Grab_Moving", stateMachine)
@@ -64,7 +67,19 @@ public class Grab_Moving : BaseState
                         PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.CurrentPlateNumber - 1);
                         PassingGate.plateReturn.CurrentPlateNumber--;
 
+                        string returnFoodName;
+
+                        if (PlayerSpawnPos.GetChild(0).name.Contains("Prawn"))
+                            returnFoodName = "Prawn";
+                        else if (PlayerSpawnPos.GetChild(0).name.Contains("Fish"))
+                            returnFoodName = "Fish";
+                        else
+                            returnFoodName = null;
+
+                        FoodOrderCheck.Invoke(returnFoodName);
+
                         Managers.Resource.Destroy(PlayerSpawnPos.GetChild(0).gameObject);
+                       
                     }
 
                 }
@@ -117,11 +132,10 @@ public class Grab_Moving : BaseState
                     }
                 }
             }
-
-            if (Input.anyKey == false)
-                _stateMachine.ChangeState(_playerSM.GrabIdleState);
-
         }
+
+        if (Input.anyKey == false)
+            _stateMachine.ChangeState(_playerSM.GrabIdleState);
     }
 
     public override void UpdatePhysics()

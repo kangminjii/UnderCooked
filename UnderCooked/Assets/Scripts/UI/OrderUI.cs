@@ -1,33 +1,41 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderUI : MonoBehaviour
 {
     // x : -342~342 , y : 9
 
-    float _speed = 4.0f;
+    int _speed = 4;
+    int _startPos = -342;
 
-    List<GameObject> OrderList = new List<GameObject>();
+    List<GameObject> _orderList = new List<GameObject>();
+    GridLayoutGroup _grid;
 
 
-    public delegate void OrderCheck(GameObject foodCheck);
+
+    public delegate void OrderCheck(string foodName);
     public event OrderCheck FoodOrderCheck;
-
 
 
     void Start()
     {
+        _grid = this.GetComponent<GridLayoutGroup>();
+        _grid.enabled = false;
+
         // 반납되는 음식이 들어올 때 이벤트 구독
         Grab_Idle.FoodOrderCheck += OrderListChecking;
 
-        StartCoroutine(OrderAnimation(-342, MakeOrderObject(0)));
-        StartCoroutine(OrderAnimation(-272, MakeOrderObject(1)));
-        StartCoroutine(OrderAnimation(-202, MakeOrderObject(1)));
+        for (int i = 0; i < 3; i++)
+        {
+            System.Random rand = new System.Random();
+            RectTransform position = MakeOrderObject(rand.Next(0, 2));
 
-
+            StartCoroutine(OrderAnimation(_startPos + 70 * i, position));
+        }
     }
+
 
     void OnDestroy()
     {
@@ -44,7 +52,7 @@ public class OrderUI : MonoBehaviour
         else
             orderObj = Managers.Resource.Instantiate("Prawn_Order", null, null, this.transform);
 
-        OrderList.Add(orderObj);
+        _orderList.Add(orderObj);
         
         return orderObj.GetComponent<RectTransform>();
     }
@@ -64,11 +72,34 @@ public class OrderUI : MonoBehaviour
     }
 
 
-    void OrderListChecking(GameObject foodCheck)
+    void OrderListChecking(string foodName)
     {
-        for(int i = 0; i < OrderList.Count; i++)
+        if(_grid.enabled == false)
+            _grid.enabled = true;
+
+
+        for (int i = 0; i < _orderList.Count; i++)
         {
-            Debug.Log("주문 체크");
+            if(foodName == "Prawn")
+            {
+                if(_orderList[i].name.Contains(foodName))
+                {
+                    Managers.Resource.Destroy(_orderList[i]);
+                    _orderList.RemoveAt(i);
+                    break;
+                }
+            }
+            else if(foodName == "Fish")
+            {
+                if (_orderList[i].name.Contains(foodName))
+                {
+                    Managers.Resource.Destroy(_orderList[i]);
+                    _orderList.RemoveAt(i);
+                    break;
+                }
+            }
         }
     }
+
+
 }
