@@ -29,33 +29,45 @@ public class Grab_Moving : BaseState
             string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
             grabObjectName = grabObjectName.Replace(clone, "");
 
-            if (_playerSM.SelectObj != null && _playerSM.SelectObj.tag == "Food")
+            GameObject SelectObj = _playerSM.SelectObj;
+            Transform PlayerSpawnPos = _playerSM.SpawnPos;
+
+            if (SelectObj != null && SelectObj.tag == "Food")
             {
-                Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
-                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                SetState();
+                Managers.Resource.Instantiate(grabObjectName + "_Drop", PlayerSpawnPos.position, Quaternion.identity);
+                Managers.Resource.Destroy(PlayerSpawnPos.GetChild(0).gameObject);
                 return;
             }
 
             if (_playerSM.SelectObj == null)
-            {;
-                Managers.Resource.Instantiate(grabObjectName + "_Drop", _playerSM.SpawnPos.position, Quaternion.identity);
-                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+            {
+
+                SetState();
+                Managers.Resource.Instantiate(grabObjectName + "_Drop", PlayerSpawnPos.position, Quaternion.identity);
+                Managers.Resource.Destroy(PlayerSpawnPos.GetChild(0).gameObject);
                 return;
 
             }
 
-            if (_playerSM.SelectObj.tag == "Passing" && _playerSM.SpawnPos.GetChild(0).tag == "Plate")
+            if (SelectObj.tag == "Passing" && PlayerSpawnPos.GetChild(0).tag == "Plate") // 접시 반납
             {
-                Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                SetState();
+                PassingGate PassingGate = SelectObj.GetComponent<PassingGate>();
+                PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.CurrentPlateNumber - 1);
+                PassingGate.plateReturn.CurrentPlateNumber--;
+
+                Managers.Resource.Destroy(PlayerSpawnPos.GetChild(0).gameObject);
             }
             else
             {
-                Transform table = _playerSM.SelectObj.transform.Find("SpawnPos");
 
-                if (table!= null && table.childCount < 1)
+                Transform table = SelectObj.transform.Find("SpawnPos");
+
+                if (table != null && table.childCount < 1)
                 {
-                    if (_playerSM.SelectObj.tag == "PlateReturn" || _playerSM.SelectObj.tag == "Passing")
-                        return;
+                    //if (SelectObj.tag == "PlateReturn" || SelectObj.tag == "Passing")
+                    //    return;
                     if (grabObjectName == "Fish") // Fish 일때 Y값 증가
                     {
                         Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
@@ -64,7 +76,7 @@ public class Grab_Moving : BaseState
                     else
                         Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
 
-                    Managers.Resource.Destroy(_playerSM.SpawnPos.GetChild(0).gameObject);
+                    Managers.Resource.Destroy(PlayerSpawnPos.GetChild(0).gameObject);
 
                 }
             }

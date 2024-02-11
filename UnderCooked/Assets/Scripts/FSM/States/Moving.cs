@@ -35,7 +35,23 @@ public class Moving : BaseState
             if (SelectObj == null)
                 return;
 
-            if (SelectObj.tag == "Crate" && PlayerSpawnPos.childCount < 1) // CrateBox 
+            if (SelectObj.tag == "PlateReturn") // 접시스폰
+            {
+                PlateReturn plateReturn = SelectObj.GetComponent<PlateReturn>();
+                string _plateName = "Plate";
+
+                if (plateReturn.CurrentPlateNumber > 0 && PlayerSpawnPos.childCount < 1)
+                {
+                    if (plateReturn.PlateSpawnPos.childCount == 0)
+                        return;
+                    Managers.Resource.Instantiate(_plateName, PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, PlayerSpawnPos);
+                    Managers.Resource.Destroy(plateReturn.PlateSpawnPos.GetChild(plateReturn.PlateSpawnPos.childCount - 1).gameObject);
+
+                }
+
+            }
+
+            if (SelectObj.tag == "Crate" && PlayerSpawnPos.childCount < 1) // CrateBox
             {
 
                 CrateBoxControl Cratebox = SelectObj.GetComponent<CrateBoxControl>();
@@ -45,15 +61,9 @@ public class Moving : BaseState
                 string food_name = SelectObj.transform.parent.parent.name;
                 string name = food_name.Remove(0, boxName.Length);
 
-                if (name == "Fish")
-                {
+                Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 1만큼 올림
+                Managers.Resource.Instantiate(name, newPosition, Quaternion.identity, PlayerSpawnPos.transform);
 
-                    Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 1만큼 올림
-                    Managers.Resource.Instantiate(name, newPosition, Quaternion.identity, PlayerSpawnPos.transform);
-
-                }
-                else
-                    Managers.Resource.Instantiate(name, PlayerSpawnPos.position, Quaternion.identity, PlayerSpawnPos.transform);
             }
 
 
@@ -63,18 +73,20 @@ public class Moving : BaseState
                 string FallingObjectName = SelectObj.transform.name;
                 FallingObjectName = FallingObjectName.Replace(clone, "");
 
-                if (FallingObjectName == "Fish")
-                {
-                    Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
-                    Managers.Resource.Instantiate(FallingObjectName, newPosition, Quaternion.identity, PlayerSpawnPos.transform);
-                    Managers.Resource.Destroy(SelectObj);
-                }
-                else
-                {
-                    Managers.Resource.Instantiate(FallingObjectName, PlayerSpawnPos.position, Quaternion.identity, PlayerSpawnPos);
-                    Managers.Resource.Destroy(SelectObj);
-                }
-
+                //if(FallingObjectName == "Fish")
+                //{
+                //    Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
+                //    Managers.Resource.Instantiate(FallingObjectName, newPosition, Quaternion.identity, PlayerSpawnPos.transform);
+                //    Managers.Resource.Destroy(SelectObj);
+                //}
+                //else
+                //{
+                //    Managers.Resource.Instantiate(FallingObjectName, PlayerSpawnPos.position+ new Vector3(0f, 0.3f, 0f), Quaternion.identity, PlayerSpawnPos);
+                //    Managers.Resource.Destroy(SelectObj);
+                //}      
+                Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
+                Managers.Resource.Instantiate(FallingObjectName, newPosition, Quaternion.identity, PlayerSpawnPos.transform);
+                Managers.Resource.Destroy(SelectObj);
             }
 
             if (SelectObj.name == "Doma_Table" && _playerSM.FoodGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
@@ -91,20 +103,9 @@ public class Moving : BaseState
                 string TableObjectName = SelectObj.transform.Find("SpawnPos").GetChild(0).name;
                 TableObjectName = TableObjectName.Replace(clone, "");
 
-
-                if (TableObjectName == "Fish")
-                {
-
-                    Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
-                    Managers.Resource.Instantiate(TableObjectName, newPosition, Quaternion.identity, PlayerSpawnPos);
-                    Managers.Resource.Destroy(table.GetChild(0).gameObject);
-                }
-                else
-                {
-
-                    Managers.Resource.Instantiate(TableObjectName, PlayerSpawnPos.position, Quaternion.identity, PlayerSpawnPos);
-                    Managers.Resource.Destroy(table.GetChild(0).gameObject);
-                }
+                Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
+                Managers.Resource.Instantiate(TableObjectName, newPosition, Quaternion.identity, PlayerSpawnPos);
+                Managers.Resource.Destroy(table.GetChild(0).gameObject);
 
             }
 

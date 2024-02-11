@@ -10,7 +10,7 @@ public class PlateReturn : MonoBehaviour
     string _plateName = "Plate";
     bool canInteract = false;
 
-    Transform _plateSpawnPos;
+    public Transform PlateSpawnPos;
     Transform _playerSpawnPos;
 
 
@@ -22,19 +22,25 @@ public class PlateReturn : MonoBehaviour
 
     private void Start()
     {
-        _plateSpawnPos = this.transform.Find("SpawnPos");
+        PlateSpawnPos = this.transform.Find("PlateSpawnPos");
         StartCoroutine(SpawnPlate());
     }
 
     private void Update()
     {
-        if (canInteract && Input.GetKeyDown(KeyCode.Space))
+        //if (canInteract && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    if(CurrentPlateNumber > 0 && _playerSpawnPos.childCount < 1)
+        //    {
+        //        Managers.Resource.Instantiate(_plateName, _playerSpawnPos.position, Quaternion.identity, _playerSpawnPos.transform);
+        //        Managers.Resource.Destroy(PlateSpawnPos.GetChild(PlateSpawnPos.childCount-1).gameObject);
+        //    }
+        //}
+        //Debug.Log(CurrentPlateNumber);
+        if (CurrentPlateNumber < _maxPlateNumber)
         {
-            if(CurrentPlateNumber > 0 && _playerSpawnPos.childCount < 1)
-            {
-                Managers.Resource.Instantiate(_plateName, _playerSpawnPos.position, Quaternion.identity, _playerSpawnPos.transform);
-                Managers.Resource.Destroy(_plateSpawnPos.GetChild(_plateSpawnPos.childCount-1).gameObject);
-            }
+            StartCoroutine(SpawnPlate());
+            Debug.Log("업데이트");
         }
 
 
@@ -45,31 +51,32 @@ public class PlateReturn : MonoBehaviour
     {
         CurrentPlateNumber++;
 
+        
         yield return new WaitForSeconds(_plateSpawnTime);
 
-        Vector3 spwanPlatePos = _plateSpawnPos.position + new Vector3(0, (_plateSpawnPos.childCount - 1) * 0.05f, 0);
-        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, _plateSpawnPos);
+        Vector3 spwanPlatePos = PlateSpawnPos.position + new Vector3(0, (PlateSpawnPos.childCount - 1) * 0.05f, 0);
+        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, PlateSpawnPos);
         PlateList.Add(plate);
-
+        Debug.Log("코루틴");
         if (CurrentPlateNumber < _maxPlateNumber)
             StartCoroutine(SpawnPlate());
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            canInteract = true;
-            _playerSpawnPos = other.transform.Find("SpawnPos");
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        canInteract = true;
+    //        _playerSpawnPos = other.transform.Find("SpawnPos");
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            canInteract = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        canInteract = false;
+    //    }
+    //}
 
 }

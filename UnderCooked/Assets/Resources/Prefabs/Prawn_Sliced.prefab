@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2235263617623112049}
   - component: {fileID: 1576280974732189576}
   m_Layer: 8
-  m_Name: m_ingredients_prawn_sliced_diced_01_0
+  m_Name: Prawn_Sliced
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8545496516366371515}
   m_Layer: 8
   m_Name: Prawn_Sliced
-  m_TagString: Food
+  m_TagString: SlicedFood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
