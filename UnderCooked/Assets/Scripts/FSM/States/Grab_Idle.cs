@@ -7,7 +7,7 @@ public class Grab_Idle : BaseState
 {
     protected Player _playerSM;
 
-    public static Action<GameObject> FoodOrderCheck;
+    public static Action<string> FoodOrderCheck;
 
 
     public Grab_Idle(Player stateMachine) : base("Grab_Idle", stateMachine)
@@ -63,9 +63,18 @@ public class Grab_Idle : BaseState
                     PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.CurrentPlateNumber - 1);
                     PassingGate.plateReturn.CurrentPlateNumber--;
 
-                    Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
+                    string returnFoodName;
 
-                    FoodOrderCheck.Invoke(playerSpawnPos.GetChild(0).gameObject);
+                    if (playerSpawnPos.GetChild(0).name.Contains("Prawn"))
+                        returnFoodName = "Prawn";
+                    else if (playerSpawnPos.GetChild(0).name.Contains("Fish"))
+                        returnFoodName = "Fish";
+                    else
+                        returnFoodName = null;
+
+                    FoodOrderCheck.Invoke(returnFoodName);
+
+                    Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
                 }
                
             }
