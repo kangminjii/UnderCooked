@@ -20,7 +20,7 @@ public class PlateReturn : MonoBehaviour
 
     private void Start()
     {
-        PlateSpawnPos = this.transform.Find("SpawnPos");
+        PlateSpawnPos = this.transform.Find("PlateSpawnPos");
         StartCoroutine(SpawnPlate());
     }
 
