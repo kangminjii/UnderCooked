@@ -15,6 +15,7 @@ TagManager:
   - Prawn
   - Plate
   - SlicedFood
+  - EmptyPlate
   layers:
   - Default
   - TransparentFX
