@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class Player : StateMachine
 {
-    [SerializeField]
-    Overlap overlap;
-
-
+    // 상태
     [HideInInspector]
     public Idle IdleState;
     [HideInInspector]
@@ -20,21 +17,24 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-    
+    //[SerializeField] Overlap overlap;
+    public CookingPlace Cook;
+   
     public Animator Animator;
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
     public GameObject Knife;
-    public GameObject SelectObj = null; // 선택된 물체
 
     public Vector3 LookDir;
     public bool canCut;
+    public bool FoodGrab;
     public float _speed = 5.0f;
 
 
     public delegate void ObjectSelectHandler(GameObject gameObject);
     public static event ObjectSelectHandler ObjectSelectEnter;
 
+    public GameObject SelectObj = null; // 선택된 물체
 
 
 
@@ -51,13 +51,13 @@ public class Player : StateMachine
         SpawnPos = this.transform.Find("SpawnPos");
 
         Overlap.ObjectSelectEnter += Select;
+
     }
 
     private void OnDestroy()
     {
         Overlap.ObjectSelectEnter -= Select;
     }
-
 
     protected override BaseState GetInitialState()
     {
@@ -98,42 +98,52 @@ public class Player : StateMachine
         Rigidbody.velocity = LookDir * dashForce;
         Rigidbody.AddForce(LookDir * dashForce, ForceMode.Force);
     }
-
+    
 
     private void Select(GameObject Obj)
     {
-        //SelectObj = null;
-        if(Obj != null)
+        
+        if (Obj != null)
         {
             SelectObj = Obj;
+
+            CookingPlace place = Obj.GetComponent<CookingPlace>();
+
+
+            if (place != null)
+            {
+                Transform SpawnPos = place.transform.Find("SpawnPos");
+
+                if (SpawnPos.childCount == 1 && !place.SliceFoodbool)
+                {
+                    canCut = true;
+                }
+                else
+                    canCut = false;
+
+                if (place._chopCount > 0)
+                    FoodGrab = false;
+                else FoodGrab = true;
+                
+            }
+            else canCut = false;
         }
         else
         {
-           // Debug.Log("Exit");
+           
             canCut = false;
             SelectObj = null;
-            return;
+            //return;
         }
-        //Debug.Log(Obj.name);
-        CookingPlace place = Obj.GetComponent<CookingPlace>();
-        if (place != null)
-            canCut = true;
 
-
-        //if (Obj == null)
-        //{
-        //    Debug.Log("Exit");
-        //    canCut = false;
-        //    SelectObj = null;
-        //    return;
-        //}
-
-
-
-
-
-
+        
         // !TODO : 오브젝트가 들어왔을 때 로직을 작성
+    }
+
+    public void Cutting()
+    {
+        Cook = SelectObj.GetComponent<CookingPlace>();
+        Cook.CuttingFood();
     }
 
 }
