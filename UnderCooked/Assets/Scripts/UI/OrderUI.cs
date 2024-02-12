@@ -2,32 +2,52 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderUI : MonoBehaviour
 {
-    // x : -342~342 , y : 9
+    // animation
+    int _speed = 4;
+    int _startPos = -342;
+    GridLayoutGroup _grid;
+    GameObject _orderPanel;
 
-    float _speed = 4.0f;
+    // score
+    int _addingScore = 100;
+    Text _scoreText;
+    GameObject _scorePanel;
+    public int TotalScore = 0;
 
-    List<GameObject> OrderList = new List<GameObject>();
 
 
-    public delegate void OrderCheck(GameObject foodCheck);
+    public List<GameObject> OrderList = new List<GameObject>();
+
+    public delegate void OrderCheck(string foodName);
     public event OrderCheck FoodOrderCheck;
-
+    public static Action<bool> TimeStart;
 
 
     void Start()
     {
-        // 반납되는 음식이 들어올 때 이벤트 구독
+        _orderPanel = Managers.UI.FindDeepChild(transform, "Order_Panel").gameObject;
+        _scorePanel = Managers.UI.FindDeepChild(transform, "Score_Panel").gameObject;
+        _scoreText = Managers.UI.FindDeepChild(_scorePanel.transform, "Score").GetComponent<Text>();
+        _grid = _orderPanel.GetComponent<GridLayoutGroup>();
+        
+        
+        for (int i = 0; i < 2; i++)
+        {
+            System.Random rand = new System.Random();
+            RectTransform position = MakeOrderObject(rand.Next(0, 2));
+
+            StartCoroutine(OrderAnimation(_startPos + 70 * i, position));
+        }
+
+        _grid.enabled = false;
+
         Grab_Idle.FoodOrderCheck += OrderListChecking;
-
-        StartCoroutine(OrderAnimation(-342, MakeOrderObject(0)));
-        StartCoroutine(OrderAnimation(-272, MakeOrderObject(1)));
-        StartCoroutine(OrderAnimation(-202, MakeOrderObject(1)));
-
-
     }
+
 
     void OnDestroy()
     {
@@ -40,9 +60,9 @@ public class OrderUI : MonoBehaviour
         GameObject orderObj;
 
         if (num == 0)
-            orderObj = Managers.Resource.Instantiate("Fish_Order", null, null, this.transform);
+            orderObj = Managers.Resource.Instantiate("Fish_Order", null, null, _orderPanel.transform);
         else
-            orderObj = Managers.Resource.Instantiate("Prawn_Order", null, null, this.transform);
+            orderObj = Managers.Resource.Instantiate("Prawn_Order", null, null, _orderPanel.transform);
 
         OrderList.Add(orderObj);
         
@@ -64,11 +84,29 @@ public class OrderUI : MonoBehaviour
     }
 
 
-    void OrderListChecking(GameObject foodCheck)
+    void OrderListChecking(string foodName)
     {
-        for(int i = 0; i < OrderList.Count; i++)
+        if(_grid.enabled == false)
+            _grid.enabled = true;
+
+
+        for (int i = 0; i < OrderList.Count; i++)
         {
-            Debug.Log("주문 체크 : " + foodCheck.name);
+            if(foodName == "Prawn" || foodName == "Fish")
+            {
+                if(OrderList[i].name.Contains(foodName))
+                {
+                    Managers.Resource.Destroy(OrderList[i]);
+                    OrderList.RemoveAt(i);
+
+                    TotalScore += _addingScore;
+                    _scoreText.text = TotalScore.ToString();
+
+                    TimeStart.Invoke(true);
+                    break;
+                }
+            }
         }
     }
+
 }
