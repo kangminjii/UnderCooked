@@ -46,12 +46,14 @@ public class OrderUI : MonoBehaviour
         _grid.enabled = false;
 
         Grab_Idle.FoodOrderCheck += OrderListChecking;
+        Grab_Moving.FoodOrderCheck += OrderListChecking;
     }
 
 
     void OnDestroy()
     {
         Grab_Idle.FoodOrderCheck -= OrderListChecking;
+        Grab_Moving.FoodOrderCheck -= OrderListChecking;
     }
 
 
