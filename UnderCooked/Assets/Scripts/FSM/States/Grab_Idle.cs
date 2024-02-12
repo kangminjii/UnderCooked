@@ -120,7 +120,7 @@ public class Grab_Idle : BaseState
                         Managers.Resource.Instantiate(grabObjectName, newPosition, Quaternion.identity, table);
                     }
                     else
-                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
+                        Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
 
                     Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
                     

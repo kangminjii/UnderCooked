@@ -23,7 +23,7 @@ public class OrderUI : MonoBehaviour
     public List<GameObject> OrderList = new List<GameObject>();
 
     public delegate void OrderCheck(string foodName);
-    public event OrderCheck FoodOrderCheck;
+    public static event OrderCheck FoodOrderCheck;
     public static Action<bool> TimeStart;
 
 
@@ -46,12 +46,15 @@ public class OrderUI : MonoBehaviour
         _grid.enabled = false;
 
         Grab_Idle.FoodOrderCheck += OrderListChecking;
+        Grab_Moving.FoodOrderCheck += OrderListChecking;
+
     }
 
 
     void OnDestroy()
     {
         Grab_Idle.FoodOrderCheck -= OrderListChecking;
+        Grab_Moving.FoodOrderCheck -= OrderListChecking;
     }
 
 
