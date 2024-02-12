@@ -40,6 +40,9 @@ public class Grab_Moving : BaseState
                 GameObject selectObj = _playerSM.SelectObj;
                 Transform playerSpawnPos = _playerSM.SpawnPos;
 
+                if (selectObj != null && selectObj.tag == "CuttingBoard" && playerSpawnPos.GetChild(0).tag.Contains("Plate")) //도마 접시위에 올라가지않게 막음
+                    return;
+
                 if (selectObj != null && selectObj.tag == "Food")
                 {
                     SetState();
