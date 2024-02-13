@@ -16,12 +16,13 @@ public class PlateReturn : MonoBehaviour
     // :: public
     public int CurrentPlateNumber = 0;
     public List<GameObject> PlateList = new List<GameObject>();
+    public int ListIndex = 0;
 
 
     private void Start()
     {
         PlateSpawnPos = this.transform.Find("PlateSpawnPos");
-        StartCoroutine(SpawnPlate());
+        //StartCoroutine(SpawnPlate());
     }
 
 
@@ -31,12 +32,14 @@ public class PlateReturn : MonoBehaviour
         {
             StartCoroutine(SpawnPlate());
         }
+
     }
 
 
     public IEnumerator SpawnPlate()
     {
         CurrentPlateNumber++;
+
 
         yield return new WaitForSeconds(_plateSpawnTime);
 

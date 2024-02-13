@@ -37,8 +37,16 @@ public class Grab_Idle : BaseState
             GameObject selectObj = _playerSM.SelectObj;
             Transform playerSpawnPos = _playerSM.SpawnPos;
 
-            if (selectObj != null && selectObj.tag == "CuttingBoard" && playerSpawnPos.GetChild(0).tag.Contains("Plate")) //도마 접시위에 올라가지않게 막음
-                return;
+            if(selectObj != null && selectObj.tag == "Bin")
+            {
+                Transform trash = selectObj.transform.Find("BinSpawnPos");
+                //Bin binObj = selectObj.GetComponent<Bin>();
+
+                Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
+
+            }
+
+
 
             if (selectObj != null && selectObj.tag == "Food")
             {
@@ -47,9 +55,6 @@ public class Grab_Idle : BaseState
                 Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
                 return;
             }
-
-            if (selectObj != null && selectObj.tag == "CuttingBoard" && playerSpawnPos.GetChild(0).tag.Contains("Plate"))
-                return;
 
             if (_playerSM.SelectObj == null)
             {
@@ -65,7 +70,7 @@ public class Grab_Idle : BaseState
                 {
                     SetState();
                     PassingGate PassingGate = selectObj.GetComponent<PassingGate>();
-                    PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.CurrentPlateNumber - 1);
+                    PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.PlateList.Count - 1);
                     PassingGate.plateReturn.CurrentPlateNumber--;
 
                     string returnFoodName;
@@ -91,8 +96,10 @@ public class Grab_Idle : BaseState
                 if (table == null)
                     return;
 
+                if (selectObj.tag == "CuttingBoard" && table.childCount < 1 && playerSpawnPos.GetChild(0).tag.Contains("Plate")) //도마 위에 접시 안올라가게 함
+                    return;
 
-                if(table.childCount == 1)
+                if (table.childCount == 1)
                 {
                     if (table.GetChild(0).tag == "EmptyPlate" && playerSpawnPos.GetChild(0).tag == "SlicedFood")
                     {
@@ -103,7 +110,6 @@ public class Grab_Idle : BaseState
                     }
                     else if (playerSpawnPos.GetChild(0).tag == "EmptyPlate" && table.GetChild(0).tag == "SlicedFood")
                     {
-
                         string tableclone = "(Clone)";
                         string tableObjectName = table.GetChild(0).name;
                         tableObjectName = tableObjectName.Replace(tableclone, "");
@@ -111,11 +117,12 @@ public class Grab_Idle : BaseState
                         Managers.Resource.Instantiate(tableObjectName + "_Plate", playerSpawnPos.position+new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerSpawnPos);
                         Managers.Resource.Destroy(table.GetChild(0).gameObject);
                         Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
+
                     }
                 }
                
 
-                if (table != null && table.childCount < 1)
+                else if (table != null && table.childCount < 1)
                 {
                     if (grabObjectName == "Fish") // Fish 일때 Y값 증가
                     {

@@ -63,9 +63,9 @@ public class Grab_Moving : BaseState
 
                 if (playerSpawnPos.GetChild(0).tag == "Plate" || playerSpawnPos.GetChild(0).tag == "EmptyPlate")
                 {
-                    //SetState();
+                    
                     PassingGate PassingGate = selectObj.GetComponent<PassingGate>();
-                    PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.CurrentPlateNumber - 1);
+                    PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.PlateList.Count - 1);
                     PassingGate.plateReturn.CurrentPlateNumber--;
 
                     string returnFoodName;
@@ -89,6 +89,9 @@ public class Grab_Moving : BaseState
                 Transform table = selectObj.transform.Find("SpawnPos");
 
                 if (table == null)
+                    return;
+
+                if (selectObj.tag == "CuttingBoard" && table.childCount < 1 && playerSpawnPos.GetChild(0).tag.Contains("Plate")) //도마 위에 접시 안올라가게 함
                     return;
 
 

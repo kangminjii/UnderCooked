@@ -4,42 +4,49 @@ using UnityEngine;
 
 public class Bin : MonoBehaviour
 {
-    bool canInteract = false;
-    Transform _playerSpawnPos;
+    //bool canInteract = false;
+    //Transform _playerSpawnPos;
+    Transform _binSpawnPos;
+    AnimationClip animationClip;
+    bool flag = false;
 
-
-    public PlateReturn plateReturn;
-
+    //public PlateReturn plateReturn;
+    private void Start()
+    {
+        _binSpawnPos = transform.Find("BinSpawnPos");
+        //animation = Resources.Load<Animation>
+        animationClip = Resources.Load<AnimationClip>("AnimationClip/BinGo");
+    }
 
     private void Update()
     {
-        if (canInteract && Input.GetKeyDown(KeyCode.Space))
+
+        if(_binSpawnPos.childCount > 0)
         {
-            if (_playerSpawnPos.childCount > 0)
-            {
-                plateReturn.PlateList.RemoveAt(plateReturn.CurrentPlateNumber - 1);
-                plateReturn.CurrentPlateNumber--;
+            GameObject trash = _binSpawnPos.GetChild(0).gameObject;
 
-                StartCoroutine(plateReturn.SpawnPlate());
-            }
-
+            trash.GetComponent<Animator>().SetTrigger("binTrigger");
+           
+            //Destroy(trash);
+           
         }
+
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            canInteract = true;
-            _playerSpawnPos = other.transform.Find("SpawnPos");
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        canInteract = true;
+    //        _playerSpawnPos = other.transform.Find("SpawnPos");
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            canInteract = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        canInteract = false;
+    //    }
+    //}
 }

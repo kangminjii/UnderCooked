@@ -91,7 +91,7 @@ public class Idle : BaseState
                 Managers.Resource.Destroy(selectObj);
             }
 
-            if (selectObj.name == "Doma_Table" && _playerSM.FoodGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
+            if (selectObj.tag == "CuttingBoard" && _playerSM.FoodGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
                 return;
 
             if (selectObj.transform.Find("SpawnPos") == null)

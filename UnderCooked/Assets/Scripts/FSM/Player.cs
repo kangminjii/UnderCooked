@@ -23,6 +23,7 @@ public class Player : StateMachine
     public Animator Animator;
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
+    private Transform ChopPos;
     public GameObject Knife;
 
     public Vector3 LookDir;
@@ -49,6 +50,7 @@ public class Player : StateMachine
         Rigidbody = GetComponent<Rigidbody>();
         Animator = GetComponent<Animator>();
         SpawnPos = this.transform.Find("SpawnPos");
+        ChopPos = this.transform.Find("ChopPos");
 
         Overlap.ObjectSelectEnter += Select;
 
@@ -124,9 +126,12 @@ public class Player : StateMachine
                 if (place._chopCount > 0)
                     FoodGrab = false;
                 else FoodGrab = true;
-                
+
             }
-            else canCut = false;
+            else
+            {
+                canCut = false;
+            }
         }
         else
         {
@@ -144,6 +149,14 @@ public class Player : StateMachine
     {
         Cook = SelectObj.GetComponent<CookingPlace>();
         Cook.CuttingFood();
+        Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
+        
     }
+
+    public void DashEffect()
+    {
+       
+    }
+
 
 }
