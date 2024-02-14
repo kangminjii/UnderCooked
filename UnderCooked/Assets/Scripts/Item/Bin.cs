@@ -8,12 +8,12 @@ public class Bin : MonoBehaviour
     //Transform _playerSpawnPos;
     Transform _binSpawnPos;
     AnimationClip animationClip;
-    bool flag = false;
+    GameObject trash;
 
     //public PlateReturn plateReturn;
     private void Start()
     {
-        _binSpawnPos = transform.Find("BinSpawnPos");
+        _binSpawnPos = this.transform;//transform.Find("BinSpawnPos");
         //animation = Resources.Load<Animation>
         animationClip = Resources.Load<AnimationClip>("AnimationClip/BinGo");
     }
@@ -23,15 +23,26 @@ public class Bin : MonoBehaviour
 
         if(_binSpawnPos.childCount > 0)
         {
-            GameObject trash = _binSpawnPos.GetChild(0).gameObject;
+            if (_binSpawnPos.childCount > 1)
+                Destroy(trash);
+
+            trash = _binSpawnPos.GetChild(0).gameObject;
+
 
             trash.GetComponent<Animator>().SetTrigger("binTrigger");
-           
-            //Destroy(trash);
-           
+
+            //Destroy(trash);         
         }
 
     }
+
+    //public void DeletTrash()
+    //{
+    //    if(trash != null)
+    //    {
+    //        Destroy(this);
+    //    }
+    //}
 
     //private void OnTriggerStay(Collider other)
     //{

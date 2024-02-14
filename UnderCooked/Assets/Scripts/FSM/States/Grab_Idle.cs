@@ -40,10 +40,9 @@ public class Grab_Idle : BaseState
             if(selectObj != null && selectObj.tag == "Bin")
             {
                 Transform trash = selectObj.transform.Find("BinSpawnPos");
-                //Bin binObj = selectObj.GetComponent<Bin>();
 
                 Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
-
+                Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
             }
 
 
