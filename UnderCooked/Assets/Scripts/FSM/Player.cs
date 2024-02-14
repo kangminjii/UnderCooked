@@ -23,8 +23,11 @@ public class Player : StateMachine
     public Animator Animator;
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
-    private Transform ChopPos;
     public GameObject Knife;
+    private Transform ChopPos;
+
+    private float lastDashTime = 0f;
+    private float dashCooldown = 0.3f;
 
     public Vector3 LookDir;
     public bool canCut;
@@ -95,12 +98,20 @@ public class Player : StateMachine
 
     public void Dash()
     {
-        float dashForce = 6f;
+        float dashForce = 7f;
 
-        Rigidbody.velocity = LookDir * dashForce;
-        Rigidbody.AddForce(LookDir * dashForce, ForceMode.Force);
+        // 쿨타임 체크
+        if (Time.time - lastDashTime >= dashCooldown)       
+        {
+            Transform DashPos = transform.Find("Chararcter");
+            Rigidbody.velocity = LookDir * dashForce;
+            Rigidbody.AddForce(LookDir * dashForce, ForceMode.Force);
+            Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, DashPos);
+            // 다시 쿨타임을 시작하기 위해 시간 기록
+            lastDashTime = Time.time;
+        }
+
     }
-    
 
     private void Select(GameObject Obj)
     {
