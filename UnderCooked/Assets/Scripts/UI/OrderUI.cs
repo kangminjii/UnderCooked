@@ -103,7 +103,7 @@ public class OrderUI : MonoBehaviour
 
                     TotalScore += _addingScore;
                     GameObject Passing = GameObject.Find("m_sk_the_pass_red_01_2");
-                    Managers.Resource.Instantiate("Order_True_Effect", Passing.transform.position + new Vector3(-0.2f,0.6f,0f), Quaternion.identity);
+                    Managers.Resource.Instantiate("OrderEffect", Passing.transform.position + new Vector3(-0.4f,0.8f,0f), Quaternion.identity);
                     _scoreText.text = TotalScore.ToString();
 
                     TimeStart.Invoke(true);

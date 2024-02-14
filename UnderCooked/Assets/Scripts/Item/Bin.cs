@@ -29,35 +29,8 @@ public class Bin : MonoBehaviour
             trash = _binSpawnPos.GetChild(0).gameObject;
 
 
-            trash.GetComponent<Animator>().SetTrigger("binTrigger");
-
-            //Destroy(trash);         
+            trash.GetComponent<Animator>().SetTrigger("binTrigger");       
         }
 
     }
-
-    //public void DeletTrash()
-    //{
-    //    if(trash != null)
-    //    {
-    //        Destroy(this);
-    //    }
-    //}
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        canInteract = true;
-    //        _playerSpawnPos = other.transform.Find("SpawnPos");
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        canInteract = false;
-    //    }
-    //}
 }

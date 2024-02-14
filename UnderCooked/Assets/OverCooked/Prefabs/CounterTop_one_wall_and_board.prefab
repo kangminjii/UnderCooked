@@ -391,8 +391,8 @@ GameObject:
   - component: {fileID: 7318606795145555330}
   - component: {fileID: 7219448377801119251}
   - component: {fileID: 1225892328582488620}
-  - component: {fileID: 6424142582500215045}
   - component: {fileID: 5313421595696929193}
+  - component: {fileID: 6426867539110134681}
   m_Layer: 14
   m_Name: CounterTop_one_wall_and_board
   m_TagString: CuttingBoard
@@ -469,20 +469,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6424142582500215045
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076218644926528685}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3719503978625710168, guid: 88c14d2b8bc7f8b459947170e56a9d3b, type: 3}
 --- !u!114 &5313421595696929193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +485,19 @@ MonoBehaviour:
   OnFood: {fileID: 0}
   _chopCount: 0
   SliceFoodbool: 0
+--- !u!65 &6426867539110134681
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076218644926528685}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2000599, y: 0.49932724, z: 1.1461778}
+  m_Center: {x: 12, y: 0.24966356, z: 1.2263491}
 --- !u!1 &5027029705911376937
 GameObject:
   m_ObjectHideFlags: 0

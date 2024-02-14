@@ -164,10 +164,5 @@ public class Player : StateMachine
         
     }
 
-    public void DashEffect()
-    {
-       
-    }
-
 
 }

@@ -42,8 +42,6 @@ GameObject:
   - component: {fileID: 2551404991560830546}
   - component: {fileID: 251282155964630521}
   - component: {fileID: 251282155964630518}
-  - component: {fileID: 7915116074188342654}
-  - component: {fileID: 545005159}
   - component: {fileID: 835010360793041160}
   m_Layer: 9
   m_Name: CounterTop_no_wall
@@ -118,33 +116,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7915116074188342654
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966596815387071996}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5634268932407732893, guid: 88c14d2b8bc7f8b459947170e56a9d3b, type: 3}
---- !u!65 &545005159
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966596815387071996}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1.7292385, y: 0.5, z: 2.3000002}
-  m_Center: {x: 17.075844, y: 0.25, z: -3.6}
 --- !u!65 &835010360793041160
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -156,5 +127,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.24, y: 0.5, z: 1.38}
-  m_Center: {x: 16.800465, y: 0.24999999, z: -3.6}
+  m_Size: {x: 1.1820831, y: 0.5, z: 1.1097591}
+  m_Center: {x: 16.829422, y: 0.25, z: -3.609509}

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4579023684905758057}
   - component: {fileID: 2440623148322415771}
   - component: {fileID: 7683033053064804037}
-  - component: {fileID: 7305789027622702167}
   m_Layer: 0
   m_Name: CounterTop_two_wall
   m_TagString: Untagged
@@ -84,17 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7305789027622702167
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1264835084347558520}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8370951663508443653, guid: 88c14d2b8bc7f8b459947170e56a9d3b, type: 3}
