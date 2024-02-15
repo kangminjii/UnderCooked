@@ -9,13 +9,14 @@ public class Bin : MonoBehaviour
     Transform _binSpawnPos;
     AnimationClip animationClip;
     GameObject trash;
+    public PassingGate passingGate;
+    bool plateRemove = false;
 
     //public PlateReturn plateReturn;
     private void Start()
     {
-        _binSpawnPos = this.transform;//transform.Find("BinSpawnPos");
-        //animation = Resources.Load<Animation>
-        animationClip = Resources.Load<AnimationClip>("AnimationClip/BinGo");
+        _binSpawnPos = transform;
+       
     }
 
     private void Update()
@@ -27,10 +28,23 @@ public class Bin : MonoBehaviour
                 Destroy(trash);
 
             trash = _binSpawnPos.GetChild(0).gameObject;
+            trash.GetComponent<Animator>().SetTrigger("binTrigger");
+            
 
 
-            trash.GetComponent<Animator>().SetTrigger("binTrigger");       
+            if (trash.name.Contains("Plate") && !plateRemove)
+            {
+                GameObject Plate = trash;
+
+                passingGate.plateReturn.PlateList.RemoveAt(passingGate.plateReturn.PlateList.Count - 1);
+                passingGate.plateReturn.CurrentPlateNumber--;
+                
+                plateRemove = true;
+            }
+
         }
+            if (_binSpawnPos.childCount == 0)
+                plateRemove = false;
 
     }
 }

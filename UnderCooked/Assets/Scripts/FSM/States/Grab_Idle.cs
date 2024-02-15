@@ -65,7 +65,7 @@ public class Grab_Idle : BaseState
 
             if(selectObj.tag == "Passing") // Á¢½Ã ¹Ý³³
             {
-                if(playerSpawnPos.GetChild(0).tag == "Plate" || playerSpawnPos.GetChild(0).tag == "EmptyPlate")
+                if (playerSpawnPos.GetChild(0).name.Contains("Plate"))
                 {
                     SetState();
                     PassingGate PassingGate = selectObj.GetComponent<PassingGate>();
