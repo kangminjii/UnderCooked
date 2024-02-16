@@ -24,7 +24,10 @@ public class Grab_Moving : BaseState
     public override void UpdateLogic()
     {
         if (_playerSM.SpawnPos.childCount < 1)
+        {
             SetState();
+            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -38,8 +41,9 @@ public class Grab_Moving : BaseState
 
             if (selectObj != null && selectObj.tag == "Bin")
             {
-                Transform trash = selectObj.transform.Find("BinSpawnPos");       
+                Transform trash = selectObj.transform.Find("BinSpawnPos");
 
+                Managers.Sound.Play(Define.Sound.Effect, "AudioClip/TrashCan");
                 Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
                 Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
             }
@@ -122,6 +126,7 @@ public class Grab_Moving : BaseState
                         Managers.Resource.Instantiate(tableObjectName + "_Plate", playerSpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerSpawnPos);
                         Managers.Resource.Destroy(table.GetChild(0).gameObject);
                         Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
+                        Managers.Sound.Play(Define.Sound.Effect,"AudioClip/Grab_On");
                     }
                 }
 

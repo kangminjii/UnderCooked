@@ -25,6 +25,7 @@ public class Moving : BaseState
         {
             _playerSM.Animator.SetBool("Grab", true);
             _stateMachine.ChangeState(_playerSM.GrabMovingState);
+            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_On");
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

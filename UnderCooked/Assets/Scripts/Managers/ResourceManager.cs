@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ResourceManager
 {
+
+    public T Load<T>(string path) where T : Object
+    {
+        return Resources.Load<T>(path);
+    }
     //public T Load<T>(string path) where T : Object
     //{
     //    if (typeof(T) == typeof(GameObject))

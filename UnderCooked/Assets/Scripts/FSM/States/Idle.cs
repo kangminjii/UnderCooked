@@ -25,6 +25,7 @@ public class Idle : BaseState
         {
             _playerSM.Animator.SetBool("Grab", true);
             _stateMachine.ChangeState(_playerSM.GrabIdleState);
+            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_On");
         }
 
 

@@ -25,6 +25,7 @@ public class OrderUI : MonoBehaviour
     public delegate void OrderCheck(string foodName);
     public event OrderCheck FoodOrderCheck;
     public static Action<bool> TimeStart;
+    bool orderChect = false;
 
 
     void Start()
@@ -96,21 +97,31 @@ public class OrderUI : MonoBehaviour
         {
             if(foodName == "Prawn" || foodName == "Fish")
             {
-                if(OrderList[i].name.Contains(foodName))
+                if (OrderList[i].name.Contains(foodName))
                 {
                     Managers.Resource.Destroy(OrderList[i]);
                     OrderList.RemoveAt(i);
 
+
                     TotalScore += _addingScore;
                     GameObject Passing = GameObject.Find("m_sk_the_pass_red_01_2");
-                    Managers.Resource.Instantiate("OrderEffect", Passing.transform.position + new Vector3(-0.4f,0.8f,0f), Quaternion.identity);
+                    Managers.Resource.Instantiate("OrderEffect", Passing.transform.position + new Vector3(-0.4f, 0.8f, 0f), Quaternion.identity);
                     _scoreText.text = TotalScore.ToString();
+                    Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Order_Successful");
+                    orderChect = true;
 
                     TimeStart.Invoke(true);
                     break;
                 }
             }
+            orderChect = false;
         }
+        if (!orderChect)
+        {
+            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Order_Fail");
+            return;
+        }
+
     }
 
 }

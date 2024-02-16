@@ -10,6 +10,13 @@ public class Define
         Click,
     }
 
+    public enum Sound
+    {
+        Bgm,
+        Effect,
+        MaxCount,
+    }
+
     public enum Object
     {
         Table,
