@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 
-public class StartSceneUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class StartSceneUI : MonoBehaviour
 {
     VanShutter _vanShutter;
     StartSceneCamera _startCamera;
@@ -55,16 +55,5 @@ public class StartSceneUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         #else
                     Application.Quit();
         #endif
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        eventData.selectedObject.GetComponent<Text>().color = Color.white;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        eventData.selectedObject.GetComponent<Text>().color = new Color(40, 138, 217);
-
     }
 }
