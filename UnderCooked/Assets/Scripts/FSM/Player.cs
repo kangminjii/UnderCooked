@@ -24,6 +24,10 @@ public class Player : StateMachine
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
     public GameObject Knife;
+    private Transform ChopPos;
+
+    private float lastDashTime = 0f;
+    private float dashCooldown = 0.3f;
 
     public Vector3 LookDir;
     public bool canCut;
@@ -49,8 +53,11 @@ public class Player : StateMachine
         Rigidbody = GetComponent<Rigidbody>();
         Animator = GetComponent<Animator>();
         SpawnPos = this.transform.Find("SpawnPos");
+        ChopPos = this.transform.Find("ChopPos");
 
         Overlap.ObjectSelectEnter += Select;
+
+        Managers.Sound.Play(Define.Sound.Bgm,"AudioClip/TheNeonCity");
 
     }
 
@@ -93,12 +100,21 @@ public class Player : StateMachine
 
     public void Dash()
     {
-        float dashForce = 6f;
+        float dashForce = 7f;
 
-        Rigidbody.velocity = LookDir * dashForce;
-        Rigidbody.AddForce(LookDir * dashForce, ForceMode.Force);
+        // 쿨타임 체크
+        if (Time.time - lastDashTime >= dashCooldown)       
+        {
+            Transform DashPos = transform.Find("Chararcter");
+            Rigidbody.velocity = LookDir * dashForce;
+            Rigidbody.AddForce(LookDir * dashForce, ForceMode.Force);
+            Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, DashPos);
+            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Dash5");
+            // 다시 쿨타임을 시작하기 위해 시간 기록
+            lastDashTime = Time.time;
+        }
+
     }
-    
 
     private void Select(GameObject Obj)
     {
@@ -124,9 +140,12 @@ public class Player : StateMachine
                 if (place._chopCount > 0)
                     FoodGrab = false;
                 else FoodGrab = true;
-                
+
             }
-            else canCut = false;
+            else
+            {
+                canCut = false;
+            }
         }
         else
         {
@@ -144,6 +163,10 @@ public class Player : StateMachine
     {
         Cook = SelectObj.GetComponent<CookingPlace>();
         Cook.CuttingFood();
+        Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
+        Managers.Sound.Play(Define.Sound.Effect,"AudioClip/Chop_Sound");
+        
     }
+
 
 }
