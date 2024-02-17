@@ -25,16 +25,30 @@ public class Grab_Idle : BaseState
     {
 
         if (_playerSM.SpawnPos.childCount < 1)
+        {
             SetState();
+            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+
             string clone = "(Clone)";
             string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
             grabObjectName = grabObjectName.Replace(clone, "");
 
             GameObject selectObj = _playerSM.SelectObj;
             Transform playerSpawnPos = _playerSM.SpawnPos;
+
+            if(selectObj != null && selectObj.tag == "Bin")
+            {
+                Transform trash = selectObj.transform.Find("BinSpawnPos");
+                Managers.Sound.Play(Define.Sound.Effect, "AudioClip/TrashCan");
+                Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
+                Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
+            }
+
+
 
             if (selectObj != null && selectObj.tag == "Food")
             {
@@ -46,21 +60,19 @@ public class Grab_Idle : BaseState
 
             if (_playerSM.SelectObj == null)
             {
-
                 SetState();
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", playerSpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
                 return;
-
             }
 
             if(selectObj.tag == "Passing") // 접시 반납
             {
-                if(playerSpawnPos.GetChild(0).tag == "Plate" || playerSpawnPos.GetChild(0).tag == "EmptyPlate")
+                if (playerSpawnPos.GetChild(0).name.Contains("Plate"))
                 {
                     SetState();
                     PassingGate PassingGate = selectObj.GetComponent<PassingGate>();
-                    PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.CurrentPlateNumber - 1);
+                    PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.PlateList.Count - 1);
                     PassingGate.plateReturn.CurrentPlateNumber--;
 
                     string returnFoodName;
@@ -86,8 +98,10 @@ public class Grab_Idle : BaseState
                 if (table == null)
                     return;
 
+                if (selectObj.tag == "CuttingBoard" && table.childCount < 1 && playerSpawnPos.GetChild(0).tag.Contains("Plate")) //도마 위에 접시 안올라가게 함
+                    return;
 
-                if(table.childCount == 1)
+                if (table.childCount == 1)
                 {
                     if (table.GetChild(0).tag == "EmptyPlate" && playerSpawnPos.GetChild(0).tag == "SlicedFood")
                     {
@@ -98,7 +112,6 @@ public class Grab_Idle : BaseState
                     }
                     else if (playerSpawnPos.GetChild(0).tag == "EmptyPlate" && table.GetChild(0).tag == "SlicedFood")
                     {
-
                         string tableclone = "(Clone)";
                         string tableObjectName = table.GetChild(0).name;
                         tableObjectName = tableObjectName.Replace(tableclone, "");
@@ -106,14 +119,14 @@ public class Grab_Idle : BaseState
                         Managers.Resource.Instantiate(tableObjectName + "_Plate", playerSpawnPos.position+new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerSpawnPos);
                         Managers.Resource.Destroy(table.GetChild(0).gameObject);
                         Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
+                        Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_On");
+
                     }
                 }
                
 
-                if (table != null && table.childCount < 1)
+                else if (table != null && table.childCount < 1)
                 {
-                    //if (selectObj.tag == "PlateReturn" || selectObj.tag == "Passing")
-                    //    return;
                     if (grabObjectName == "Fish") // Fish 일때 Y값 증가
                     {
                         Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림

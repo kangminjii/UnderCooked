@@ -12,25 +12,31 @@ public class PlateReturn : MonoBehaviour
 
     public Transform PlateSpawnPos;
 
-
     // :: public
-    public int CurrentPlateNumber = 0;
+    public int CurrentPlateNumber = 2;
     public List<GameObject> PlateList = new List<GameObject>();
+
 
 
     private void Start()
     {
         PlateSpawnPos = this.transform.Find("PlateSpawnPos");
-        StartCoroutine(SpawnPlate());
+        StartPlate();
+        StartPlate();
+
     }
 
 
     private void Update()
     {
+
+
         if (CurrentPlateNumber < _maxPlateNumber)
         {
             StartCoroutine(SpawnPlate());
+            
         }
+
     }
 
 
@@ -38,6 +44,7 @@ public class PlateReturn : MonoBehaviour
     {
         CurrentPlateNumber++;
 
+       
         yield return new WaitForSeconds(_plateSpawnTime);
 
         Vector3 spwanPlatePos = PlateSpawnPos.position + new Vector3(0, (PlateSpawnPos.childCount - 1) * 0.05f, 0);
@@ -45,7 +52,16 @@ public class PlateReturn : MonoBehaviour
         PlateList.Add(plate);
         if (CurrentPlateNumber < _maxPlateNumber)
             StartCoroutine(SpawnPlate());
+        Managers.Sound.Play(Define.Sound.Effect, "AudioClip/WashedPlate");
     }
 
+
+    public void StartPlate()
+    {
+        CurrentPlateNumber++;
+        Vector3 spwanPlatePos = PlateSpawnPos.position + new Vector3(0, (PlateSpawnPos.childCount - 1) * 0.05f, 0);
+        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, PlateSpawnPos);
+        PlateList.Add(plate);
+    }
 
 }
