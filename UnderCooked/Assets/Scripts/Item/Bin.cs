@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Bin : MonoBehaviour
 {
-    //bool canInteract = false;
-    //Transform _playerSpawnPos;
     Transform _binSpawnPos;
     AnimationClip animationClip;
     GameObject trash;
     public PassingGate passingGate;
     bool plateRemove = false;
 
-    //public PlateReturn plateReturn;
+
     private void Start()
     {
         _binSpawnPos = transform;

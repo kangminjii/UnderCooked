@@ -13,11 +13,10 @@ public class StartSceneUI : MonoBehaviour
 
     GameObject _startButton;
     GameObject _exitButton;
-    Text _startText;
-    Text _selectedText;
-    Text _originalText;
+    GameObject _startText;
 
-    string _playScene = "[2]Minji";
+    string _playScene = "YJM";
+
 
     private void Start()
     {
@@ -26,7 +25,7 @@ public class StartSceneUI : MonoBehaviour
 
         _startButton = transform.Find("StartButton").gameObject;
         _exitButton = transform.Find("ExitButton").gameObject;
-        _startText = transform.Find("StartText").GetComponent<Text>();
+        _startText = transform.Find("StartText").gameObject;
     }
 
     void Update()
@@ -38,7 +37,7 @@ public class StartSceneUI : MonoBehaviour
 
             _startButton.SetActive(true);
             _exitButton.SetActive(true);
-            _startText.text = "";
+            _startText.SetActive(false);
         }
     }
 
