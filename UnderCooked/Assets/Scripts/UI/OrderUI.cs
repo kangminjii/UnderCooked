@@ -107,7 +107,7 @@ public class OrderUI : MonoBehaviour
                     GameObject Passing = GameObject.Find("m_sk_the_pass_red_01_2");
                     Managers.Resource.Instantiate("OrderEffect", Passing.transform.position + new Vector3(-0.4f, 0.8f, 0f), Quaternion.identity);
                     _scoreText.text = TotalScore.ToString();
-                    Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Order_Successful");
+                    Managers.Sound.Play("AudioClip/Order_Successful", Define.Sound.Effect);
                     orderChect = true;
 
                     TimeStart.Invoke(true);
@@ -118,7 +118,7 @@ public class OrderUI : MonoBehaviour
         }
         if (!orderChect)
         {
-            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Order_Fail");
+            Managers.Sound.Play("AudioClip/Order_Fail", Define.Sound.Effect);
             return;
         }
 

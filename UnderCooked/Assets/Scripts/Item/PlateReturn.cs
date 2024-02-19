@@ -52,7 +52,7 @@ public class PlateReturn : MonoBehaviour
         PlateList.Add(plate);
         if (CurrentPlateNumber < _maxPlateNumber)
             StartCoroutine(SpawnPlate());
-        Managers.Sound.Play(Define.Sound.Effect, "AudioClip/WashedPlate");
+        Managers.Sound.Play("AudioClip/WashedPlate", Define.Sound.Effect);
     }
 
 

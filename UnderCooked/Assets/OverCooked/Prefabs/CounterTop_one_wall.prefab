@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1999578161652223094}
   - component: {fileID: 1882405310431950823}
   - component: {fileID: 8010840746653959128}
-  - component: {fileID: 205223365315287152}
+  - component: {fileID: 737778209165749006}
   m_Layer: 9
   m_Name: CounterTop_one_wall
   m_TagString: Table
@@ -116,7 +116,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &205223365315287152
+--- !u!65 &737778209165749006
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,5 +127,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9117489, y: 0.4451435, z: 0.9801128}
-  m_Center: {x: 12.01, y: 0.22257169, z: 1.3026439}
+  m_Size: {x: 1.2000597, y: 0.64897114, z: 1.1806805}
+  m_Center: {x: 12.000004, y: 0.3244855, z: 1.2090993}
