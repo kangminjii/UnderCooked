@@ -13,7 +13,7 @@ public class PlateReturn : MonoBehaviour
     public Transform PlateSpawnPos;
 
     // :: public
-    public int CurrentPlateNumber = 2;
+    public int CurrentPlateNumber = 0;
     public List<GameObject> PlateList = new List<GameObject>();
 
 
@@ -23,20 +23,15 @@ public class PlateReturn : MonoBehaviour
         PlateSpawnPos = this.transform.Find("PlateSpawnPos");
         StartPlate();
         StartPlate();
-
     }
 
 
     private void Update()
     {
-
-
         if (CurrentPlateNumber < _maxPlateNumber)
         {
             StartCoroutine(SpawnPlate());
-            
         }
-
     }
 
 
