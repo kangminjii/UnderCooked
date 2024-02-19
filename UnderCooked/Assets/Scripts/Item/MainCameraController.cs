@@ -26,7 +26,7 @@ public class MainCameraController : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(offsetX, offsetY + 0.8f, offsetZ), Time.deltaTime * CameraSpeed * 0.25f);
         }
-        else //(player.transform.position.z > -0.7f)
+        else
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(offsetX, offsetY, offsetZ), Time.deltaTime * CameraSpeed * 0.25f);
         }

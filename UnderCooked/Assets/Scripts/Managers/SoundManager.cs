@@ -7,6 +7,8 @@ public class SoundManager
 
     AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
 
+    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+
     public void Init()
     {
         GameObject root = GameObject.Find("Sound");
@@ -32,7 +34,20 @@ public class SoundManager
 
     }
 
-    public void Play(Define.Sound type , string path, float pitch = 1.0f)
+
+    public void Clear()
+    {
+        foreach(AudioSource audioSource in _audioSources)
+        {
+            audioSource.clip = null;
+            audioSource.Stop();
+        }
+
+        _audioClips.Clear();
+    }
+
+
+    public void Play(string path, Define.Sound type = Define.Sound.Effect , float pitch = 1.0f)
     {
         if (path.Contains("Sound/") == false)
             path = $"Sounds/{path}";
@@ -48,12 +63,17 @@ public class SoundManager
             // TODO
 
             AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
-            audioSource.PlayOneShot(audioClip);
+
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+            audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
+            audioSource.Play();
             
         }
         else
         {
-            AudioClip audioClip = Managers.Resource.Load<AudioClip>(path);
+            AudioClip audioClip = GetorAddAudioClip(path);
             if (audioClip == null)
             {
                 Debug.Log($"AudioClip Missing ! {path}");
@@ -68,5 +88,15 @@ public class SoundManager
      
 
 
+    AudioClip GetorAddAudioClip(string path)
+    {
+        AudioClip audioClip = null;
+        if (_audioClips.TryGetValue(path, out audioClip) == false)
+        {
+            audioClip = Managers.Resource.Load<AudioClip>(path);
+            _audioClips.Add(path, audioClip);
+        }
 
+        return audioClip;
+    }
 }

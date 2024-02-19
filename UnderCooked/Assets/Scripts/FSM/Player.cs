@@ -57,7 +57,7 @@ public class Player : StateMachine
 
         Overlap.ObjectSelectEnter += Select;
 
-        Managers.Sound.Play(Define.Sound.Bgm,"AudioClip/TheNeonCity");
+        Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
         
 
     }
@@ -110,7 +110,7 @@ public class Player : StateMachine
             Rigidbody.velocity = LookDir * dashForce;
             Rigidbody.AddForce(LookDir * dashForce, ForceMode.Force);
             Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, DashPos);
-            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Dash5");
+            Managers.Sound.Play( "AudioClip/Dash5", Define.Sound.Effect);
             // 다시 쿨타임을 시작하기 위해 시간 기록
             lastDashTime = Time.time;
         }
@@ -164,7 +164,7 @@ public class Player : StateMachine
         Cook = SelectObj.GetComponent<CookingPlace>();
         Cook.CuttingFood();
         Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
-        Managers.Sound.Play(Define.Sound.Effect,"AudioClip/Chop_Sound");
+        Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
         
     }
 

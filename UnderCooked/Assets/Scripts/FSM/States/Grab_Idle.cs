@@ -26,7 +26,7 @@ public class Grab_Idle : BaseState
 
         if (_playerSM.SpawnPos.childCount < 1)
         {
-            Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
+            Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
             SetState();
             //Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
         }
@@ -44,7 +44,7 @@ public class Grab_Idle : BaseState
             if(selectObj != null && selectObj.tag == "Bin")
             {
                 Transform trash = selectObj.transform.Find("BinSpawnPos");
-                Managers.Sound.Play(Define.Sound.Effect, "AudioClip/TrashCan");
+                Managers.Sound.Play("AudioClip/TrashCan", Define.Sound.Effect);
                 Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
                 Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
             }
@@ -64,7 +64,7 @@ public class Grab_Idle : BaseState
                 SetState();
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", playerSpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-                Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
+                Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
                 return;
             }
 
@@ -121,7 +121,7 @@ public class Grab_Idle : BaseState
                         Managers.Resource.Instantiate(tableObjectName + "_Plate", playerSpawnPos.position+new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerSpawnPos);
                         Managers.Resource.Destroy(table.GetChild(0).gameObject);
                         Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-                        Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_On");
+                        Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
 
                     }
                 }
