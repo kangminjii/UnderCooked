@@ -26,8 +26,9 @@ public class Grab_Idle : BaseState
 
         if (_playerSM.SpawnPos.childCount < 1)
         {
-            SetState();
             Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
+            SetState();
+            //Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -63,6 +64,7 @@ public class Grab_Idle : BaseState
                 SetState();
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", playerSpawnPos.position, Quaternion.identity);
                 Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
+                Managers.Sound.Play(Define.Sound.Effect, "AudioClip/Grab_Off");
                 return;
             }
 

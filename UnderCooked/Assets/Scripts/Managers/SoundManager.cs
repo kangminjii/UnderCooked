@@ -49,6 +49,7 @@ public class SoundManager
 
             AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
             audioSource.PlayOneShot(audioClip);
+            
         }
         else
         {

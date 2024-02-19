@@ -32,7 +32,7 @@ public class Player : StateMachine
     public Vector3 LookDir;
     public bool canCut;
     public bool FoodGrab;
-    public float _speed = 5.0f;
+    public float _speed = 7.0f;
 
 
     public delegate void ObjectSelectHandler(GameObject gameObject);
@@ -58,6 +58,7 @@ public class Player : StateMachine
         Overlap.ObjectSelectEnter += Select;
 
         Managers.Sound.Play(Define.Sound.Bgm,"AudioClip/TheNeonCity");
+        
 
     }
 
@@ -113,7 +114,6 @@ public class Player : StateMachine
             // 다시 쿨타임을 시작하기 위해 시간 기록
             lastDashTime = Time.time;
         }
-
     }
 
     private void Select(GameObject Obj)
