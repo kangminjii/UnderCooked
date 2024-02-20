@@ -15,14 +15,17 @@ public class EndSceneUI : MonoBehaviour
     int _failOrder;
 
     string _startScene = "[1]Start";
-    string _playScene = "YJM";
+    string _playScene = "[2]Minji";
 
 
     void Start()
     {
         _successOrder = PlayerPrefs.GetInt("Success");
         _failOrder = PlayerPrefs.GetInt("Fail");
-
+        Managers.Sound.Clear();
+        Managers.Sound.Play("AudioClip/LevelVictorySound", Define.Sound.Effect);
+        Invoke("PlaySound", 4f);
+        //Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
         ChangeText();
         TurnOnStar();
     }
@@ -30,11 +33,24 @@ public class EndSceneUI : MonoBehaviour
     void TurnOnStar()
     {
         if(_totalScore >= 20)
-            Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject.SetActive(true);
+        {
+            //Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject.SetActive(true);
+            StartCoroutine(ActivateStar
+            (Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject,1f, "AudioClip/RoundResults_Star_01"));
+
+        }
         if(_totalScore >= 60)
-            Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject.SetActive(true);
+        {
+            StartCoroutine(ActivateStar
+            (Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject,2f, "AudioClip/RoundResults_Star_01"));
+            //Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject.SetActive(true);
+        }
         if (_totalScore >= 240)
-            Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject.SetActive(true);
+        {
+            StartCoroutine(ActivateStar
+            (Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject, 3f, "AudioClip/RoundResults_Star_01"));
+            //Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject.SetActive(true);
+        }
     }
 
     void ChangeText()
@@ -74,5 +90,18 @@ public class EndSceneUI : MonoBehaviour
     void LoadPlayScene()
     {
         SceneManager.LoadScene(_playScene);
+    }
+
+    void PlaySound()
+    {
+        Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
+    }
+
+
+    IEnumerator ActivateStar(GameObject star,float delay, string soundEffect)
+    {
+        yield return new WaitForSeconds(delay);
+        Managers.Sound.Play(soundEffect, Define.Sound.Effect);
+        star.SetActive(true);
     }
 }

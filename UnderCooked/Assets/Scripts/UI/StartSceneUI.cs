@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 
-public class StartSceneUI : MonoBehaviour
+public class StartSceneUI : MonoBehaviour, IPointerEnterHandler
 {
     VanShutter _vanShutter;
     StartSceneCamera _startCamera;
@@ -15,7 +15,8 @@ public class StartSceneUI : MonoBehaviour
     GameObject _exitButton;
     GameObject _startText;
 
-    string _playScene = "YJM";
+    bool _pressSpace = false;
+    string _playScene = "[2]Minji";
 
 
     private void Start()
@@ -26,6 +27,11 @@ public class StartSceneUI : MonoBehaviour
         _startButton = transform.Find("StartButton").gameObject;
         _exitButton = transform.Find("ExitButton").gameObject;
         _startText = transform.Find("StartText").gameObject;
+
+
+        Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
+        
+
     }
 
     void Update()
@@ -35,16 +41,27 @@ public class StartSceneUI : MonoBehaviour
             StartCoroutine(_vanShutter.ShutterAnimation());
             StartCoroutine(_startCamera.CameraAnimation());
 
+            if(!_pressSpace)
+            {
+                Managers.Sound.Play("AudioClip/UI_PressStart", Define.Sound.Effect);
+               
+                _pressSpace = true;
+            }
+
             _startButton.SetActive(true);
             _exitButton.SetActive(true);
             _startText.SetActive(false);
         }
+
+
     }
 
 
     public void OnClickNextScene()
     {
         SceneManager.LoadScene(_playScene);
+        Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
+        
     }
 
     public void OnClickExit()
@@ -54,5 +71,12 @@ public class StartSceneUI : MonoBehaviour
         #else
                     Application.Quit();
         #endif
+    }
+
+
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {    
+        Managers.Sound.Play("AudioClip/UI_Button_Drop", Define.Sound.Effect);
     }
 }
