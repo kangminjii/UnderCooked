@@ -15,7 +15,7 @@ public class StartSceneUI : MonoBehaviour
     GameObject _exitButton;
     GameObject _startText;
 
-    string _playScene = "YJM";
+    string _playScene = "[2]Minji";
 
 
     private void Start()
@@ -44,7 +44,9 @@ public class StartSceneUI : MonoBehaviour
 
     public void OnClickNextScene()
     {
-        SceneManager.LoadScene(_playScene);
+        PlayerPrefs.SetString("SceneName", _playScene);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
     }
 
     public void OnClickExit()

@@ -15,7 +15,7 @@ public class EndSceneUI : MonoBehaviour
     int _failOrder;
 
     string _startScene = "[1]Start";
-    string _playScene = "YJM";
+    string _playScene = "[2]Minji";
 
 
     void Start()
@@ -68,11 +68,15 @@ public class EndSceneUI : MonoBehaviour
 
     void LoadStartScene()
     {
-        SceneManager.LoadScene(_startScene);
+        PlayerPrefs.SetString("SceneName", _startScene);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
     }
 
     void LoadPlayScene()
     {
-        SceneManager.LoadScene(_playScene);
+        PlayerPrefs.SetString("SceneName", _playScene);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
     }
 }
