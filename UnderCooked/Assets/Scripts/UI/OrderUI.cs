@@ -87,6 +87,8 @@ public class OrderUI : MonoBehaviour
 
     IEnumerator OrderAnimation2(float xPos, RectTransform orderPos)
     {
+        yield return new WaitForSeconds(0.1f);
+
         _grid.enabled = false;
         orderPos.anchoredPosition = new Vector2(342, 9); // 처음 시작 구역
 
