@@ -36,7 +36,7 @@ public class Player : StateMachine
 
 
     public delegate void ObjectSelectHandler(GameObject gameObject);
-    public static event ObjectSelectHandler ObjectSelectEnter;
+    //public static event ObjectSelectHandler ObjectSelectEnter;
 
     public GameObject SelectObj = null; // 선택된 물체
 

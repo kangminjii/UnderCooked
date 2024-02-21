@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParticleDestroyer : MonoBehaviour
 {
-    private ParticleSystem particleSystem;
+    ParticleSystem particleSystem;
 
     void Start()
     {

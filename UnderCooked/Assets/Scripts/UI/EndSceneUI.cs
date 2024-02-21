@@ -17,6 +17,8 @@ public class EndSceneUI : MonoBehaviour
     string _startScene = "[1]Start";
     string _playScene = "[2]Minji";
 
+    bool _canSpace = false;
+
 
     void Start()
     {
@@ -36,19 +38,19 @@ public class EndSceneUI : MonoBehaviour
         {
             //Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject.SetActive(true);
             StartCoroutine(ActivateStar
-            (Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject,1f, "AudioClip/RoundResults_Star_01"));
+            (Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject,0.5f, "AudioClip/RoundResults_Star_01"));
 
         }
         if(_totalScore >= 60)
         {
             StartCoroutine(ActivateStar
-            (Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject,2f, "AudioClip/RoundResults_Star_01"));
+            (Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject,1.5f, "AudioClip/RoundResults_Star_02"));
             //Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject.SetActive(true);
         }
         if (_totalScore >= 240)
         {
             StartCoroutine(ActivateStar
-            (Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject, 3f, "AudioClip/RoundResults_Star_01"));
+            (Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject, 2.5f, "AudioClip/RoundResults_Star_03"));
             //Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject.SetActive(true);
         }
     }
@@ -72,11 +74,13 @@ public class EndSceneUI : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && _canSpace)
         {
+
             LoadStartScene();
+            Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
         }
-        else if(Input.GetKeyDown(KeyCode.LeftShift))
+        else if(Input.GetKeyDown(KeyCode.LeftShift) && _canSpace)
         {
             LoadPlayScene();
         }
@@ -95,6 +99,7 @@ public class EndSceneUI : MonoBehaviour
     void PlaySound()
     {
         Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
+        _canSpace = true;
     }
 
 
