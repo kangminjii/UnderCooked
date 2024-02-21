@@ -32,11 +32,11 @@ public class Player : StateMachine
     public Vector3 LookDir;
     public bool canCut;
     public bool FoodGrab;
-    public float _speed = 7.0f;
+    public float _speed = 5.0f;
 
 
     public delegate void ObjectSelectHandler(GameObject gameObject);
-    public static event ObjectSelectHandler ObjectSelectEnter;
+    //public static event ObjectSelectHandler ObjectSelectEnter;
 
     public GameObject SelectObj = null; // 선택된 물체
 
@@ -58,7 +58,9 @@ public class Player : StateMachine
         Overlap.ObjectSelectEnter += Select;
 
         Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
-        
+        //Managers.Sound.Play("AudioClip/UI_Screen_Out", Define.Sound.Effect);
+
+
 
     }
 
@@ -86,6 +88,13 @@ public class Player : StateMachine
         if (Input.GetKey(KeyCode.RightArrow))
             moveDirection += Vector3.right;
 
+        //Rigidbody.AddForce(moveDirection * 20, ForceMode.Force);
+
+        //if (Rigidbody.velocity.magnitude < (moveDirection * _speed).magnitude)
+        //{
+        //    Rigidbody.velocity = moveDirection * _speed;
+        //}
+        //Rigidbody.velocity = moveDirection * _speed;
         Rigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
 
         if (moveDirection != Vector3.zero)

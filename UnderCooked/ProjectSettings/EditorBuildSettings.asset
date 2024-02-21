@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/[0]Base.unity
+    guid: 1d497bf35e67e3247ab30553c367bc81
+  - enabled: 1
     path: Assets/Scenes/[1]Start.unity
     guid: 399efd9028457b445a6930f6188a99f6
   - enabled: 1
-    path: Assets/Scenes/YJM.unity
-    guid: 4f990d8d6389445438e7f747262e9b0a
+    path: Assets/Scenes/[2]Minji.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/[3]Ending.unity
     guid: e13dfa1a7df8cbb4b9e2fe986e95882e
+  - enabled: 0
+    path: Assets/Scenes/YJM.unity
+    guid: 4f990d8d6389445438e7f747262e9b0a
   m_configObjects: {}
