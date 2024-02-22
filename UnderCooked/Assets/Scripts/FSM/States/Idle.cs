@@ -56,9 +56,8 @@ public class Idle : BaseState
 
             if(selectObj.tag == "Crate" && playerSpawnPos.childCount < 1) // CrateBox
             {
-
-                CrateBoxControl Cratebox = selectObj.GetComponent<CrateBoxControl>();
-                Cratebox._animator.SetTrigger("IsOpen");
+                Animator crateBoxAnimator = selectObj.GetComponent<Animator>();
+                crateBoxAnimator.SetTrigger("IsOpen");
 
                 string boxName = "Crate_";
                 string food_name = selectObj.transform.parent.parent.name;

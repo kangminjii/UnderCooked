@@ -24,7 +24,7 @@ public class ReadyUI : MonoBehaviour
         while(true)
         {
             if (Input.GetKey(KeyCode.Space))
-                _spaceBar.fillAmount += 0.002f * Time.realtimeSinceStartup;
+                _spaceBar.fillAmount += 0.001f * Time.realtimeSinceStartup;
             else if (Input.GetKeyUp(KeyCode.Space))
                 _spaceBar.fillAmount = 0;
 

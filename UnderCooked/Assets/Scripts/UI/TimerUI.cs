@@ -10,7 +10,7 @@ public class TimerUI : MonoBehaviour
 {
     Image _timerProgressBar;
     Text _timeText;
-    float _timeLimit = 20f;
+    float _timeLimit = 30f;
     float _currentTime;
 
     string _endScene = "[3]Ending";
