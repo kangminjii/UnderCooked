@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 
-public class StartSceneUI : MonoBehaviour, IPointerEnterHandler
+public class StartSceneUI : MonoBehaviour
 {
     VanShutter _vanShutter;
     StartSceneCamera _startCamera;
@@ -55,10 +55,7 @@ public class StartSceneUI : MonoBehaviour, IPointerEnterHandler
             _exitButton.SetActive(true);
             _startText.SetActive(false);
         }
-
-
     }
-
 
     IEnumerator FadeOut()
     {
@@ -92,6 +89,11 @@ public class StartSceneUI : MonoBehaviour, IPointerEnterHandler
     }
 
 
+    public void ClickSound()
+    {
+        Managers.Sound.Play("AudioClip/UI_Button_Drop", Define.Sound.Effect);
+    }
+
 
     public void OnClickNextScene()
     {
@@ -102,6 +104,7 @@ public class StartSceneUI : MonoBehaviour, IPointerEnterHandler
         Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
     }
 
+
     public void OnClickExit()
     {
         #if UNITY_EDITOR
@@ -111,11 +114,7 @@ public class StartSceneUI : MonoBehaviour, IPointerEnterHandler
         #endif
     }
 
-
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {    
-        Managers.Sound.Play("AudioClip/UI_Button_Drop", Define.Sound.Effect);
-    }
+  
+  
 
 }
