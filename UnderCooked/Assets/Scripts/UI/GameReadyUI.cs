@@ -72,6 +72,7 @@ public class GameReadyUI : MonoBehaviour
 
     IEnumerator DisappearStartObject()
     {
+        // 주문서 애니메이션 시작하기
         yield return new WaitForSeconds(2.0f);
         Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(false);
     }
