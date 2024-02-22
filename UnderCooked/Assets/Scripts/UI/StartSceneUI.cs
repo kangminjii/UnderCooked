@@ -95,9 +95,11 @@ public class StartSceneUI : MonoBehaviour, IPointerEnterHandler
 
     public void OnClickNextScene()
     {
-        SceneManager.LoadScene(_playScene);
+        PlayerPrefs.SetString("SceneName", _playScene);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
+
         Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
-        
     }
 
     public void OnClickExit()
