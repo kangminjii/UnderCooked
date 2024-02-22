@@ -6,9 +6,9 @@ public class VanShutter : MonoBehaviour
 {
     public IEnumerator ShutterAnimation()
     {
-        while(transform.position.y < 7.9f)
+        while(transform.position.y < 10.5f)
         {
-            transform.position += new Vector3(0,0.05f);
+            transform.position += new Vector3(0,0.01f);
             yield return null;
         }
 

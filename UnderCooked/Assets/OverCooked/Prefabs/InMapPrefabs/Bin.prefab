@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 3983856332467845870}
   - component: {fileID: 8810569547641688918}
   - component: {fileID: 5169460283506452078}
-  - component: {fileID: 719335632100374326}
   - component: {fileID: 936853981758187132}
   m_Layer: 11
   m_Name: Bin
@@ -131,20 +130,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &719335632100374326
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5230309993868486451}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4646731719348952947, guid: 92fc91a0d0e599a4189786b8463a6ea4, type: 3}
 --- !u!65 &936853981758187132
 BoxCollider:
   m_ObjectHideFlags: 0

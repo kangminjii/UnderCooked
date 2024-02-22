@@ -165,7 +165,7 @@ public class OrderUI : MonoBehaviour
                     _scoreText.text = _totalScore.ToString();
 
                     GameObject Passing = GameObject.Find("m_sk_the_pass_red_01_2");
-                    Managers.Resource.Instantiate("OrderEffect", Passing.transform.position + new Vector3(-0.4f, 0.8f, 0f), Quaternion.identity);
+                    Managers.Resource.Instantiate("OrderEffect", Passing.transform.position + new Vector3(-1f, 1f, 0f), Quaternion.identity);
                     Managers.Sound.Play("AudioClip/Order_Successful", Define.Sound.Effect);
 
                     _successFood++;

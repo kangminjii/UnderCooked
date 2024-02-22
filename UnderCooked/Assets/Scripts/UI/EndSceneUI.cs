@@ -17,12 +17,17 @@ public class EndSceneUI : MonoBehaviour
     string _startScene = "[1]Start";
     string _playScene = "[2]Minji";
 
+    bool _canSpace = false;
+
 
     void Start()
     {
         _successOrder = PlayerPrefs.GetInt("Success");
         _failOrder = PlayerPrefs.GetInt("Fail");
-
+        Managers.Sound.Clear();
+        Managers.Sound.Play("AudioClip/LevelVictorySound", Define.Sound.Effect);
+        Invoke("PlaySound", 4f);
+        //Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
         ChangeText();
         TurnOnStar();
     }
@@ -30,11 +35,24 @@ public class EndSceneUI : MonoBehaviour
     void TurnOnStar()
     {
         if(_totalScore >= 20)
-            Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject.SetActive(true);
+        {
+            //Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject.SetActive(true);
+            StartCoroutine(ActivateStar
+            (Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject,0.5f, "AudioClip/RoundResults_Star_01"));
+
+        }
         if(_totalScore >= 60)
-            Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject.SetActive(true);
+        {
+            StartCoroutine(ActivateStar
+            (Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject,1.5f, "AudioClip/RoundResults_Star_02"));
+            //Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject.SetActive(true);
+        }
         if (_totalScore >= 240)
-            Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject.SetActive(true);
+        {
+            StartCoroutine(ActivateStar
+            (Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject, 2.5f, "AudioClip/RoundResults_Star_03"));
+            //Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject.SetActive(true);
+        }
     }
 
     void ChangeText()
@@ -56,11 +74,13 @@ public class EndSceneUI : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && _canSpace)
         {
+
             LoadStartScene();
+            Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
         }
-        else if(Input.GetKeyDown(KeyCode.LeftShift))
+        else if(Input.GetKeyDown(KeyCode.LeftShift) && _canSpace)
         {
             LoadPlayScene();
         }
@@ -68,15 +88,25 @@ public class EndSceneUI : MonoBehaviour
 
     void LoadStartScene()
     {
-        PlayerPrefs.SetString("SceneName", _startScene);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene(_startScene);
     }
 
     void LoadPlayScene()
     {
-        PlayerPrefs.SetString("SceneName", _playScene);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene(_playScene);
+    }
+
+    void PlaySound()
+    {
+        Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
+        _canSpace = true;
+    }
+
+
+    IEnumerator ActivateStar(GameObject star,float delay, string soundEffect)
+    {
+        yield return new WaitForSeconds(delay);
+        Managers.Sound.Play(soundEffect, Define.Sound.Effect);
+        star.SetActive(true);
     }
 }
