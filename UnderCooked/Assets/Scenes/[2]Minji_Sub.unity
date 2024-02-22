@@ -4405,6 +4405,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 987729253, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1076218644926528685, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_Name
       value: CounterTop_one_wall_and_board (3)
@@ -10487,6 +10491,10 @@ PrefabInstance:
       value: -145.9
       objectReference: {fileID: 0}
     - target: {fileID: 764243272, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987729253, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -17546,6 +17554,10 @@ PrefabInstance:
       value: -145.5
       objectReference: {fileID: 0}
     - target: {fileID: 764243272, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987729253, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -30703,6 +30715,10 @@ PrefabInstance:
       value: -145
       objectReference: {fileID: 0}
     - target: {fileID: 764243272, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987729253, guid: e1261f02b8496ca4aac07a9074f83971, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
