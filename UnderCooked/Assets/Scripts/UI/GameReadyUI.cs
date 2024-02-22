@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class ReadyUI : MonoBehaviour
+public class GameReadyUI : MonoBehaviour
 {
     Image _spaceBar;
     
@@ -24,7 +24,7 @@ public class ReadyUI : MonoBehaviour
         while(true)
         {
             if (Input.GetKey(KeyCode.Space))
-                _spaceBar.fillAmount += 0.001f * Time.realtimeSinceStartup;
+                _spaceBar.fillAmount += 0.004f;
             else if (Input.GetKeyUp(KeyCode.Space))
                 _spaceBar.fillAmount = 0;
 
