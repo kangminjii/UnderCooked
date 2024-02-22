@@ -35,20 +35,19 @@ public class OrderUI : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.DeleteAll();
+
         _orderPanel = Managers.UI.FindDeepChild(transform, "Order_Panel").gameObject;
         _scorePanel = Managers.UI.FindDeepChild(transform, "Score_Panel").gameObject;
         _scoreText = Managers.UI.FindDeepChild(_scorePanel.transform, "Score").GetComponent<Text>();
         _grid = _orderPanel.GetComponent<GridLayoutGroup>();
         _grid.enabled = false;
 
-        AddOrderList(2);
-
         Grab_Idle.FoodOrderCheck += OrderListChecking;
         Grab_Moving.FoodOrderCheck += OrderListChecking;
 
-        StartCoroutine(OrderListUpdate());
-
-        PlayerPrefs.DeleteAll();
+        AddOrderList(2);
+        StartCoroutine(OrderListUpdate(_updateTime));
     }
 
 
@@ -87,6 +86,8 @@ public class OrderUI : MonoBehaviour
 
     IEnumerator OrderAnimation2(float xPos, RectTransform orderPos)
     {
+        //yield return new WaitForSeconds(0.1f);
+
         _grid.enabled = false;
         orderPos.anchoredPosition = new Vector2(342, 9); // 처음 시작 구역
 
@@ -134,12 +135,12 @@ public class OrderUI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    IEnumerator OrderListUpdate()
+    IEnumerator OrderListUpdate(float updateTime)
     {
-        yield return new WaitForSeconds(_updateTime);
+        yield return new WaitForSeconds(updateTime);
         
         AddOrderList(1);
-        StartCoroutine(OrderListUpdate());
+        StartCoroutine(OrderListUpdate(updateTime));
     }
 
 

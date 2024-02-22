@@ -10,9 +10,8 @@ public class TimerUI : MonoBehaviour
 {
     Image _timerProgressBar;
     Text _timeText;
-    float _timeLimit = 15f;
+    float _timeLimit = 30f;
     float _currentTime;
-    bool _isReady;
 
     string _endScene = "[3]Ending";
 
@@ -33,9 +32,13 @@ public class TimerUI : MonoBehaviour
             SceneManager.LoadScene(_endScene);
         }
 
-        _currentTime -= Time.deltaTime;
-        _timeText.text = FormatTime(_currentTime);
-        _timerProgressBar.fillAmount = _currentTime / _timeLimit;
+        if(Time.timeScale > 0)
+        {
+            _currentTime -= Time.deltaTime;
+            _timeText.text = FormatTime(_currentTime);
+            _timerProgressBar.fillAmount = _currentTime / _timeLimit;
+        }
+      
     }
 
     string FormatTime(float time)
@@ -44,4 +47,6 @@ public class TimerUI : MonoBehaviour
         int seconds = Mathf.FloorToInt(time % 60f);
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+
 }

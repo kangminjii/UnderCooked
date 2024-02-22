@@ -54,9 +54,8 @@ public class Moving : BaseState
 
             if (selectObj.tag == "Crate" && playerSpawnPos.childCount < 1) // CrateBox
             {
-
-                CrateBoxControl crateBox = selectObj.GetComponent<CrateBoxControl>();
-                crateBox._animator.SetTrigger("IsOpen");
+                Animator crateBoxAnimator = selectObj.GetComponent<Animator>();
+                crateBoxAnimator.SetTrigger("IsOpen");
 
                 string boxName = "Crate_";
                 string foodName = selectObj.transform.parent.parent.name;

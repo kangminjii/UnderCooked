@@ -9,7 +9,6 @@ public class EndSceneUI : MonoBehaviour
 {
     int _addingScore = 20;
     int _minusScore = 10;
-
     int _totalScore;
     int _successOrder;
     int _failOrder;
@@ -24,36 +23,51 @@ public class EndSceneUI : MonoBehaviour
     {
         _successOrder = PlayerPrefs.GetInt("Success");
         _failOrder = PlayerPrefs.GetInt("Fail");
+        
         Managers.Sound.Clear();
         Managers.Sound.Play("AudioClip/LevelVictorySound", Define.Sound.Effect);
         Invoke("PlaySound", 4f);
-        //Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
+        
         ChangeText();
         TurnOnStar();
     }
+
+
+    void PlaySound()
+    {
+        Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
+        _canSpace = true;
+    }
+
 
     void TurnOnStar()
     {
         if(_totalScore >= 20)
         {
-            //Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject.SetActive(true);
-            StartCoroutine(ActivateStar
-            (Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject,0.5f, "AudioClip/RoundResults_Star_01"));
-
+            GameObject star = Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject;
+            StartCoroutine(ActivateStar(star, 0.5f, "AudioClip/RoundResults_Star_01"));
         }
         if(_totalScore >= 60)
         {
-            StartCoroutine(ActivateStar
-            (Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject,1.5f, "AudioClip/RoundResults_Star_02"));
-            //Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject.SetActive(true);
+            GameObject star = Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject;
+            StartCoroutine(ActivateStar(star,1.5f, "AudioClip/RoundResults_Star_02"));
         }
         if (_totalScore >= 240)
         {
-            StartCoroutine(ActivateStar
-            (Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject, 2.5f, "AudioClip/RoundResults_Star_03"));
-            //Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject.SetActive(true);
+            GameObject star = Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject;
+            StartCoroutine(ActivateStar(star, 2.5f, "AudioClip/RoundResults_Star_03"));
         }
     }
+
+
+    IEnumerator ActivateStar(GameObject star, float delay, string soundEffect)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        star.SetActive(true);
+        Managers.Sound.Play(soundEffect, Define.Sound.Effect);
+    }
+
 
     void ChangeText()
     {
@@ -72,13 +86,12 @@ public class EndSceneUI : MonoBehaviour
         Managers.UI.FindDeepChild(transform, "TotalScore").GetComponent<Text>().text = _totalScore.ToString();
     }
 
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space) && _canSpace)
         {
-
             LoadStartScene();
-            Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
         }
         else if(Input.GetKeyDown(KeyCode.LeftShift) && _canSpace)
         {
@@ -86,27 +99,21 @@ public class EndSceneUI : MonoBehaviour
         }
     }
 
+
     void LoadStartScene()
     {
-        SceneManager.LoadScene(_startScene);
+        PlayerPrefs.SetString("SceneName", _startScene);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
+
+        Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
     }
 
     void LoadPlayScene()
     {
-        SceneManager.LoadScene(_playScene);
+        PlayerPrefs.SetString("SceneName", _playScene);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
     }
 
-    void PlaySound()
-    {
-        Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
-        _canSpace = true;
-    }
-
-
-    IEnumerator ActivateStar(GameObject star,float delay, string soundEffect)
-    {
-        yield return new WaitForSeconds(delay);
-        Managers.Sound.Play(soundEffect, Define.Sound.Effect);
-        star.SetActive(true);
-    }
 }
