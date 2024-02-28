@@ -20,7 +20,7 @@ public class StartSceneUI : MonoBehaviour
 
 
     bool _pressSpace = false;
-    string _playScene = "[2]Minji";
+    string _playScene = "[2]Game";
 
 
     private void Start()

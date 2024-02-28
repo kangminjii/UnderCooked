@@ -14,7 +14,7 @@ public class EndSceneUI : MonoBehaviour
     int _failOrder;
 
     string _startScene = "[1]Start";
-    string _playScene = "[2]Minji";
+    string _playScene = "[2]Game";
 
     bool _canSpace = false;
 

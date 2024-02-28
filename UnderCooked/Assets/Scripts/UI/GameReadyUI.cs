@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,9 @@ public class GameReadyUI : MonoBehaviour
 {
     Image _spaceBar;
     
-    
+    public static Action OrderStart;
+
+
     void Start()
     {
         _spaceBar = Managers.UI.FindDeepChild(transform, "SpaceBarCount").GetComponent<Image>();
@@ -38,7 +41,7 @@ public class GameReadyUI : MonoBehaviour
         }
     }
 
-    // 2. 레디 문구 후 시작
+    // 2. 레디 문구
     void SetGameCondition()
     {
         Managers.UI.FindDeepChild(transform, "Recipe").gameObject.SetActive(false);
@@ -47,12 +50,12 @@ public class GameReadyUI : MonoBehaviour
         StartCoroutine(ResumeGame());
     }
 
-
+    // 3. 시작
     IEnumerator ResumeGame()
     {
         Managers.UI.FindDeepChild(transform, "Ready").gameObject.SetActive(true);
         yield return WaitForRealSeconds(1.5f);
-        
+
         Time.timeScale = 1;
         Managers.UI.FindDeepChild(transform, "Ready").gameObject.SetActive(false);
         Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(true);
@@ -72,7 +75,8 @@ public class GameReadyUI : MonoBehaviour
 
     IEnumerator DisappearStartObject()
     {
-        // 주문서 애니메이션 시작하기
+        OrderStart.Invoke();
+
         yield return new WaitForSeconds(2.0f);
         Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(false);
     }

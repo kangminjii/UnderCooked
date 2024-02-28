@@ -25,15 +25,25 @@ public class OrderUI : MonoBehaviour
 
     // orderUpdate
     float _updateTime = 15;
+    int _orderNumber = 0;
+    float _orderWaitingTime = 30f;
+    bool _animationCheck;
 
-    public List<GameObject> OrderList = new List<GameObject>();
+    List<KeyValuePair<GameObject, int>> OrderList = new List<KeyValuePair<GameObject, int>>();
 
     public delegate void OrderCheck(string foodName);
     public event OrderCheck FoodOrderCheck;
-    bool orderCheck = false;
+    bool _orderCheck = false;
 
+    public delegate void OrderUIStart();
+    public event OrderUIStart OrderStart;
 
-    void Start()
+    private void Start()
+    {
+        GameReadyUI.OrderStart += SceneStart;
+    }
+
+    void SceneStart()
     {
         PlayerPrefs.DeleteAll();
 
@@ -55,6 +65,7 @@ public class OrderUI : MonoBehaviour
     {
         Grab_Idle.FoodOrderCheck -= OrderListChecking;
         Grab_Moving.FoodOrderCheck -= OrderListChecking;
+        GameReadyUI.OrderStart -= SceneStart;
     }
 
 
@@ -67,10 +78,62 @@ public class OrderUI : MonoBehaviour
         else
             orderObj = Managers.Resource.Instantiate("Prawn_Order", null, null, _orderPanel.transform);
 
-        OrderList.Add(orderObj);
-        
+        _orderNumber++;
+        OrderList.Add(new KeyValuePair<GameObject, int>(orderObj, _orderNumber));
+        StartCoroutine(OrderObjectProgress(orderObj, _orderNumber));
+
         return orderObj.GetComponent<RectTransform>();
     }
+
+
+    IEnumerator OrderObjectProgress(GameObject obj, int _orderNumber)
+    {
+        Transform progressBar = Managers.UI.FindDeepChild(obj.transform, "ProgressBar");
+        float waitingAmount = progressBar.GetComponent<Image>().fillAmount;
+
+
+        // 1초간 게이지 줄어듦
+        while (waitingAmount > 0 && obj != null)
+        {
+            waitingAmount -= 1 / _orderWaitingTime;
+            progressBar.GetComponent<Image>().fillAmount = waitingAmount;
+
+            // 색 변화
+            if(waitingAmount < 0.7f && waitingAmount > 0.5f)
+            {
+                Color changeColor = new Color(0.4f, 115 / 256f, 14 / 256f);
+                progressBar.GetComponent<Image>().color = changeColor;
+            }
+            else if(waitingAmount <= 0.5f && waitingAmount > 0.5f)
+            {
+                Color changeColor = new Color(0.6f, 115 / 256f, 14 / 256f);
+                progressBar.GetComponent<Image>().color = changeColor;
+            }
+            else if (waitingAmount <= 0.3f && waitingAmount > 0.1f)
+            {
+                Color changeColor = new Color(0.8f, 115 / 256f, 14 / 256f);
+                progressBar.GetComponent<Image>().color = changeColor;
+            }
+            else if(waitingAmount <= 0.1f)
+            {
+                Color changeColor = new Color(0.9f, 115 / 256f, 14 / 256f);
+                progressBar.GetComponent<Image>().color = changeColor;
+            }
+
+            yield return new WaitForSeconds(1);
+        }
+
+
+        // 시간 초과
+        if (waitingAmount <= 0)
+        {
+            OrderFail();
+
+            Managers.Resource.Destroy(obj);
+            OrderList.Remove(new KeyValuePair<GameObject, int>(obj, _orderNumber));
+        }
+    }
+
 
 
     IEnumerator OrderAnimation1(float xPos, RectTransform orderPos)
@@ -86,9 +149,9 @@ public class OrderUI : MonoBehaviour
 
     IEnumerator OrderAnimation2(float xPos, RectTransform orderPos)
     {
-        //yield return new WaitForSeconds(0.1f);
-
         _grid.enabled = false;
+        _animationCheck = false;
+
         orderPos.anchoredPosition = new Vector2(342, 9); // 처음 시작 구역
 
         while (orderPos.anchoredPosition.x > xPos)
@@ -98,7 +161,9 @@ public class OrderUI : MonoBehaviour
         }
 
         _grid.enabled = true;
+        _animationCheck = true;
     }
+
 
     void AddOrderList(int num)
     {
@@ -127,13 +192,17 @@ public class OrderUI : MonoBehaviour
     // 2. UpdateTime마다 1개씩 추가
     private void Update()
     {
-        if (OrderList.Count < 2)
+        if(Time.timeScale > 0)
         {
-            AddOrderList(1);
-        }
+            if (OrderList.Count < 2 && _animationCheck)
+            {
+                AddOrderList(1);
+            }
 
-        PlayerPrefs.Save();
+            PlayerPrefs.Save();
+        }
     }
+
 
     IEnumerator OrderListUpdate(float updateTime)
     {
@@ -147,18 +216,14 @@ public class OrderUI : MonoBehaviour
     // 플레이어가 반납한 음식 판단하는 함수
     void OrderListChecking(string foodName)
     {
-        if(_grid.enabled == false)
-            _grid.enabled = true;
-
-
         for (int i = 0; i < OrderList.Count; i++)
         {
-            if(foodName == "Prawn" || foodName == "Fish")
+            if (foodName == "Prawn" || foodName == "Fish")
             {
-                if (OrderList[i].name.Contains(foodName))
+                if (OrderList[i].Key.name.Contains(foodName))
                 {
-                    Managers.Resource.Destroy(OrderList[i]);
-                    OrderList.RemoveAt(i);
+                    Managers.Resource.Destroy(OrderList[i].Key);
+                    OrderList.Remove(OrderList[i]);
 
                     _totalScore += _addingScore;
                     _scoreText.text = _totalScore.ToString();
@@ -170,25 +235,36 @@ public class OrderUI : MonoBehaviour
                     _successFood++;
                     PlayerPrefs.SetInt("Success", _successFood);
 
-                    orderCheck = true;
+                    _orderCheck = true;
 
+                    if(_grid.enabled == false)
+                        _grid.enabled = true;
+                    
                     break;
                 }
             }
         }
 
-        if (!orderCheck)
+        if (!_orderCheck)
         {
-            _totalScore -= _minusScore;
-            if (_totalScore < 0)
-                _totalScore = 0;
-            _scoreText.text = _totalScore.ToString();
-
-            _failFood++;
-            PlayerPrefs.SetInt("Fail", _failFood);
-
-            Managers.Sound.Play("AudioClip/Order_Fail", Define.Sound.Effect);
+            OrderFail();
         }
     }
+
+    void OrderFail()
+    {
+        _totalScore -= _minusScore;
+        if (_totalScore < 0)
+            _totalScore = 0;
+        _scoreText.text = _totalScore.ToString();
+
+        _failFood++;
+        PlayerPrefs.SetInt("Fail", _failFood);
+
+        Managers.Sound.Play("AudioClip/Order_Fail", Define.Sound.Effect);
+    }
+
+
+
 
 }
