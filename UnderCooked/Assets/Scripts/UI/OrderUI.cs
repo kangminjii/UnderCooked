@@ -24,9 +24,9 @@ public class OrderUI : MonoBehaviour
     GameObject _scorePanel;
 
     // orderUpdate
-    float _updateTime = 15;
+    float _updateTime = 20;
     int _orderNumber = 0;
-    float _orderWaitingTime = 30f;
+    float _orderWaitingTime = 40f;
     bool _animationCheck;
 
     List<KeyValuePair<GameObject, int>> OrderList = new List<KeyValuePair<GameObject, int>>();
@@ -129,7 +129,7 @@ public class OrderUI : MonoBehaviour
         {
             OrderFail();
 
-            Managers.Resource.Destroy(obj);
+            StartCoroutine(FailOrderDestroy(obj));
             OrderList.Remove(new KeyValuePair<GameObject, int>(obj, _orderNumber));
         }
     }
@@ -222,7 +222,7 @@ public class OrderUI : MonoBehaviour
             {
                 if (OrderList[i].Key.name.Contains(foodName))
                 {
-                    Managers.Resource.Destroy(OrderList[i].Key);
+                    StartCoroutine(SuccessOrderDestroy(OrderList[i].Key));
                     OrderList.Remove(OrderList[i]);
 
                     _totalScore += _addingScore;
@@ -264,7 +264,41 @@ public class OrderUI : MonoBehaviour
         Managers.Sound.Play("AudioClip/Order_Fail", Define.Sound.Effect);
     }
 
+    IEnumerator SuccessOrderDestroy(GameObject go)
+    {
+        Transform effectImage = Managers.UI.FindDeepChild(go.transform, "Success");
+        effectImage.gameObject.SetActive(true);
+        float alpha = 0;
 
+        while (alpha < 0.8f)
+        {
+            alpha += 0.2f; 
+            Color changeColor = new Color(0, 1, 0, alpha);
+            effectImage.GetComponent<Image>().color = changeColor;
+          
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        Managers.Resource.Destroy(go);
+    }
+
+    IEnumerator FailOrderDestroy(GameObject go)
+    {
+        Transform effectImage = Managers.UI.FindDeepChild(go.transform, "Fail");
+        effectImage.gameObject.SetActive(true);
+        float alpha = 0;
+
+        while (alpha < 0.8f)
+        {
+            alpha += 0.2f;
+            Color changeColor = new Color(1, 0, 0, alpha);
+            effectImage.GetComponent<Image>().color = changeColor;
+
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        Managers.Resource.Destroy(go);
+    }
 
 
 }
