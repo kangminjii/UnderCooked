@@ -106,8 +106,7 @@ public class EndSceneUI : MonoBehaviour
         PlayerPrefs.Save();
         SceneManager.LoadScene("Loading");
 
-        Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
-    }
+    }  
 
     void LoadPlayScene()
     {

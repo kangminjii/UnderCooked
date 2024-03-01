@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +8,21 @@ using UnityEngine.UI;
 public class GameReadyUI : MonoBehaviour
 {
     Image _spaceBar;
-    
-    
+
+    public static Action OrderStart;
+    public static Action CameraAction;
+
+
+
     void Start()
     {
+        
+        Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
+        Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
+
         _spaceBar = Managers.UI.FindDeepChild(transform, "SpaceBarCount").GetComponent<Image>();
 
+        
         StartCoroutine(SpaceBarCheck());
         Time.timeScale = 0;
     }
@@ -31,6 +41,7 @@ public class GameReadyUI : MonoBehaviour
             if (_spaceBar.fillAmount >= 1)
             {
                 SetGameCondition();
+                Managers.Sound.Play("AudioClip/Tutorial_Pop_Out", Define.Sound.Effect, 1f, 0.2f);
                 break;
             }
 
@@ -45,17 +56,24 @@ public class GameReadyUI : MonoBehaviour
         this.transform.GetComponent<Image>().color = new Color(0,0,0,0);
 
         StartCoroutine(ResumeGame());
+        
     }
 
 
     IEnumerator ResumeGame()
     {
+        // 카메라 움직이기
+
+        CameraAction.Invoke();
+        yield return WaitForRealSeconds(2f);
         Managers.UI.FindDeepChild(transform, "Ready").gameObject.SetActive(true);
-        yield return WaitForRealSeconds(1.5f);
+        Managers.Sound.Play("AudioClip/LevelReady_01", Define.Sound.Effect);
+        yield return WaitForRealSeconds(2.5f);
         
         Time.timeScale = 1;
         Managers.UI.FindDeepChild(transform, "Ready").gameObject.SetActive(false);
         Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(true);
+        Managers.Sound.Play("AudioClip/LevelGo", Define.Sound.Effect);  
         StartCoroutine(DisappearStartObject());
     }
 
@@ -72,7 +90,11 @@ public class GameReadyUI : MonoBehaviour
 
     IEnumerator DisappearStartObject()
     {
-        yield return new WaitForSeconds(2.0f);
+        //OrderStart.Invoke();
+        
+        yield return new WaitForSeconds(1.0f);    
         Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(false);
+        Managers.Sound.GetAudio(Define.Sound.Bgm).Play();
     }
+
 }

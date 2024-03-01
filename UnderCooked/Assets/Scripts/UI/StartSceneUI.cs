@@ -33,7 +33,12 @@ public class StartSceneUI : MonoBehaviour
 
         _startButton = transform.Find("StartButton").gameObject;
         _exitButton = transform.Find("ExitButton").gameObject;
-        _startText = transform.Find("StartText").gameObject;   
+        _startText = transform.Find("StartText").gameObject;
+
+        AudioSource bgmAudioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
+
+        if (bgmAudioSource.clip == null)
+            Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
 
     }
 
@@ -47,7 +52,9 @@ public class StartSceneUI : MonoBehaviour
             if(!_pressSpace)
             {
                 Managers.Sound.Play("AudioClip/UI_PressStart", Define.Sound.Effect);
-               
+                Managers.Sound.Bgm_Down();
+
+
                 _pressSpace = true;
             }
 
@@ -55,7 +62,10 @@ public class StartSceneUI : MonoBehaviour
             _exitButton.SetActive(true);
             _startText.SetActive(false);
         }
+
     }
+
+
 
     IEnumerator FadeOut()
     {
@@ -99,9 +109,7 @@ public class StartSceneUI : MonoBehaviour
     {
         PlayerPrefs.SetString("SceneName", _playScene);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("Loading");
-
-        Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
+        SceneManager.LoadScene("Loading");    
     }
 
 
