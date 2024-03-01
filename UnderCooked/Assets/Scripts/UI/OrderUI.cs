@@ -104,7 +104,7 @@ public class OrderUI : MonoBehaviour
                 Color changeColor = new Color(0.4f, 115 / 256f, 14 / 256f);
                 progressBar.GetComponent<Image>().color = changeColor;
             }
-            else if(waitingAmount <= 0.5f && waitingAmount > 0.5f)
+            else if(waitingAmount <= 0.5f && waitingAmount > 0.3f)
             {
                 Color changeColor = new Color(0.6f, 115 / 256f, 14 / 256f);
                 progressBar.GetComponent<Image>().color = changeColor;
@@ -116,7 +116,7 @@ public class OrderUI : MonoBehaviour
             }
             else if(waitingAmount <= 0.1f)
             {
-                Color changeColor = new Color(0.9f, 115 / 256f, 14 / 256f);
+                Color changeColor = Color.red;
                 progressBar.GetComponent<Image>().color = changeColor;
             }
 

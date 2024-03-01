@@ -56,9 +56,6 @@ public class Player : StateMachine
         ChopPos = this.transform.Find("ChopPos");
 
         Overlap.ObjectSelectEnter += Select;
-
-        //Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
-
     }
 
     private void OnDestroy()
@@ -85,18 +82,12 @@ public class Player : StateMachine
         if (Input.GetKey(KeyCode.RightArrow))
             moveDirection += Vector3.right;
 
-        //Rigidbody.AddForce(moveDirection * 20, ForceMode.Force);
-
-        //if (Rigidbody.velocity.magnitude < (moveDirection * _speed).magnitude)
-        //{
-        //    Rigidbody.velocity = moveDirection * _speed;
-        //}
-        //Rigidbody.velocity = moveDirection * _speed;
         Rigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
 
         if (moveDirection != Vector3.zero)
             PlayerRotate(moveDirection);
     }
+
 
     public void PlayerRotate(Vector3 moveDir)
     {
@@ -104,6 +95,7 @@ public class Player : StateMachine
         transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.06f);
         LookDir = transform.forward;
     }
+
 
     public void Dash()
     {
@@ -121,6 +113,7 @@ public class Player : StateMachine
             lastDashTime = Time.time;
         }
     }
+
 
     private void Select(GameObject Obj)
     {
@@ -158,12 +151,9 @@ public class Player : StateMachine
            
             canCut = false;
             SelectObj = null;
-            //return;
         }
-
-        
-        // !TODO : 오브젝트가 들어왔을 때 로직을 작성
     }
+
 
     public void Cutting()
     {
@@ -171,7 +161,6 @@ public class Player : StateMachine
         Cook.CuttingFood();
         Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
         Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
-        
     }
 
 

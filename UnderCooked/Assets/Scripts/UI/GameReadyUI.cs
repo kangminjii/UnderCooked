@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,12 +16,10 @@ public class GameReadyUI : MonoBehaviour
 
     void Start()
     {
-        
         Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
         Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
 
         _spaceBar = Managers.UI.FindDeepChild(transform, "SpaceBarCount").GetComponent<Image>();
-
         
         StartCoroutine(SpaceBarCheck());
         Time.timeScale = 0;
@@ -60,14 +58,16 @@ public class GameReadyUI : MonoBehaviour
     }
 
 
+    // 3. 카메라 움직이기
     IEnumerator ResumeGame()
     {
-        // 카메라 움직이기
-
         CameraAction.Invoke();
+
         yield return WaitForRealSeconds(2f);
+
         Managers.UI.FindDeepChild(transform, "Ready").gameObject.SetActive(true);
         Managers.Sound.Play("AudioClip/LevelReady_01", Define.Sound.Effect);
+
         yield return WaitForRealSeconds(2.5f);
         
         Time.timeScale = 1;
@@ -90,9 +90,10 @@ public class GameReadyUI : MonoBehaviour
 
     IEnumerator DisappearStartObject()
     {
-        //OrderStart.Invoke();
+        OrderStart.Invoke();
         
-        yield return new WaitForSeconds(1.0f);    
+        yield return new WaitForSeconds(1.0f);   
+        
         Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(false);
         Managers.Sound.GetAudio(Define.Sound.Bgm).Play();
     }
