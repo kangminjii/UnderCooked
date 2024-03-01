@@ -6,12 +6,11 @@ public class StateMachine : MonoBehaviour
 {
     BaseState _currentState;
 
-
-    private void OnGUI()
-    {
-        string content = _currentState != null ? _currentState.Name : "(no current state)";
-        GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
-    }
+    //private void OnGUI()
+    //{
+    //    string content = _currentState != null ? _currentState.Name : "(no current state)";
+    //    GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
+    //}
 
     private void Start()
     {
