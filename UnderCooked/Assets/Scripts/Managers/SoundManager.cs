@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManager
 {
 
-    AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
+    public AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
 
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
@@ -47,7 +47,16 @@ public class SoundManager
     }
 
 
-    public void Play(string path, Define.Sound type = Define.Sound.Effect , float pitch = 1.0f)
+    public void Bgm_Down()
+    {
+        float newVolume = 0.2f;
+
+        AudioSource bgmAudioSource = _audioSources[(int)Define.Sound.Bgm];
+        bgmAudioSource.volume = newVolume;
+    }
+
+
+    public void Play(string path, Define.Sound type = Define.Sound.Effect , float pitch = 1.0f, float volume = 0.5f)
     {
         if (path.Contains("Sound/") == false)
             path = $"Sounds/{path}";
@@ -67,6 +76,7 @@ public class SoundManager
             if (audioSource.isPlaying)
                 audioSource.Stop();
             audioSource.pitch = pitch;
+            audioSource.volume = volume;
             audioSource.clip = audioClip;
             audioSource.Play();
             
@@ -81,7 +91,7 @@ public class SoundManager
             }
 
             AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
-            audioSource.volume = 0.7f;
+            audioSource.volume = volume;
             audioSource.pitch = pitch;
             audioSource.PlayOneShot(audioClip);
         }
@@ -99,5 +109,14 @@ public class SoundManager
         }
 
         return audioClip;
+    }
+
+
+
+    public AudioSource GetAudio(Define.Sound type)
+    {
+        AudioSource audioSource = _audioSources[(int)type];
+
+        return audioSource;
     }
 }

@@ -57,10 +57,7 @@ public class Player : StateMachine
 
         Overlap.ObjectSelectEnter += Select;
 
-        Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
-        //Managers.Sound.Play("AudioClip/UI_Screen_Out", Define.Sound.Effect);
-
-
+        //Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
 
     }
 
@@ -119,7 +116,7 @@ public class Player : StateMachine
             Rigidbody.velocity = LookDir * dashForce;
             Rigidbody.AddForce(LookDir * dashForce, ForceMode.Force);
             Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, DashPos);
-            Managers.Sound.Play( "AudioClip/Dash5", Define.Sound.Effect);
+            Managers.Sound.Play("AudioClip/Dash5", Define.Sound.Effect);
             // 다시 쿨타임을 시작하기 위해 시간 기록
             lastDashTime = Time.time;
         }
