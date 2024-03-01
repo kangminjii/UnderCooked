@@ -15,18 +15,44 @@ public class LoadingUI : MonoBehaviour
     {
         _loadingBar = Managers.UI.FindDeepChild(transform, "Filled").GetComponent<Image>();
         _fadeInOut = Managers.UI.FindDeepChild(transform, "FadeInOut").GetComponent<Image>();
-
+        Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
         StartCoroutine(FadeIn());
         StartCoroutine(LoadingBar());
+        DecreaseBgmVolumeOverTime(0f, 2.5f);
     }
 
+
+    public void DecreaseBgmVolumeOverTime(float targetVolume, float duration)
+    {
+        AudioSource bgmAudioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
+        StartCoroutine(DecreaseVolumeOverTime(bgmAudioSource, targetVolume, duration));
+    }
+
+
+    private IEnumerator DecreaseVolumeOverTime(AudioSource audioSource, float targetVolume, float duration)
+    {
+        audioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
+
+        float startVolume = audioSource.volume;
+        float startTime = Time.time;
+
+        while (Time.time < startTime + duration)
+        {
+            float t = (Time.time - startTime) / duration;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, t);
+            yield return null;
+        }
+
+        Managers.Sound.Clear();
+    }
 
     IEnumerator FadeIn()
     {
         Color temp = _fadeInOut.color;
+        
 
         while (_fadeInOut.color.a > 0)
-        {
+        {    
             temp.a -= _speed;
             _fadeInOut.color = temp;
             yield return null;
@@ -52,6 +78,8 @@ public class LoadingUI : MonoBehaviour
 
         Color temp = _fadeInOut.color;
 
+        Managers.Sound.Play("AudioClip/UI_Screen_Out", Define.Sound.Effect);
+        Managers.Sound.Play("AudioClip/Tutorial_Pop_In", Define.Sound.Effect, 1f , 0.2f);
         while (_fadeInOut.color.a < 1)
         {
             temp.a += _speed;
@@ -59,6 +87,7 @@ public class LoadingUI : MonoBehaviour
             yield return null;
         }
 
+        
         SceneManager.LoadScene(PlayerPrefs.GetString("SceneName"));
     }
 
