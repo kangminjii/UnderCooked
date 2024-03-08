@@ -953,7 +953,7 @@ Transform:
   - {fileID: 1340633965}
   - {fileID: 4693234}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &435522330
 GameObject:
@@ -1452,7 +1452,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1212994460}
         m_TargetAssemblyTypeName: StartSceneUI, Assembly-CSharp
-        m_MethodName: OnClickNextScene
+        m_MethodName: OnClickStage1Scene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2137,7 +2137,7 @@ RectTransform:
   - {fileID: 46494626}
   - {fileID: 435522331}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2656,7 +2656,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1731772351
 PrefabInstance:
@@ -2917,7 +2917,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 8.88, y: 4.9, z: 0}
 --- !u!4 &1971710152 stripped
 Transform:
@@ -3007,7 +3007,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1542275734372189153, guid: 1363a3d01294d4a4092eb5e8eeb0cb9e, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1542275734372189153, guid: 1363a3d01294d4a4092eb5e8eeb0cb9e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3072,7 +3072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6384532160789324044, guid: 55323bfb16ad9074faf01e98d77367cd, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6384532160789324044, guid: 55323bfb16ad9074faf01e98d77367cd, type: 3}
       propertyPath: m_LocalPosition.x

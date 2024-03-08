@@ -11,28 +11,24 @@ public class LoadingUI : MonoBehaviour
     Image _fadeInOut;
     float _speed = 0.003f;
 
+
     void Start()
     {
         _loadingBar = Managers.UI.FindDeepChild(transform, "Filled").GetComponent<Image>();
         _fadeInOut = Managers.UI.FindDeepChild(transform, "FadeInOut").GetComponent<Image>();
+
         Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
+
         StartCoroutine(FadeIn());
         StartCoroutine(LoadingBar());
-        DecreaseBgmVolumeOverTime(0f, 2.5f);
-    }
 
-
-    public void DecreaseBgmVolumeOverTime(float targetVolume, float duration)
-    {
         AudioSource bgmAudioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
-        StartCoroutine(DecreaseVolumeOverTime(bgmAudioSource, targetVolume, duration));
+        StartCoroutine(DecreaseVolumeOverTime(bgmAudioSource, 0f, 2.5f));
     }
 
 
     private IEnumerator DecreaseVolumeOverTime(AudioSource audioSource, float targetVolume, float duration)
     {
-        audioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
-
         float startVolume = audioSource.volume;
         float startTime = Time.time;
 
@@ -46,18 +42,17 @@ public class LoadingUI : MonoBehaviour
         Managers.Sound.Clear();
     }
 
+
     IEnumerator FadeIn()
     {
         Color temp = _fadeInOut.color;
         
-
         while (_fadeInOut.color.a > 0)
         {    
             temp.a -= _speed;
             _fadeInOut.color = temp;
             yield return null;
         }
-
     }
     
 
@@ -72,6 +67,7 @@ public class LoadingUI : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
+
     IEnumerator FadeOut()
     {
         yield return new WaitForSeconds(1.0f);
@@ -80,6 +76,7 @@ public class LoadingUI : MonoBehaviour
 
         Managers.Sound.Play("AudioClip/UI_Screen_Out", Define.Sound.Effect);
         Managers.Sound.Play("AudioClip/Tutorial_Pop_In", Define.Sound.Effect, 1f , 0.2f);
+
         while (_fadeInOut.color.a < 1)
         {
             temp.a += _speed;
@@ -87,7 +84,6 @@ public class LoadingUI : MonoBehaviour
             yield return null;
         }
 
-        
         SceneManager.LoadScene(PlayerPrefs.GetString("SceneName"));
     }
 

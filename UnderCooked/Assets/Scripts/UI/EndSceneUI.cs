@@ -32,6 +32,29 @@ public class EndSceneUI : MonoBehaviour
         TurnOnStar();
     }
 
+    private void Update()
+    {
+        if (_canSpace)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                LoadScene(_startScene);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                LoadScene(_playScene);
+            }
+        }
+    }
+
+
+    void LoadScene(string sceneName)
+    {
+        PlayerPrefs.SetString("SceneName", sceneName);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
+    }
+
 
     void PlaySound()
     {
@@ -84,35 +107,6 @@ public class EndSceneUI : MonoBehaviour
         Managers.UI.FindDeepChild(transform, "PassScore").GetComponent<Text>().text = successScore.ToString();
         Managers.UI.FindDeepChild(transform, "FailScore").GetComponent<Text>().text = failScore.ToString();
         Managers.UI.FindDeepChild(transform, "TotalScore").GetComponent<Text>().text = _totalScore.ToString();
-    }
-
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space) && _canSpace)
-        {
-            LoadStartScene();
-        }
-        else if(Input.GetKeyDown(KeyCode.LeftShift) && _canSpace)
-        {
-            LoadPlayScene();
-        }
-    }
-
-
-    void LoadStartScene()
-    {
-        PlayerPrefs.SetString("SceneName", _startScene);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Loading");
-
-    }  
-
-    void LoadPlayScene()
-    {
-        PlayerPrefs.SetString("SceneName", _playScene);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Loading");
     }
 
 }

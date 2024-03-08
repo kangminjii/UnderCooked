@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -434,10 +434,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -498,8 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3230f2bf95a035e4bb46a16d24144831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 411217832}
-  UnitySprite: {fileID: 21300000, guid: a7798bab7c5f7574fb66513bb8670cc9, type: 3}
+  TitleImage: {fileID: 21300000, guid: fa46b2addabf74f4f9e3b5655406e78f, type: 3}
+  UnityImage: {fileID: 21300000, guid: a7798bab7c5f7574fb66513bb8670cc9, type: 3}
 --- !u!1 &1052418465
 GameObject:
   m_ObjectHideFlags: 0

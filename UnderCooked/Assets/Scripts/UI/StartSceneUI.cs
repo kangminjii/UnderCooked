@@ -8,26 +8,22 @@ using UnityEngine.EventSystems;
 
 public class StartSceneUI : MonoBehaviour
 {
+    public Image StartImg;
+
     VanShutter _vanShutter;
     StartSceneCamera _startCamera;
     
-    public Image StartImg;
     GameObject _startButton;
     GameObject _exitButton;
     GameObject _startText;
 
-    float fadeDuration = 2.0f;    // 색상 변화 지속 시간
-
-
+    float fadeDuration = 2.0f;
     bool _pressSpace = false;
     string _playScene = "[2]Game";
 
 
     private void Start()
     {
-
-        StartCoroutine(FadeOut());
-
         _vanShutter = FindObjectOfType<VanShutter>();
         _startCamera = FindObjectOfType<StartSceneCamera>();
 
@@ -36,63 +32,51 @@ public class StartSceneUI : MonoBehaviour
         _startText = transform.Find("StartText").gameObject;
 
         AudioSource bgmAudioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
-
         if (bgmAudioSource.clip == null)
             Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
 
+        StartCoroutine(FadeOut());
     }
+
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(_vanShutter.ShutterAnimation());
-            StartCoroutine(_startCamera.CameraAnimation());
-
             if(!_pressSpace)
             {
+                StartCoroutine(_vanShutter.ShutterAnimation());
+                StartCoroutine(_startCamera.CameraAnimation());
+
                 Managers.Sound.Play("AudioClip/UI_PressStart", Define.Sound.Effect);
                 Managers.Sound.Bgm_Down();
 
+                _startButton.SetActive(true);
+                _exitButton.SetActive(true);
+                _startText.SetActive(false);
 
                 _pressSpace = true;
             }
-
-            _startButton.SetActive(true);
-            _exitButton.SetActive(true);
-            _startText.SetActive(false);
         }
-
     }
-
 
 
     IEnumerator FadeOut()
     {
-        // 시작 알파 값
-        float startAlpha = 1.0f;
-        // 목표 알파 값
-        float endAlpha = 0.0f;
-
-        // 경과 시간
+        float startAlpha = 1f;
+        float endAlpha = 0f;
         float elapsedTime = 0f;
 
         while (elapsedTime < fadeDuration)
         {
-            // 보간된 알파 값 계산
             float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
-
-            // 이미지의 색상 업데이트 (알파 값만 변경)
             StartImg.color = new Color(StartImg.color.r, StartImg.color.g, StartImg.color.b, alpha);
 
-            // 다음 프레임까지 대기
-            yield return null;
-
-            // 경과 시간 업데이트
             elapsedTime += Time.deltaTime;
+
+            yield return null;
         }
 
-        // 마지막으로 알파 값을 설정하여 완전히 투명하게 만듭니다.
         StartImg.color = new Color(StartImg.color.r, StartImg.color.g, StartImg.color.b, endAlpha);
 
         Destroy(StartImg);
@@ -105,7 +89,8 @@ public class StartSceneUI : MonoBehaviour
     }
 
 
-    public void OnClickNextScene()
+    // 씬전환
+    public void OnClickStage1Scene()
     {
         PlayerPrefs.SetString("SceneName", _playScene);
         PlayerPrefs.Save();
@@ -121,8 +106,5 @@ public class StartSceneUI : MonoBehaviour
                     Application.Quit();
         #endif
     }
-
-  
-  
 
 }
