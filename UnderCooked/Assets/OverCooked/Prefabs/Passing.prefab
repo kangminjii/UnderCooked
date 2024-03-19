@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 949207976}
   m_Layer: 0
   m_Name: Passing
-  m_TagString: Untagged
+  m_TagString: Passing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: e5fb2536301599d42a0e7d34982ca23d, type: 2}
-  scrollSpeed: {x: -1, y: 0}
 --- !u!1 &7479588643760919672
 GameObject:
   m_ObjectHideFlags: 0

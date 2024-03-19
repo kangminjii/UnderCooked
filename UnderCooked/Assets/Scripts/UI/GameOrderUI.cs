@@ -24,7 +24,7 @@ public class GameOrderUI : MonoBehaviour
     GameObject _scorePanel;
 
     // orderUpdate
-    float _updateTime = 20;
+    float _updateTime = 10f;
     int _orderNumber = 0;
     float _orderWaitingTime = 40f;
     bool _animationCheck;
@@ -38,10 +38,12 @@ public class GameOrderUI : MonoBehaviour
     public delegate void OrderUIStart();
     public event OrderUIStart OrderStart;
 
+
     private void Start()
     {
         GameReadyUI.OrderStart += SceneStart;
     }
+
 
     void SceneStart()
     {
@@ -90,7 +92,6 @@ public class GameOrderUI : MonoBehaviour
     {
         Transform progressBar = Managers.UI.FindDeepChild(obj.transform, "ProgressBar");
         float waitingAmount = progressBar.GetComponent<Image>().fillAmount;
-
 
         // 1초간 게이지 줄어듦
         while (waitingAmount > 0 && obj != null)
