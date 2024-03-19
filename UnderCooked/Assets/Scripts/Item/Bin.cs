@@ -8,7 +8,7 @@ public class Bin : MonoBehaviour
     GameObject _trash;
     bool _plateRemove = false;
 
-    public PlateReturn plateReturn;
+    public PlateReturn PlateReturn;
 
 
     private void Start()
@@ -25,8 +25,8 @@ public class Bin : MonoBehaviour
             
             if (_trash.name.Contains("Plate") && !_plateRemove)
             {
-                plateReturn.PlateList.RemoveAt(plateReturn.PlateList.Count - 1);
-                plateReturn.CurrentPlateNumber--;
+                PlateReturn.PlateList.RemoveAt(PlateReturn.PlateList.Count - 1);
+                PlateReturn.CurrentPlateNumber--;
                 
                 _plateRemove = true;
             }

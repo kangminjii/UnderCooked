@@ -21,7 +21,6 @@ public class PlateReturn : MonoBehaviour
 
         StartPlate();
         StartPlate();
-        CurrentPlateNumber = 2;
     }
 
 
@@ -31,6 +30,8 @@ public class PlateReturn : MonoBehaviour
         {
             StartCoroutine(SpawnPlate());
         }
+
+        CurrentPlateNumber = PlateList.Count;
     }
 
 

@@ -15995,7 +15995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f63cad60a55d34f88aae3ba442af9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 0.001
+  ScaleFactor: 0.001
 --- !u!23 &1038127525
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29125,7 +29125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f63cad60a55d34f88aae3ba442af9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 0.001
+  ScaleFactor: 0.001
 --- !u!23 &1917830582
 MeshRenderer:
   m_ObjectHideFlags: 0

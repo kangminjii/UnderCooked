@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ParticleDestroyer : MonoBehaviour
 {
-    ParticleSystem particleSystem;
+    ParticleSystem _particleSystem;
 
     void Start()
     {
-        particleSystem = GetComponent<ParticleSystem>();
-        Invoke("DestroyParticleSystem", particleSystem.main.duration);
+        _particleSystem = GetComponent<ParticleSystem>();
+        Invoke("DestroyParticle", _particleSystem.main.duration);
     }
 
-    void DestroyParticleSystem()
+    void DestroyParticle()
     {
         Destroy(gameObject);
     }
