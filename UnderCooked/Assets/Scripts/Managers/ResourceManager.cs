@@ -4,28 +4,11 @@ using UnityEngine;
 
 public class ResourceManager
 {
-
     public T Load<T>(string path) where T : Object
     {
         return Resources.Load<T>(path);
     }
-    //public T Load<T>(string path) where T : Object
-    //{
-    //    if (typeof(T) == typeof(GameObject))
-    //    {
-    //        string name = path;
-    //        int index = name.LastIndexOf('/');
-    //        if (index >= 0)
-    //            name = name.Substring(index + 1);
 
-    //        //GameObject go = Managers.Pool.GetOriginal(name);
-    //        GameObject go = Resources.Load(name) as GameObject;
-    //        if (go != null)
-    //            return go as T;
-    //    }
-
-    //    return Resources.Load<T>(path);
-    //}
 
     public GameObject Instantiate(string path, Vector3? pos = null, Quaternion? rot = null, Transform parent = null)
     {

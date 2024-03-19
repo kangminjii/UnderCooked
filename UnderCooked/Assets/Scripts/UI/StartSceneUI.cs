@@ -31,7 +31,7 @@ public class StartSceneUI : MonoBehaviour
         _exitButton = transform.Find("ExitButton").gameObject;
         _startText = transform.Find("StartText").gameObject;
 
-        AudioSource bgmAudioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
+        AudioSource bgmAudioSource = Managers.Sound.AudioSources[(int)Define.Sound.Bgm];
         if (bgmAudioSource.clip == null)
             Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
 
@@ -49,7 +49,7 @@ public class StartSceneUI : MonoBehaviour
                 StartCoroutine(_startCamera.CameraAnimation());
 
                 Managers.Sound.Play("AudioClip/UI_PressStart", Define.Sound.Effect);
-                Managers.Sound.Bgm_Down();
+                Managers.Sound.BgmDown();
 
                 _startButton.SetActive(true);
                 _exitButton.SetActive(true);

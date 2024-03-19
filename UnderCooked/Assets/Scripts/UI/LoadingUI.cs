@@ -22,7 +22,7 @@ public class LoadingUI : MonoBehaviour
         StartCoroutine(FadeIn());
         StartCoroutine(LoadingBar());
 
-        AudioSource bgmAudioSource = Managers.Sound._audioSources[(int)Define.Sound.Bgm];
+        AudioSource bgmAudioSource = Managers.Sound.AudioSources[(int)Define.Sound.Bgm];
         StartCoroutine(DecreaseVolumeOverTime(bgmAudioSource, 0f, 2.5f));
     }
 

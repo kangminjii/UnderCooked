@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager
 {
-
-    public AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
+    public AudioSource[] AudioSources = new AudioSource[(int)Define.Sound.MaxCount];
 
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
@@ -22,22 +20,18 @@ public class SoundManager
             for (int i = 0; i < soundNames.Length - 1; i++)
             {
                 GameObject go = new GameObject { name = soundNames[i] };
-                _audioSources[i] = go.AddComponent<AudioSource>();
+                AudioSources[i] = go.AddComponent<AudioSource>();
                 go.transform.parent = root.transform;
-                
             }
 
-            _audioSources[(int)Define.Sound.Bgm].loop = true;
-
+            AudioSources[(int)Define.Sound.Bgm].loop = true;
         }
-
-
     }
 
 
     public void Clear()
     {
-        foreach(AudioSource audioSource in _audioSources)
+        foreach(AudioSource audioSource in AudioSources)
         {
             audioSource.clip = null;
             audioSource.Stop();
@@ -47,11 +41,11 @@ public class SoundManager
     }
 
 
-    public void Bgm_Down()
+    public void BgmDown()
     {
         float newVolume = 0.2f;
 
-        AudioSource bgmAudioSource = _audioSources[(int)Define.Sound.Bgm];
+        AudioSource bgmAudioSource = AudioSources[(int)Define.Sound.Bgm];
         bgmAudioSource.volume = newVolume;
     }
 
@@ -68,36 +62,33 @@ public class SoundManager
             {
                 Debug.Log($"AudioClip Missing ! {path}");
             }
-
-            // TODO
-
-            AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
+          
+            AudioSource audioSource = AudioSources[(int)Define.Sound.Bgm];
 
             if (audioSource.isPlaying)
                 audioSource.Stop();
+
             audioSource.pitch = pitch;
             audioSource.volume = volume;
             audioSource.clip = audioClip;
             audioSource.Play();
-            
         }
         else
         {
             AudioClip audioClip = GetorAddAudioClip(path);
-            //AudioClip audioClip = Managers.Resource.Load<AudioClip>(path);
+            
             if (audioClip == null)
             {
                 Debug.Log($"AudioClip Missing ! {path}");
             }
 
-            AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
+            AudioSource audioSource = AudioSources[(int)Define.Sound.Effect];
             audioSource.volume = volume;
             audioSource.pitch = pitch;
             audioSource.PlayOneShot(audioClip);
         }
     }
      
-
 
     AudioClip GetorAddAudioClip(string path)
     {
@@ -111,11 +102,9 @@ public class SoundManager
         return audioClip;
     }
 
-
-
     public AudioSource GetAudio(Define.Sound type)
     {
-        AudioSource audioSource = _audioSources[(int)type];
+        AudioSource audioSource = AudioSources[(int)type];
 
         return audioSource;
     }
