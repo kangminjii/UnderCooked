@@ -15,11 +15,6 @@ public class PlateReturn : MonoBehaviour
     public List<GameObject> PlateList = new List<GameObject>();
 
 
-    private void Start()
-    {
-        PlateSpawnPos = this.transform.Find("PlateSpawnPos");
-    }
-
 
     private void Update()
     {

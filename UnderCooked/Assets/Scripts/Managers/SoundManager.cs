@@ -58,7 +58,7 @@ public class SoundManager
 
         if(type == Define.Sound.Bgm)
         {
-            AudioClip audioClip = GetorAddAudioClip(path); //Managers.Resource.Load<AudioClip>(path);
+            AudioClip audioClip = GetorAddAudioClip(path);
             
             if(audioClip == null)
             {
