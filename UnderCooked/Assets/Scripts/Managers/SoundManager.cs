@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,12 +53,13 @@ public class SoundManager
 
     public void Play(string path, Define.Sound type = Define.Sound.Effect , float pitch = 1.0f, float volume = 0.5f)
     {
-        if (path.Contains("Sound/") == false)
+        if (path.Contains("Sounds/") == false)
             path = $"Sounds/{path}";
 
         if(type == Define.Sound.Bgm)
         {
-            AudioClip audioClip = Managers.Resource.Load<AudioClip>(path);
+            AudioClip audioClip = GetorAddAudioClip(path); //Managers.Resource.Load<AudioClip>(path);
+            
             if(audioClip == null)
             {
                 Debug.Log($"AudioClip Missing ! {path}");

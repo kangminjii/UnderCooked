@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlateReturn : MonoBehaviour
 {
     float _plateSpawnTime = 1.0f;
-    int _maxPlateNumber = 2;
+    int _maxPlateNumber = 3;
     string _plateName = "Plate";
 
 
@@ -18,9 +18,6 @@ public class PlateReturn : MonoBehaviour
     private void Start()
     {
         PlateSpawnPos = this.transform.Find("PlateSpawnPos");
-
-        StartPlate();
-        StartPlate();
     }
 
 
@@ -30,8 +27,6 @@ public class PlateReturn : MonoBehaviour
         {
             StartCoroutine(SpawnPlate());
         }
-
-        CurrentPlateNumber = PlateList.Count;
     }
 
 
