@@ -73,8 +73,8 @@ public class Grab_Moving : BaseState
                 {
                     SetState();
                     PassingGate PassingGate = selectObj.GetComponent<PassingGate>();
-                    PassingGate.plateReturn.PlateList.RemoveAt(PassingGate.plateReturn.PlateList.Count - 1);
-                    PassingGate.plateReturn.CurrentPlateNumber--;
+                    PassingGate.PlateReturn.PlateList.RemoveAt(PassingGate.PlateReturn.PlateList.Count - 1);
+                    PassingGate.PlateReturn.CurrentPlateNumber--;
 
                     string returnFoodName;
 

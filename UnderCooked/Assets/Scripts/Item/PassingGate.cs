@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PassingGate : MonoBehaviour
 {
-    public PlateReturn plateReturn;
+    public PlateReturn PlateReturn;
 }
