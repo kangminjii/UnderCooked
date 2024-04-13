@@ -3,29 +3,24 @@ using UnityEngine.UI;
 
 public class CookingPlace : MonoBehaviour
 {
-    private GameObject _cookingKnife;
-    private Transform _spawnPos;
+    GameObject _cookingKnife;
+    Transform _spawnPos;
+    string _prawnObjectName = "Prawn(Clone)";
+    string _fishObjectName = "Fish(Clone)";
+
+
     public Slider _slider;
-
-
     public GameObject OnFood;
-
-    
-
-    string PrawnObjectName = "Prawn(Clone)";
-    string FishObjectName = "Fish(Clone)";
-
-    public int _chopCount = 0;
+    public int ChopCount = 0;
     public bool SliceFoodbool = false;
-
 
 
     private void Start()
     {
         _cookingKnife = transform.Find("CuttingBoard_Knife").gameObject;
         _spawnPos = transform.Find("SpawnPos");
+        
         _slider = GetComponentInChildren<Slider>();
-
         _slider.minValue = 0;
         _slider.maxValue = 10;
     }
@@ -39,11 +34,11 @@ public class CookingPlace : MonoBehaviour
 
             OnFood = _spawnPos.transform.GetChild(0).gameObject;
 
-            if (OnFood.name == PrawnObjectName)
+            if (OnFood.name == _prawnObjectName)
             {
                 SliceFoodbool = false;
             }
-            else if (OnFood.name == FishObjectName)
+            else if (OnFood.name == _fishObjectName)
             {
                 SliceFoodbool = false;
             }
@@ -55,11 +50,11 @@ public class CookingPlace : MonoBehaviour
         if (OnFood != null && !SliceFoodbool)
         {
             _slider.gameObject.SetActive(true);
-            _slider.value = (float)_chopCount;
+            _slider.value = (float)ChopCount;
         }
         else _slider.gameObject.SetActive(false);
 
-        if (_chopCount >= 10)
+        if (ChopCount >= 10)
         {
             string clone = "(Clone)";
             string SliceObjectName = _spawnPos.GetChild(0).name;
@@ -70,14 +65,14 @@ public class CookingPlace : MonoBehaviour
             Managers.Resource.Instantiate(SliceObjectName + "_Sliced", _spawnPos.position, Quaternion.Euler(0, -90, 0), _spawnPos);
 
             SliceFoodbool = true;
-            _chopCount = 0;
+            ChopCount = 0;
         }
     }
 
 
     public void CuttingFood()
     {
-        _chopCount++;
+        ChopCount++;
     }
 
 }

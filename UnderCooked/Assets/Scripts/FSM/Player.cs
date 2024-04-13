@@ -17,9 +17,8 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-    //[SerializeField] Overlap overlap;
+
     public CookingPlace Cook;
-   
     public Animator Animator;
     public Rigidbody Rigidbody;
     public Transform SpawnPos;
@@ -36,9 +35,7 @@ public class Player : StateMachine
 
 
     public delegate void ObjectSelectHandler(GameObject gameObject);
-    //public static event ObjectSelectHandler ObjectSelectEnter;
-
-    public GameObject SelectObj = null; // 선택된 물체
+    public GameObject SelectObj = null;
 
 
 
@@ -68,6 +65,7 @@ public class Player : StateMachine
         return IdleState;
     }
 
+    
     // Player 움직임
     public void PlayerMove()
     {
@@ -88,14 +86,12 @@ public class Player : StateMachine
             PlayerRotate(moveDirection);
     }
 
-
     public void PlayerRotate(Vector3 moveDir)
     {
         Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.06f);
         LookDir = transform.forward;
     }
-
 
     public void Dash()
     {
@@ -115,31 +111,27 @@ public class Player : StateMachine
     }
 
 
+    // Chop 조건
     private void Select(GameObject Obj)
     {
-        
         if (Obj != null)
         {
             SelectObj = Obj;
-
             CookingPlace place = Obj.GetComponent<CookingPlace>();
-
 
             if (place != null)
             {
-                Transform SpawnPos = place.transform.Find("SpawnPos");
+                Transform spawnPos = place.transform.Find("SpawnPos");
 
-                if (SpawnPos.childCount == 1 && !place.SliceFoodbool)
-                {
+                if (spawnPos.childCount == 1 && place.SliceFoodbool == false)
                     canCut = true;
-                }
                 else
                     canCut = false;
 
-                if (place._chopCount > 0)
+                if (place.ChopCount > 0)
                     FoodGrab = false;
-                else FoodGrab = true;
-
+                else 
+                    FoodGrab = true;
             }
             else
             {
@@ -148,17 +140,16 @@ public class Player : StateMachine
         }
         else
         {
-           
             canCut = false;
             SelectObj = null;
         }
     }
 
-
     public void Cutting()
     {
         Cook = SelectObj.GetComponent<CookingPlace>();
         Cook.CuttingFood();
+
         Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
         Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
     }

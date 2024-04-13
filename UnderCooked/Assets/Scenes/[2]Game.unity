@@ -17871,7 +17871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1205548867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21245,14 +21245,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1447040409, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: _radius
-      value: 0.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 700426664125094363, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1186960611942983899, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
       propertyPath: m_Name
       value: Chef
@@ -21300,26 +21292,6 @@ PrefabInstance:
     - target: {fileID: 1959979325366055521, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2069834705226764069, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2069834705226764069, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2069834705226764071, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: _speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2069834705226764074, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_Size.z
-      value: 0.3187365
-      objectReference: {fileID: 0}
-    - target: {fileID: 2069834705226764074, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
-      propertyPath: m_Center.z
-      value: 0.43063173
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
