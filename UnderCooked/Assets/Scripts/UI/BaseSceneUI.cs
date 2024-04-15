@@ -5,15 +5,15 @@ using System.Collections;
 
 public class BaseSceneUI : MonoBehaviour
 {
-    public Sprite TitleImage;
-    public Sprite UnityImage;
-
-
     Image _image;
     Color _startColor = Color.white;
-    Color _endColor = Color.black;  
+    Color _endColor = Color.black;
     float _changeDuration = 2.0f;
     string _playScene = "[1]Start";
+
+
+    public Sprite TitleImage;
+    public Sprite UnityImage;
 
 
     void Start()

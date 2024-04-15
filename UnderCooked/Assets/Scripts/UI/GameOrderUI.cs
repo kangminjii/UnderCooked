@@ -25,15 +25,16 @@ public class GameOrderUI : MonoBehaviour
 
     // orderUpdate
     float _updateTime = 10f;
-    int _orderNumber = 0;
     float _orderWaitingTime = 40f;
+    int _orderNumber = 0;
     bool _animationCheck;
+    bool _orderCheck = false;
 
     List<KeyValuePair<GameObject, int>> OrderList = new List<KeyValuePair<GameObject, int>>();
 
+
     public delegate void OrderCheck(string foodName);
     public event OrderCheck FoodOrderCheck;
-    bool _orderCheck = false;
 
     public delegate void OrderUIStart();
     public event OrderUIStart OrderStart;

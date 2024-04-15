@@ -33,7 +33,7 @@ public class Chop : BaseState
     {
         base.UpdateLogic();
 
-        if (!_playerSM.canCut)
+        if (!_playerSM.CanCut)
             _stateMachine.ChangeState(_playerSM.IdleState);
         
     }

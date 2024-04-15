@@ -9,6 +9,7 @@ public class GameEndUI : MonoBehaviour
     GameObject _endImage;
     string _endScene = "[3]Ending";
 
+
     public delegate void TimeOver();
     public event TimeOver GameEnd;
 

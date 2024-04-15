@@ -6,7 +6,9 @@ public class Bin : MonoBehaviour
 {
     Transform _binSpawnPos;
     GameObject _trash;
+
     bool _plateRemove = false;
+
 
     public PlateReturn PlateReturn;
 

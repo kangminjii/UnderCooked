@@ -8,11 +8,9 @@ using UnityEngine.EventSystems;
 
 public class StartSceneUI : MonoBehaviour
 {
-    public Image StartImg;
-
     VanShutter _vanShutter;
     StartSceneCamera _startCamera;
-    
+
     GameObject _startButton;
     GameObject _exitButton;
     GameObject _startText;
@@ -20,6 +18,9 @@ public class StartSceneUI : MonoBehaviour
     float fadeDuration = 2.0f;
     bool _pressSpace = false;
     string _playScene = "[2]Game";
+
+
+    public Image StartImg;
 
 
     private void Start()

@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
+
 using UnityEngine;
 
 public class Player : StateMachine
 {
-    // 상태
     [HideInInspector]
     public Idle IdleState;
     [HideInInspector]
@@ -17,26 +14,22 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-
-    public CookingPlace Cook;
     public Animator Animator;
     public Rigidbody Rigidbody;
-    public Transform SpawnPos;
     public GameObject Knife;
-    private Transform ChopPos;
-
-    private float lastDashTime = 0f;
-    private float dashCooldown = 0.3f;
-
-    public Vector3 LookDir;
-    public bool canCut;
-    public bool FoodGrab;
-    public float _speed = 5.0f;
-
+    public Transform SpawnPos;
+    public Transform ChopPos;
+    public bool CanCut;
+    public bool CanGrab;
+    public float Speed = 5.0f;
 
     public delegate void ObjectSelectHandler(GameObject gameObject);
     public GameObject SelectObj = null;
 
+
+    float _lastDashTime = 0f;
+    float _dashCoolDown = 0.3f;
+    Vector3 LookDir;
 
 
     private void Awake()
@@ -46,11 +39,6 @@ public class Player : StateMachine
         ChopState = new Chop(this);
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
-
-        Rigidbody = GetComponent<Rigidbody>();
-        Animator = GetComponent<Animator>();
-        SpawnPos = this.transform.Find("SpawnPos");
-        ChopPos = this.transform.Find("ChopPos");
 
         Overlap.ObjectSelectEnter += Select;
     }
@@ -80,7 +68,7 @@ public class Player : StateMachine
         if (Input.GetKey(KeyCode.RightArrow))
             moveDirection += Vector3.right;
 
-        Rigidbody.position += moveDirection.normalized * Time.deltaTime * _speed;
+        Rigidbody.position += moveDirection.normalized * Time.deltaTime * Speed;
 
         if (moveDirection != Vector3.zero)
             PlayerRotate(moveDirection);
@@ -98,7 +86,7 @@ public class Player : StateMachine
         float dashForce = 7f;
 
         // 쿨타임 체크
-        if (Time.time - lastDashTime >= dashCooldown)       
+        if (Time.time - _lastDashTime >= _dashCoolDown)       
         {
             Transform DashPos = transform.Find("Chararcter");
             Rigidbody.velocity = LookDir * dashForce;
@@ -106,7 +94,7 @@ public class Player : StateMachine
             Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, DashPos);
             Managers.Sound.Play("AudioClip/Dash5", Define.Sound.Effect);
             // 다시 쿨타임을 시작하기 위해 시간 기록
-            lastDashTime = Time.time;
+            _lastDashTime = Time.time;
         }
     }
 
@@ -123,32 +111,32 @@ public class Player : StateMachine
             {
                 Transform spawnPos = place.transform.Find("SpawnPos");
 
-                if (spawnPos.childCount == 1 && place.ChopObject == true)
-                    canCut = true;
+                if (spawnPos.childCount == 1 && place.CanChop == true)
+                    CanCut = true;
                 else
-                    canCut = false;
+                    CanCut = false;
 
                 if (place.ChopCount > 0)
-                    FoodGrab = false;
+                    CanGrab = false;
                 else 
-                    FoodGrab = true;
+                    CanGrab = true;
             }
             else
             {
-                canCut = false;
+                CanCut = false;
             }
         }
         else
         {
-            canCut = false;
+            CanCut = false;
             SelectObj = null;
         }
     }
 
     public void Cutting()
     {
-        Cook = SelectObj.GetComponent<CookingPlace>();
-        Cook.CuttingFood();
+        CookingPlace cook = SelectObj.GetComponent<CookingPlace>();
+        cook.CuttingFood();
 
         Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
         Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);

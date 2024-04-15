@@ -6,13 +6,14 @@ public class CookingPlace : MonoBehaviour
     string _prawnObjectName = "Prawn(Clone)";
     string _fishObjectName = "Fish(Clone)";
 
+
     public GameObject CookingKnife;
+    public GameObject OnFood;
     public Transform SpawnPos;
     public Slider Slider;
-    public GameObject OnFood;
+    
     public float ChopCount = 0;
-    public bool ChopObject = false;
-
+    public bool CanChop = false;
 
 
     private void Update()
@@ -26,13 +27,13 @@ public class CookingPlace : MonoBehaviour
 
             if (OnFood.name == _prawnObjectName || OnFood.name == _fishObjectName)
             {
-                ChopObject = true;
+                CanChop = true;
                 Slider.gameObject.SetActive(true);
                 Slider.value = ChopCount;
             }
             else
             {
-                ChopObject = false;
+                CanChop = false;
                 Slider.gameObject.SetActive(false);
             }
         }
@@ -50,7 +51,7 @@ public class CookingPlace : MonoBehaviour
             Destroy(OnFood);
             Managers.Resource.Instantiate(SliceObjectName + "_Sliced", SpawnPos.position, Quaternion.Euler(0, -90, 0), SpawnPos);
 
-            ChopObject = false;
+            CanChop = false;
             ChopCount = 0;
         }
     }

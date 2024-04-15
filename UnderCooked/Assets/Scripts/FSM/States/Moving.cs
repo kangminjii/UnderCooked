@@ -14,7 +14,7 @@ public class Moving : BaseState
     public override void Enter()
     {
         base.Enter();
-        _playerSM.Animator.SetFloat("speed", _playerSM._speed);
+        _playerSM.Animator.SetFloat("speed", _playerSM.Speed);
     }
 
     public override void UpdateLogic()
@@ -78,7 +78,7 @@ public class Moving : BaseState
                 Managers.Resource.Destroy(selectObj);
             }
 
-            if (selectObj.tag == "CuttingBoard" && _playerSM.FoodGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
+            if (selectObj.tag == "CuttingBoard" && _playerSM.CanGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
                 return;
 
             if (selectObj.transform.Find("SpawnPos") == null)
@@ -103,7 +103,7 @@ public class Moving : BaseState
         if (Input.anyKey == false)
             _stateMachine.ChangeState(_playerSM.IdleState);
       
-        if (_playerSM.canCut && Input.GetKey(KeyCode.LeftControl))
+        if (_playerSM.CanCut && Input.GetKey(KeyCode.LeftControl))
             _stateMachine.ChangeState(_playerSM.ChopState);
     }
 

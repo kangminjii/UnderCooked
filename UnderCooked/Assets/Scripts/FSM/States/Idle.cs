@@ -75,23 +75,12 @@ public class Idle : BaseState
                 string fallingObjectName = selectObj.transform.name;
                 fallingObjectName = fallingObjectName.Replace(clone, "");
 
-                //if(FallingObjectName == "Fish")
-                //{
-                //    Vector3 newPosition = PlayerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
-                //    Managers.Resource.Instantiate(FallingObjectName, newPosition, Quaternion.identity, PlayerSpawnPos.transform);
-                //    Managers.Resource.Destroy(selectObj);
-                //}
-                //else
-                //{
-                //    Managers.Resource.Instantiate(FallingObjectName, PlayerSpawnPos.position+ new Vector3(0f, 0.3f, 0f), Quaternion.identity, PlayerSpawnPos);
-                //    Managers.Resource.Destroy(selectObj);
-                //}      
                 Vector3 newPosition = playerSpawnPos.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
                 Managers.Resource.Instantiate(fallingObjectName, newPosition, Quaternion.identity, playerSpawnPos.transform);
                 Managers.Resource.Destroy(selectObj);
             }
 
-            if (selectObj.tag == "CuttingBoard" && _playerSM.FoodGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
+            if (selectObj.tag == "CuttingBoard" && _playerSM.CanGrab == false) // 도마위에 있는 오브젝트 한번이라도 썰면 못잡게 하는 코드
                 return;
 
             if (selectObj.transform.Find("SpawnPos") == null)
@@ -112,7 +101,7 @@ public class Idle : BaseState
 
         }
 
-        if (_playerSM.canCut && Input.GetKey(KeyCode.LeftControl))
+        if (_playerSM.CanCut && Input.GetKey(KeyCode.LeftControl))
             _stateMachine.ChangeState(_playerSM.ChopState);
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||

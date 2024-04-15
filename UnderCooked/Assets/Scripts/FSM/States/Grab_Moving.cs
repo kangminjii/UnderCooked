@@ -18,7 +18,7 @@ public class Grab_Moving : BaseState
     public override void Enter()
     {
         base.Enter();
-        _playerSM.Animator.SetFloat("speed", _playerSM._speed);
+        _playerSM.Animator.SetFloat("speed", _playerSM.Speed);
     }
 
     public override void UpdateLogic()

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class SoundManager
 {
+    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+
+
     public AudioSource[] AudioSources = new AudioSource[(int)Define.Sound.MaxCount];
 
-    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
     public void Init()
     {

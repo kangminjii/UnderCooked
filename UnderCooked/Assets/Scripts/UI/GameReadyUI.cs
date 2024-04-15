@@ -12,6 +12,7 @@ public class GameReadyUI : MonoBehaviour
     GameObject _ready;
     GameObject _start;
     
+
     public static Action OrderStart;
     public static Action CameraAction;
 
