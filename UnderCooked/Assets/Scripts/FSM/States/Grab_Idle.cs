@@ -73,7 +73,9 @@ public class Grab_Idle : BaseState
                 if (playerSpawnPos.GetChild(0).name.Contains("Plate"))
                 {
                     SetState();
+
                     PassingGate PassingGate = selectObj.GetComponent<PassingGate>();
+
                     PassingGate.PlateReturn.PlateList.RemoveAt(PassingGate.PlateReturn.PlateList.Count - 1);
                     PassingGate.PlateReturn.CurrentPlateNumber--;
 

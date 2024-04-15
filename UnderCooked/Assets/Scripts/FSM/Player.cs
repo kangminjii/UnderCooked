@@ -123,7 +123,7 @@ public class Player : StateMachine
             {
                 Transform spawnPos = place.transform.Find("SpawnPos");
 
-                if (spawnPos.childCount == 1 && place.SliceFoodbool == false)
+                if (spawnPos.childCount == 1 && place.ChopObject == true)
                     canCut = true;
                 else
                     canCut = false;

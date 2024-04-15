@@ -3,68 +3,54 @@ using UnityEngine.UI;
 
 public class CookingPlace : MonoBehaviour
 {
-    GameObject _cookingKnife;
-    Transform _spawnPos;
     string _prawnObjectName = "Prawn(Clone)";
     string _fishObjectName = "Fish(Clone)";
 
-
-    public Slider _slider;
+    public GameObject CookingKnife;
+    public Transform SpawnPos;
+    public Slider Slider;
     public GameObject OnFood;
-    public int ChopCount = 0;
-    public bool SliceFoodbool = false;
+    public float ChopCount = 0;
+    public bool ChopObject = false;
 
-
-    private void Start()
-    {
-        _cookingKnife = transform.Find("CuttingBoard_Knife").gameObject;
-        _spawnPos = transform.Find("SpawnPos");
-        
-        _slider = GetComponentInChildren<Slider>();
-        _slider.minValue = 0;
-        _slider.maxValue = 10;
-    }
 
 
     private void Update()
     {
-        if (_spawnPos.childCount > 0)
+        // 음식이 놓였는가?
+        if (SpawnPos.childCount > 0)
         {
-            _cookingKnife.SetActive(false);
+            CookingKnife.SetActive(false);
 
-            OnFood = _spawnPos.transform.GetChild(0).gameObject;
+            OnFood = SpawnPos.GetChild(0).gameObject;
 
-            if (OnFood.name == _prawnObjectName)
+            if (OnFood.name == _prawnObjectName || OnFood.name == _fishObjectName)
             {
-                SliceFoodbool = false;
+                ChopObject = true;
+                Slider.gameObject.SetActive(true);
+                Slider.value = ChopCount;
             }
-            else if (OnFood.name == _fishObjectName)
+            else
             {
-                SliceFoodbool = false;
+                ChopObject = false;
+                Slider.gameObject.SetActive(false);
             }
-            else SliceFoodbool = true;
         }
         else
-            _cookingKnife.SetActive(true);
-
-        if (OnFood != null && !SliceFoodbool)
         {
-            _slider.gameObject.SetActive(true);
-            _slider.value = (float)ChopCount;
+            CookingKnife.SetActive(true);
+            Slider.gameObject.SetActive(false);
         }
-        else _slider.gameObject.SetActive(false);
-
+       
+        // 다 썰렸는가?
         if (ChopCount >= 10)
         {
-            string clone = "(Clone)";
-            string SliceObjectName = _spawnPos.GetChild(0).name;
-            SliceObjectName = SliceObjectName.Replace(clone, "");
+            string SliceObjectName = OnFood.name.Replace("(Clone)", "");
 
             Destroy(OnFood);
+            Managers.Resource.Instantiate(SliceObjectName + "_Sliced", SpawnPos.position, Quaternion.Euler(0, -90, 0), SpawnPos);
 
-            Managers.Resource.Instantiate(SliceObjectName + "_Sliced", _spawnPos.position, Quaternion.Euler(0, -90, 0), _spawnPos);
-
-            SliceFoodbool = true;
+            ChopObject = false;
             ChopCount = 0;
         }
     }

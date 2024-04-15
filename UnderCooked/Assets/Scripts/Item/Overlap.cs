@@ -16,8 +16,6 @@ public class Overlap : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_selectedObject);
-
         Vector3 playerPosition = transform.position;
         Vector3 playerForward = transform.forward;
         RaycastHit hit;

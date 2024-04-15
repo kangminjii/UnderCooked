@@ -46,7 +46,7 @@ public class GameReadyUI : MonoBehaviour
             else if (Input.GetKey(KeyCode.Space))
             {
                 float elapsedTime = Time.realtimeSinceStartup - startTime;
-                _spaceBar.fillAmount = elapsedTime * 0.4f; // 0.004
+                _spaceBar.fillAmount = elapsedTime * 10f; // 0.4f
             }
 
 
