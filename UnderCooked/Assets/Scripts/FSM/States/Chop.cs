@@ -12,6 +12,7 @@ public class Chop : BaseState
         _playerSM = (Player)stateMachine;
     }
 
+
     public override void Enter()
     {
         base.Enter();
@@ -22,30 +23,31 @@ public class Chop : BaseState
         _playerSM.Animator.SetFloat("speed", 0);
     }
 
+
     public override void Exit()
     {
         base.Exit();
+
         _playerSM.Knife.SetActive(false);
         _playerSM.Animator.SetBool("Cutting", false);
     }
+
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
 
+        // Idle Á¶°Ç
         if (!_playerSM.CanCut)
             _stateMachine.ChangeState(_playerSM.IdleState);
-        
     }
+
+
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
 
         _playerSM.PlayerMove();
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-            _playerSM.Dash();
     }
-
 }
 

@@ -12,7 +12,7 @@ public class Overlap : MonoBehaviour
 
 
     public LayerMask Layermask;
-    public GameObject SelectGameObject;
+    public GameObject OverlappedGameObject;
     public static Action<GameObject> ObjectSelectEnter;
 
 
@@ -25,28 +25,27 @@ public class Overlap : MonoBehaviour
         if (Physics.SphereCast(playerPosition, _radius, playerForward, out hit, _maxDistance, Layermask))
         {
             _collidedObject = hit.collider;
-            SelectGameObject = _collidedObject.gameObject;
+            OverlappedGameObject = _collidedObject.gameObject;
 
             RestoreObjectColor();
 
             // 충돌한 객체의 Renderer 가져오기
-            MeshRenderer objRenderer = SelectGameObject.GetComponent<MeshRenderer>();
+            MeshRenderer objRenderer = OverlappedGameObject.GetComponent<MeshRenderer>();
             objRenderer.material.SetColor("_EmissionColor", new Color(0.5f, 0.45f, 0.4f, 0f));
             objRenderer.material.EnableKeyword("_EMISSION");
             _originalColor = objRenderer.material.color;
 
-            _selectedObject = SelectGameObject;
+            _selectedObject = OverlappedGameObject;
 
-            ObjectSelectEnter.Invoke(SelectGameObject);
+            ObjectSelectEnter.Invoke(OverlappedGameObject);
         }
-
         else
         {
             _collidedObject = null; 
-            SelectGameObject = null;
+            OverlappedGameObject = null;
 
             RestoreObjectColor();
-            ObjectSelectEnter.Invoke(SelectGameObject);
+            ObjectSelectEnter.Invoke(OverlappedGameObject);
         }
     }
 
@@ -62,7 +61,7 @@ public class Overlap : MonoBehaviour
                 objRenderer.material.SetColor("_EmissionColor", _originalColor);
                 objRenderer.material.DisableKeyword("_EMISSION");
             }
-            // 선택된 객체 초기화
+
             _selectedObject = null;
         }
     }

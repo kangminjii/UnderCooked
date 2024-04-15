@@ -72,6 +72,10 @@ public class Player : StateMachine
 
         if (moveDirection != Vector3.zero)
             PlayerRotate(moveDirection);
+
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+            Dash();
     }
 
     public void PlayerRotate(Vector3 moveDir)
@@ -133,6 +137,8 @@ public class Player : StateMachine
         }
     }
 
+    
+    // Chop할때 효과들
     public void Cutting()
     {
         CookingPlace cook = SelectObj.GetComponent<CookingPlace>();
@@ -142,5 +148,65 @@ public class Player : StateMachine
         Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
     }
 
+
+    // Idle & Moving에서 Object 탐지시
+    public void InteractObject()
+    {
+        if (SelectObj == null)
+            return;
+
+        // Object == 접시
+        if (SelectObj.tag == "PlateReturn")
+        {
+            PlateReturn plateReturn = SelectObj.GetComponent<PlateReturn>();
+
+            if (plateReturn.CurrentPlateNumber > 0 && SpawnPos.childCount < 1)
+            {
+                if (plateReturn.PlateSpawnPos.childCount == 0)
+                    return;
+
+                Managers.Resource.Instantiate("Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                Managers.Resource.Destroy(plateReturn.PlateSpawnPos.GetChild(plateReturn.PlateSpawnPos.childCount - 1).gameObject);
+            }
+        }
+
+        // Object == 재료상자
+        if (SelectObj.tag == "Crate" && SpawnPos.childCount < 1)
+        {
+            Animator crateBoxAnimator = SelectObj.GetComponent<Animator>();
+            crateBoxAnimator.SetTrigger("IsOpen");
+
+            string ingredientName = SelectObj.transform.GetChild(0).name.Remove(0, "Crate_".Length);
+
+            Managers.Resource.Instantiate(ingredientName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+        }
+
+        // Object == 음식
+        if (SelectObj.tag == "Food")
+        {
+            string droppedItemName = SelectObj.name.Replace("_Drop(Clone)", "");
+
+            Managers.Resource.Instantiate(droppedItemName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+            Managers.Resource.Destroy(SelectObj);
+        }
+
+        // Object == 도마
+        if (SelectObj.tag == "CuttingBoard" && CanGrab == false)
+            return;
+
+        // Object == 테이블
+        if (SelectObj.transform.Find("SpawnPos") == null)
+        {
+            return;
+        }
+        else if (SelectObj.transform.Find("SpawnPos").childCount == 1)
+        {
+            Transform table = SelectObj.transform.Find("SpawnPos");
+            string tableObjectName = table.GetChild(0).name.Replace("(Clone)", "");
+
+            Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+            Managers.Resource.Destroy(table.GetChild(0).gameObject);
+        }
+    }
 
 }

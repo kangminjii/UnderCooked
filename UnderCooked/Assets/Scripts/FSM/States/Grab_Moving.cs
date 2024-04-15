@@ -15,11 +15,15 @@ public class Grab_Moving : BaseState
         _playerSM = (Player)stateMachine;
     }
 
+
     public override void Enter()
     {
         base.Enter();
+        
+        _playerSM.Animator.SetBool("Grab", true);
         _playerSM.Animator.SetFloat("speed", _playerSM.Speed);
     }
+
 
     public override void UpdateLogic()
     {
@@ -149,20 +153,18 @@ public class Grab_Moving : BaseState
         
     }
 
+
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
 
         _playerSM.PlayerMove();
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-            _playerSM.Dash();
     }
+
 
     private void SetState()
     {
         _playerSM.Animator.SetBool("Grab", false);
         _stateMachine.ChangeState(_playerSM.MovingState);
-        
     }
 }
