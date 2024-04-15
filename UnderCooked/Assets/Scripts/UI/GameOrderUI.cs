@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 public class GameOrderUI : MonoBehaviour
@@ -56,8 +54,7 @@ public class GameOrderUI : MonoBehaviour
         _grid = _orderPanel.GetComponent<GridLayoutGroup>();
         _grid.enabled = false;
 
-        Grab_Idle.FoodOrderCheck += OrderListChecking;
-        Grab_Moving.FoodOrderCheck += OrderListChecking;
+        Player.FoodOrderCheck += OrderListChecking;
 
         AddOrderList(2);
         StartCoroutine(OrderListUpdate(_updateTime));
@@ -66,8 +63,7 @@ public class GameOrderUI : MonoBehaviour
 
     void OnDestroy()
     {
-        Grab_Idle.FoodOrderCheck -= OrderListChecking;
-        Grab_Moving.FoodOrderCheck -= OrderListChecking;
+        Player.FoodOrderCheck -= OrderListChecking;
         GameReadyUI.OrderStart -= SceneStart;
     }
 

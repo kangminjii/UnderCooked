@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Grab_Moving : BaseState
@@ -27,131 +25,28 @@ public class Grab_Moving : BaseState
 
     public override void UpdateLogic()
     {
+        // Idle 조건
         if (_playerSM.SpawnPos.childCount < 1)
         {
             Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
-            SetState();
-           
+            
+            _playerSM.Animator.SetBool("Grab", false);
+            _stateMachine.ChangeState(_playerSM.MovingState);
         }
 
+        // GrabIdle 조건
+        if (Input.anyKey == false)
+        {
+            _stateMachine.ChangeState(_playerSM.GrabIdleState);
+        }
+
+        // Object와 상호작용시
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
-            string clone = "(Clone)";
-            string grabObjectName = _playerSM.SpawnPos.GetChild(0).name;
-            grabObjectName = grabObjectName.Replace(clone, "");
-
-            GameObject selectObj = _playerSM.SelectObj;
-            Transform playerSpawnPos = _playerSM.SpawnPos;
-
-            if (selectObj != null && selectObj.tag == "Bin")
-            {
-                Transform trash = selectObj.transform.Find("BinSpawnPos");
-                Managers.Sound.Play("AudioClip/TrashCan", Define.Sound.Effect);
-                Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
-                Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-            }
-
-
-
-            if (selectObj != null && selectObj.tag == "Food")
-            {
-                SetState();
-                Managers.Resource.Instantiate(grabObjectName + "_Drop", playerSpawnPos.position, Quaternion.identity);
-                Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-                return;
-            }
-
-            if (_playerSM.SelectObj == null)
-            {
-                SetState();
-                Managers.Resource.Instantiate(grabObjectName + "_Drop", playerSpawnPos.position, Quaternion.identity);
-                Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-                Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
-                return;
-            }
-
-            if (selectObj.tag == "Passing") // 접시 반납
-            {
-                if (playerSpawnPos.GetChild(0).name.Contains("Plate"))
-                {
-                    SetState();
-                    PassingGate PassingGate = selectObj.GetComponent<PassingGate>();
-                    PassingGate.PlateReturn.PlateList.RemoveAt(PassingGate.PlateReturn.PlateList.Count - 1);
-                    PassingGate.PlateReturn.CurrentPlateNumber--;
-
-                    string returnFoodName;
-
-                    if (playerSpawnPos.GetChild(0).name.Contains("Prawn"))
-                        returnFoodName = "Prawn";
-                    else if (playerSpawnPos.GetChild(0).name.Contains("Fish"))
-                        returnFoodName = "Fish";
-                    else
-                        returnFoodName = null;
-
-                    FoodOrderCheck.Invoke(returnFoodName);
-
-                    Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-                }
-
-            }
-            else
-            {
-
-                Transform table = selectObj.transform.Find("SpawnPos");
-
-                if (table == null)
-                    return;
-
-                if (selectObj.tag == "CuttingBoard" && table.childCount < 1 && playerSpawnPos.GetChild(0).tag.Contains("Plate")) //도마 위에 접시 안올라가게 함
-                    return;
-
-                if (table.childCount == 1)
-                {
-                    if (table.GetChild(0).tag == "EmptyPlate" && playerSpawnPos.GetChild(0).tag == "SlicedFood")
-                    {
-                        //Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
-                        Managers.Resource.Instantiate(grabObjectName + "_Plate", table.position, Quaternion.identity, table);
-                        Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-                        Managers.Resource.Destroy(table.GetChild(0).gameObject);
-                    }
-                    else if (playerSpawnPos.GetChild(0).tag == "EmptyPlate" && table.GetChild(0).tag == "SlicedFood")
-                    {
-                        string tableclone = "(Clone)";
-                        string tableObjectName = table.GetChild(0).name;
-                        tableObjectName = tableObjectName.Replace(tableclone, "");
-
-                        Managers.Resource.Instantiate(tableObjectName + "_Plate", playerSpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, playerSpawnPos);
-                        Managers.Resource.Destroy(table.GetChild(0).gameObject);
-                        Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-                        Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
-
-                    }
-                }
-
-
-                else if (table != null && table.childCount < 1)
-                {
-                    if (grabObjectName == "Fish") // Fish 일때 Y값 증가
-                    {
-                        Vector3 newPosition = table.position + new Vector3(0f, 0.3f, 0f); // y값을 0.3만큼 올림
-                        Managers.Resource.Instantiate(grabObjectName, newPosition, Quaternion.identity, table);
-                    }
-                    else
-                        Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
-
-                    Managers.Resource.Destroy(playerSpawnPos.GetChild(0).gameObject);
-
-                }
-            }
-
+            _playerSM.InteractObjectWhileGrabbing();
         }
-
-        if (Input.anyKey == false)
-            _stateMachine.ChangeState(_playerSM.GrabIdleState);
-
-        
     }
+
 
 
     public override void UpdatePhysics()
@@ -159,12 +54,5 @@ public class Grab_Moving : BaseState
         base.UpdatePhysics();
 
         _playerSM.PlayerMove();
-    }
-
-
-    private void SetState()
-    {
-        _playerSM.Animator.SetBool("Grab", false);
-        _stateMachine.ChangeState(_playerSM.MovingState);
     }
 }

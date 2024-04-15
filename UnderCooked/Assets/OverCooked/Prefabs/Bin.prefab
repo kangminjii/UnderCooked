@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173904f666824e74eafeadbbb7ff29c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plateReturn: {fileID: 0}
+  PlateReturn: {fileID: 0}
 --- !u!1 &5230309993868486451
 GameObject:
   m_ObjectHideFlags: 0

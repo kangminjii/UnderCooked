@@ -17879,7 +17879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1205548867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21433,7 +21433,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 763418275, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
-      propertyPath: plateReturn
+      propertyPath: PlateReturn
       value: 
       objectReference: {fileID: 1553317639}
     - target: {fileID: 3983856332467845870, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
