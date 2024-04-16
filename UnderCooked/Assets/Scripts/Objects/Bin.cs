@@ -2,25 +2,18 @@ using UnityEngine;
 
 public class Bin : MonoBehaviour
 {
-    Transform _binSpawnPos;
     GameObject _trash;
-
     bool _plateRemove = false;
 
 
     public PlateReturn PlateReturn;
-
-
-    private void Start()
-    {
-        _binSpawnPos = transform;
-    }
+   
 
     private void Update()
     {
-        if(_binSpawnPos.childCount > 0)
+        if(transform.childCount > 0)
         {
-            _trash = _binSpawnPos.GetChild(0).gameObject;
+            _trash = transform.GetChild(0).gameObject;
             _trash.GetComponent<Animator>().SetTrigger("binTrigger");
             
             if (_trash.name.Contains("Plate") && !_plateRemove)
@@ -32,7 +25,7 @@ public class Bin : MonoBehaviour
             }
         }
 
-        if (_binSpawnPos.childCount == 0)
+        if (transform.childCount == 0)
             _plateRemove = false;
     }
 }
