@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +7,13 @@ using UnityEngine.UI;
 public class GameReadyUI : MonoBehaviour
 {
     Image _spaceBar;
+    GameObject _recipe;
+    GameObject _ready;
+    GameObject _start;
+    
 
     public static Action OrderStart;
     public static Action CameraAction;
-
 
 
     void Start()
@@ -20,7 +22,10 @@ public class GameReadyUI : MonoBehaviour
         Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
 
         _spaceBar = Managers.UI.FindDeepChild(transform, "SpaceBarCount").GetComponent<Image>();
-        
+        _recipe = Managers.UI.FindDeepChild(transform, "Recipe").gameObject;
+        _ready = Managers.UI.FindDeepChild(transform, "Ready").gameObject;
+        _start = Managers.UI.FindDeepChild(transform, "Start").gameObject;
+
         StartCoroutine(SpaceBarCheck());
         Time.timeScale = 0;
     }
@@ -29,12 +34,21 @@ public class GameReadyUI : MonoBehaviour
     // 1. 스페이스바 게이지 채우기
     IEnumerator SpaceBarCheck()
     {
-        while(true)
+        float startTime = Time.realtimeSinceStartup;
+
+        while (true)
         {
-            if (Input.GetKey(KeyCode.Space))
-                _spaceBar.fillAmount += 0.004f;
+            // 스페이스바 조건에 따른 동작들
+            if (Input.GetKeyDown(KeyCode.Space))
+                startTime = Time.realtimeSinceStartup;
             else if (Input.GetKeyUp(KeyCode.Space))
                 _spaceBar.fillAmount = 0;
+            else if (Input.GetKey(KeyCode.Space))
+            {
+                float elapsedTime = Time.realtimeSinceStartup - startTime;
+                _spaceBar.fillAmount = elapsedTime * 0.4f;
+            }
+
 
             if (_spaceBar.fillAmount >= 1)
             {
@@ -50,11 +64,10 @@ public class GameReadyUI : MonoBehaviour
     // 2. 레디 문구 후 시작
     void SetGameCondition()
     {
-        Managers.UI.FindDeepChild(transform, "Recipe").gameObject.SetActive(false);
+        _recipe.SetActive(false);
         this.transform.GetComponent<Image>().color = new Color(0,0,0,0);
 
         StartCoroutine(ResumeGame());
-        
     }
 
 
@@ -65,16 +78,28 @@ public class GameReadyUI : MonoBehaviour
 
         yield return WaitForRealSeconds(2f);
 
-        Managers.UI.FindDeepChild(transform, "Ready").gameObject.SetActive(true);
+        _ready.SetActive(true);
         Managers.Sound.Play("AudioClip/LevelReady_01", Define.Sound.Effect);
 
         yield return WaitForRealSeconds(2.5f);
         
+        _ready.SetActive(false);
+        _start.SetActive(true);
+        Managers.Sound.Play("AudioClip/LevelGo", Define.Sound.Effect);
+        
         Time.timeScale = 1;
-        Managers.UI.FindDeepChild(transform, "Ready").gameObject.SetActive(false);
-        Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(true);
-        Managers.Sound.Play("AudioClip/LevelGo", Define.Sound.Effect);  
         StartCoroutine(DisappearStartObject());
+    }
+
+
+    IEnumerator DisappearStartObject()
+    {
+        OrderStart.Invoke();
+        
+        yield return new WaitForSeconds(1.0f);   
+        
+        _start.SetActive(false);
+        Managers.Sound.GetAudio(Define.Sound.Bgm).Play();
     }
 
 
@@ -86,16 +111,4 @@ public class GameReadyUI : MonoBehaviour
             yield return null;
         }
     }
-
-
-    IEnumerator DisappearStartObject()
-    {
-        OrderStart.Invoke();
-        
-        yield return new WaitForSeconds(1.0f);   
-        
-        Managers.UI.FindDeepChild(transform, "Start").gameObject.SetActive(false);
-        Managers.Sound.GetAudio(Define.Sound.Bgm).Play();
-    }
-
 }

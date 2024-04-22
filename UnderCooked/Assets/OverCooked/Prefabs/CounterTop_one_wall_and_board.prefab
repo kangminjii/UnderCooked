@@ -374,7 +374,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 10
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -481,9 +481,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f62df7d75dc7d4d98c603f3fedd8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slider: {fileID: 1942024226}
+  CookingKnife: {fileID: 6417040262823014029}
+  SpawnPos: {fileID: 4319702491014521278}
+  Slider: {fileID: 1942024226}
   OnFood: {fileID: 0}
-  _chopCount: 0
+  ChopCount: 0
   SliceFoodbool: 0
 --- !u!65 &6426867539110134681
 BoxCollider:
@@ -594,6 +596,11 @@ PrefabInstance:
 --- !u!4 &774582043822724750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3030491372688979770, guid: aca99840ab83db44b9715ea39a7f1b36, type: 3}
+  m_PrefabInstance: {fileID: 2355850564206600628}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6417040262823014029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8771958216004325177, guid: aca99840ab83db44b9715ea39a7f1b36, type: 3}
   m_PrefabInstance: {fileID: 2355850564206600628}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6579367653452938403

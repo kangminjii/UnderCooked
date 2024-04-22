@@ -6,13 +6,12 @@ public class Managers : MonoBehaviour
 {
     static Managers _instance;
 
-    InputManager _input = new InputManager();
     ResourceManager _resource = new ResourceManager();
     UIManager _ui = new UIManager();
     SoundManager _sound = new SoundManager();
 
+
     public static Managers Instance { get { Init(); return _instance; } }
-    public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static SoundManager Sound { get { return Instance._sound; } }
@@ -34,7 +33,7 @@ public class Managers : MonoBehaviour
 
             _instance = go.GetComponent<Managers>();
             _instance._sound.Init();
-
         }
     }
+
 }

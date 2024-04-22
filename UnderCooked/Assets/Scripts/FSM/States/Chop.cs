@@ -7,11 +7,11 @@ public class Chop : BaseState
     protected Player _playerSM;
 
 
-
     public Chop(Player stateMachine) : base("Chop", stateMachine)
     {
         _playerSM = (Player)stateMachine;
     }
+
 
     public override void Enter()
     {
@@ -21,35 +21,33 @@ public class Chop : BaseState
         _playerSM.Animator.Play("Chop");
         _playerSM.Animator.SetBool("Cutting", true);
         _playerSM.Animator.SetFloat("speed", 0);
-
-        //CookingPlace.Food_Enter -= Choping;
-        //CookingPlace.Food_Enter += Choping;
     }
+
 
     public override void Exit()
     {
         base.Exit();
+
         _playerSM.Knife.SetActive(false);
         _playerSM.Animator.SetBool("Cutting", false);
     }
+
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
 
-        if (!_playerSM.canCut)
+        // Idle Á¶°Ç
+        if (!_playerSM.CanCut)
             _stateMachine.ChangeState(_playerSM.IdleState);
-        
     }
+
+
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
 
         _playerSM.PlayerMove();
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-            _playerSM.Dash();
     }
-
 }
 
