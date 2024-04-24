@@ -10,7 +10,8 @@ public class BaseSceneUI : MonoBehaviour
     Color _endColor = Color.black;
     float _changeDuration = 2.0f;
     string _playScene = "[1]Start";
-
+    int _width = 1920;
+    int _height = 1080;
 
     public Sprite TitleImage;
     public Sprite UnityImage;
@@ -18,6 +19,7 @@ public class BaseSceneUI : MonoBehaviour
 
     void Start()
     {
+        Screen.SetResolution(_width, _height, true);
         _image = GetComponent<Image>();
         
         StartCoroutine(ChangeToDark());
