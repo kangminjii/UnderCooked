@@ -1,13 +1,12 @@
-## 1. 프로젝트명
-UnderCooked
-
-## 2. 프로젝트 설명
+## 1. 프로젝트 설명
 OverCooked2를 모작하여 만든 프로젝트입니다.   
 제한 시간내에 주문서에 나오는 음식을 최대한 많이 반납하여 점수를 올리는 액션-캐쥬얼 게임입니다.   
 
-Unity 버전: 2021.3.24f1   
-Git 사용툴: SourceTree   
-팀원수: 2명   
+## 2. 개발 환경
+- IDE: Visual Studio 2019   
+- Unity 버전: 2021.3.24f1   
+- VCS: Git, Github   
+  - GUI 툴: SourceTree   
 
 ## 3. 코드 설명
 /UnderCooked/Assets/Scripts 폴더에 코드들이 저장돼있습니다.   
@@ -25,10 +24,10 @@ Player와 상호작용되는 Item들에 대한 코드를 모아둔 폴더입니�
 
 ## 4. 프로젝트 진행 방법
 ### 4.1 조작법
-이동: 방향키(←↑↓→)   
-아이템 상호작용: Space   
-스킬(썰기): Left Ctrl   
-대쉬: Left Alt   
+- 이동: 방향키(←↑↓→)   
+- 아이템 상호작용: Space   
+- 스킬(썰기): Left Ctrl   
+- 대쉬: Left Alt   
 
 ### 4.2 진행과정
 exe 파일 실행 --> 게임 스테이지 선택 --> 게임 진행 --> 다시하기 or 메인화면으로 돌아가기   
