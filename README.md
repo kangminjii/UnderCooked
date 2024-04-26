@@ -8,8 +8,7 @@ OverCooked2를 모작하여 만든 프로젝트입니다.
 - VCS: Git, Github   
   - GUI 툴: SourceTree   
 
-## 3. 코드 설명
-/UnderCooked/Assets/Scripts 폴더에 코드들이 저장돼있습니다.   
+## 3. 코드 설명   
 ### 3.1 Animation
 카메라 움직임, 화면 전환, 물체의 반복적인 움직임 등의 애니메이션을 코드로 만들어 모아둔 폴더입니다.   
 ### 3.2 FSM
