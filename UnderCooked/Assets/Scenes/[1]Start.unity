@@ -2093,7 +2093,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -3171,6 +3171,10 @@ PrefabInstance:
       propertyPath: speed
       value: 8.75
       objectReference: {fileID: 0}
+    - target: {fileID: 8135104437833267725, guid: 05f11e8e48db1904db272384bd057bcc, type: 3}
+      propertyPath: CloudPrefab
+      value: 
+      objectReference: {fileID: 8135104437833267726, guid: 05f11e8e48db1904db272384bd057bcc, type: 3}
     - target: {fileID: 8135104437833267726, guid: 05f11e8e48db1904db272384bd057bcc, type: 3}
       propertyPath: m_Name
       value: Cloud

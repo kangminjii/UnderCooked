@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScrollTexture : MonoBehaviour
 {
-    public Material Material;  // 이동 효과를 적용할 머터리얼
+    public Material Material;
     float _speed = -1f;
 
     void Update()
