@@ -3171,6 +3171,10 @@ PrefabInstance:
       propertyPath: speed
       value: 8.75
       objectReference: {fileID: 0}
+    - target: {fileID: 8135104437833267725, guid: 05f11e8e48db1904db272384bd057bcc, type: 3}
+      propertyPath: CloudPrefab
+      value: 
+      objectReference: {fileID: 8135104437833267726, guid: 05f11e8e48db1904db272384bd057bcc, type: 3}
     - target: {fileID: 8135104437833267726, guid: 05f11e8e48db1904db272384bd057bcc, type: 3}
       propertyPath: m_Name
       value: Cloud
