@@ -28,6 +28,8 @@ public class GameReadyUI : MonoBehaviour
 
         StartCoroutine(SpaceBarCheck());
         Time.timeScale = 0;
+
+        Cursor.visible = false;
     }
    
 

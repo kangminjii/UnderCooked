@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -81,9 +80,10 @@ public class LoadingUI : MonoBehaviour
         {
             temp.a += _speed;
             _fadeInOut.color = temp;
+
             yield return null;
         }
-
+        
         SceneManager.LoadScene(PlayerPrefs.GetString("SceneName"));
     }
 
