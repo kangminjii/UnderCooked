@@ -9,6 +9,7 @@ public class GameTimerUI : MonoBehaviour
     Text _timeText;
     float _timeLimit = 100f;
     float _currentTime;
+    bool _canUpdate = true;
 
 
     public static Action GameEnd;
@@ -24,21 +25,26 @@ public class GameTimerUI : MonoBehaviour
 
     void Update()
     {
-        // 종료 조건
-        if (_currentTime <= 0)
+        if (_canUpdate)
         {
-            _currentTime = 0;
-            GameEnd.Invoke();
-        }
+            if (Time.timeScale > 0)
+            {
+                _currentTime -= Time.deltaTime;
+            }
 
-        if(Time.timeScale > 0)
-        {
-            _currentTime -= Time.deltaTime;
+            // 종료 조건
+            if (_currentTime <= 0)
+            {
+                _currentTime = 0;
+                GameEnd.Invoke();
+                _canUpdate = false;
+            }
+
             _timeText.text = FormatTime(_currentTime);
             _timerProgressBar.fillAmount = _currentTime / _timeLimit;
         }
-      
     }
+
 
     string FormatTime(float time)
     {

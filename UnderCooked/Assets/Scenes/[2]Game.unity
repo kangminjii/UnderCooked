@@ -33967,7 +33967,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1:40
+  m_Text: 01:40
 --- !u!224 &1524798710190898249
 RectTransform:
   m_ObjectHideFlags: 0
