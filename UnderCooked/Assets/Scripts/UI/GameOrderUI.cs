@@ -97,12 +97,12 @@ public class GameOrderUI : MonoBehaviour
             progressBar.GetComponent<Image>().fillAmount = waitingAmount;
 
             // 색 변화
-            if(waitingAmount < 0.7f && waitingAmount > 0.5f)
+            if (waitingAmount < 0.7f && waitingAmount > 0.5f)
             {
                 Color changeColor = new Color(0.4f, 115 / 256f, 14 / 256f);
                 progressBar.GetComponent<Image>().color = changeColor;
             }
-            else if(waitingAmount <= 0.5f && waitingAmount > 0.3f)
+            else if (waitingAmount <= 0.5f && waitingAmount > 0.3f)
             {
                 Color changeColor = new Color(0.6f, 115 / 256f, 14 / 256f);
                 progressBar.GetComponent<Image>().color = changeColor;
@@ -112,7 +112,7 @@ public class GameOrderUI : MonoBehaviour
                 Color changeColor = new Color(0.8f, 115 / 256f, 14 / 256f);
                 progressBar.GetComponent<Image>().color = changeColor;
             }
-            else if(waitingAmount <= 0.1f)
+            else if (waitingAmount <= 0.1f)
             {
                 Color changeColor = Color.red;
                 progressBar.GetComponent<Image>().color = changeColor;
@@ -190,7 +190,7 @@ public class GameOrderUI : MonoBehaviour
     // 2. UpdateTime마다 1개씩 추가
     private void Update()
     {
-        if(Time.timeScale > 0)
+        if (Time.timeScale > 0)
         {
             if (OrderList.Count < 2 && _animationCheck)
             {
@@ -205,7 +205,7 @@ public class GameOrderUI : MonoBehaviour
     IEnumerator OrderListUpdate(float updateTime)
     {
         yield return new WaitForSeconds(updateTime);
-        
+
         AddOrderList(1);
         StartCoroutine(OrderListUpdate(updateTime));
     }
@@ -235,20 +235,23 @@ public class GameOrderUI : MonoBehaviour
 
                     _orderCheck = true;
 
-                    if(_grid.enabled == false)
+                    if (_grid.enabled == false)
                         _grid.enabled = true;
-                    
+
                     break;
                 }
+                else
+                    _orderCheck = false;
             }
         }
+
 
         if (!_orderCheck)
         {
             OrderFail();
         }
     }
-
+    
     void OrderFail()
     {
         _totalScore -= _minusScore;
@@ -260,12 +263,19 @@ public class GameOrderUI : MonoBehaviour
         PlayerPrefs.SetInt("Fail", _failFood);
 
         Managers.Sound.Play("AudioClip/Order_Fail", Define.Sound.Effect);
-    }
+
+        for (int i = 0; i < OrderList.Count; i++)
+        {
+            StartCoroutine(EntireFailed(i));
+        }
+
+    } 
 
     IEnumerator SuccessOrderDestroy(GameObject go)
     {
         Transform effectImage = Managers.UI.FindDeepChild(go.transform, "Success");
         effectImage.gameObject.SetActive(true);
+        
         float alpha = 0;
 
         while (alpha < 0.8f)
@@ -284,6 +294,7 @@ public class GameOrderUI : MonoBehaviour
     {
         Transform effectImage = Managers.UI.FindDeepChild(go.transform, "Fail");
         effectImage.gameObject.SetActive(true);
+
         float alpha = 0;
 
         while (alpha < 0.8f)
@@ -298,5 +309,23 @@ public class GameOrderUI : MonoBehaviour
         Managers.Resource.Destroy(go);
     }
 
+    IEnumerator EntireFailed(int num)
+    {
+        Transform effectImage = Managers.UI.FindDeepChild(OrderList[num].Key.transform, "Fail");
+        effectImage.gameObject.SetActive(true);
+
+        float alpha = 0;
+
+        while (alpha < 0.8f)
+        {
+            alpha += 0.2f;
+            Color changeColor = new Color(1, 0, 0, alpha);
+            effectImage.GetComponent<Image>().color = changeColor;
+
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        effectImage.gameObject.SetActive(false);
+    }
 
 }

@@ -35,6 +35,8 @@ public class StartSceneUI : MonoBehaviour
             Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
 
         StartCoroutine(FadeOut());
+
+        Cursor.visible = true;
     }
 
 

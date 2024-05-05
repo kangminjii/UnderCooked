@@ -7,7 +7,7 @@ public class GameTimerUI : MonoBehaviour
 {
     Image _timerProgressBar;
     Text _timeText;
-    float _timeLimit = 150f;
+    float _timeLimit = 100f;
     float _currentTime;
 
 
