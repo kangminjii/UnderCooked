@@ -33,18 +33,20 @@ public class GameReadyUI : MonoBehaviour
     }
    
 
-    // 1. 스페이스바 게이지 채우기
     IEnumerator SpaceBarCheck()
     {
         float startTime = Time.realtimeSinceStartup;
 
         while (true)
         {
-            // 스페이스바 조건에 따른 동작들
             if (Input.GetKeyDown(KeyCode.Space))
+            {
                 startTime = Time.realtimeSinceStartup;
+            }
             else if (Input.GetKeyUp(KeyCode.Space))
+            {
                 _spaceBar.fillAmount = 0;
+            }
             else if (Input.GetKey(KeyCode.Space))
             {
                 float elapsedTime = Time.realtimeSinceStartup - startTime;
@@ -54,8 +56,12 @@ public class GameReadyUI : MonoBehaviour
 
             if (_spaceBar.fillAmount >= 1)
             {
-                SetGameCondition();
+                _recipe.SetActive(false);
+                transform.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                
                 Managers.Sound.Play("AudioClip/Tutorial_Pop_Out", Define.Sound.Effect, 1f, 0.2f);
+                StartCoroutine(ResumeGame());
+
                 break;
             }
 
@@ -63,17 +69,7 @@ public class GameReadyUI : MonoBehaviour
         }
     }
 
-    // 2. 레디 문구 후 시작
-    void SetGameCondition()
-    {
-        _recipe.SetActive(false);
-        this.transform.GetComponent<Image>().color = new Color(0,0,0,0);
 
-        StartCoroutine(ResumeGame());
-    }
-
-
-    // 3. 카메라 움직이기
     IEnumerator ResumeGame()
     {
         CameraAction.Invoke();
@@ -90,16 +86,11 @@ public class GameReadyUI : MonoBehaviour
         Managers.Sound.Play("AudioClip/LevelGo", Define.Sound.Effect);
         
         Time.timeScale = 1;
-        StartCoroutine(DisappearStartObject());
-    }
 
-
-    IEnumerator DisappearStartObject()
-    {
         OrderStart.Invoke();
-        
-        yield return new WaitForSeconds(1.0f);   
-        
+
+        yield return new WaitForSeconds(1.0f);
+
         _start.SetActive(false);
         Managers.Sound.GetAudio(Define.Sound.Bgm).Play();
     }

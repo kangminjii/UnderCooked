@@ -5,7 +5,7 @@ public class Managers : MonoBehaviour
     static Managers _instance;
 
     ResourceManager _resource = new ResourceManager();
-    UIManager _ui = new UIManager();
+    //UIManager _ui = new UIManager();
     SoundManager _sound = new SoundManager();
 
 

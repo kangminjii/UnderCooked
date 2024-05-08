@@ -11,6 +11,9 @@ public class EndSceneUI : MonoBehaviour
     int _totalScore;
     int _successOrder;
     int _failOrder;
+    int[] _firstStageScore = new int[3]{ 20, 60, 240 };
+    
+
 
     string _startScene = "[1]Start";
     string _playScene = "[2]Game";
@@ -64,17 +67,17 @@ public class EndSceneUI : MonoBehaviour
 
     void TurnOnStar()
     {
-        if(_totalScore >= 20)
+        if(_totalScore >= _firstStageScore[0])
         {
             GameObject star = Define.FindDeepChild(transform, "Star1_Filled").gameObject;
             StartCoroutine(ActivateStar(star, 0.5f, "AudioClip/RoundResults_Star_01"));
         }
-        if(_totalScore >= 60)
+        if(_totalScore >= _firstStageScore[1])
         {
             GameObject star = Define.FindDeepChild(transform, "Star2_Filled").gameObject;
             StartCoroutine(ActivateStar(star,1.5f, "AudioClip/RoundResults_Star_02"));
         }
-        if (_totalScore >= 240)
+        if (_totalScore >= _firstStageScore[2])
         {
             GameObject star = Define.FindDeepChild(transform, "Star3_Filled").gameObject;
             StartCoroutine(ActivateStar(star, 2.5f, "AudioClip/RoundResults_Star_03"));

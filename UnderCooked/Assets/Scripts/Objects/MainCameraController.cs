@@ -1,77 +1,67 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
-    GameObject player;
+    GameObject _player;
+    Vector3 _offset = new Vector3(-0.08f, 9.7f, -6.81f);
+    float _cameraSpeed = 2f;       
+
 
     public delegate void MovingCamera();
     public event MovingCamera CameraAction;
 
-    float offsetX = -0.08f;            // 카메라의 x좌표
-    float offsetY = 9.7f;           // 카메라의 y좌표
-    float offsetZ = -6.81f;          // 카메라의 z좌표
 
-    float CameraSpeed = 2f;       // 카메라의 속도
-    Vector3 TargetPos;            // 타겟의 위치
-
-    private void Awake()
-    {
-        GameReadyUI.CameraAction += MoveCamera;
-    }
     private void Start()
     {
-        player = GameObject.Find("Chef").gameObject;
+        _player = GameObject.Find("Chef").gameObject;
+        GameReadyUI.CameraAction += MoveCamera;
     }
+
     private void OnDestroy()
     {
-        // CameraAction 이벤트에 대한 구독 해제
         GameReadyUI.CameraAction -= MoveCamera;
     }
 
 
     void FixedUpdate()
     {
-
-        if (player.transform.position.z < -1f)
+        if (_player.transform.position.z < -1f)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(offsetX, offsetY + 0.8f, offsetZ), Time.deltaTime * CameraSpeed * 0.25f);
+            transform.position = Vector3.Lerp(transform.position, _offset + new Vector3(0, 0.8f, 0), Time.deltaTime * _cameraSpeed * 0.25f);
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(offsetX, offsetY, offsetZ), Time.deltaTime * CameraSpeed * 0.25f);
+            transform.position = Vector3.Lerp(transform.position, _offset, Time.deltaTime * _cameraSpeed * 0.25f);
         }
 
-        if(player.transform.position.x < -3f)
+        if(_player.transform.position.x < -3f)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(offsetX - 0.9f, offsetY, offsetZ), Time.deltaTime * CameraSpeed * 0.25f) ;
+            transform.position = Vector3.Lerp(transform.position, _offset + new Vector3(-0.9f, 0, 0), Time.deltaTime * _cameraSpeed * 0.25f);
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(offsetX , offsetY, offsetZ), Time.deltaTime * CameraSpeed * 0.25f);
+            transform.position = Vector3.Lerp(transform.position, _offset, Time.deltaTime * _cameraSpeed * 0.25f);
         }
-
     }
+
 
     void MoveCamera()
     {
         StartCoroutine(StartMoving());
     }
 
-
-
     IEnumerator StartMoving()
     {
         float startY = transform.position.y;
         float targetY = 10.5f;
         float duration = 2.0f;
-
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
             elapsedTime += Time.unscaledDeltaTime;
+
             float t = Mathf.Clamp01(elapsedTime / duration);
             float newY = Mathf.Lerp(startY, targetY, t);
 
@@ -82,15 +72,14 @@ public class MainCameraController : MonoBehaviour
             yield return null;
         }
 
-
         float reverseTargetY = 9.7f;
         float reverseDuration = 1.0f;
-
         float reverseElapsedTime = 0f;
 
         while (reverseElapsedTime < reverseDuration)
         {
             reverseElapsedTime += Time.unscaledDeltaTime;
+
             float t = Mathf.Clamp01(reverseElapsedTime / reverseDuration);
             float newReverseY = Mathf.Lerp(targetY, reverseTargetY, t);
 
@@ -101,7 +90,7 @@ public class MainCameraController : MonoBehaviour
             yield return null;
         }
 
-        offsetY = 9.7f;
+        _offset.y = 9.7f;
     }
     
 }
