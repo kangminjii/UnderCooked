@@ -34,15 +34,9 @@ public class BaseSceneUI : MonoBehaviour
         Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
 
         float elapsedTime = 0f;
-
-        // 기존 색 -> 어두운 색
         while (elapsedTime < _changeDuration)
         {
-            Color lerpedColor = Color.Lerp(_startColor, _endColor, elapsedTime / _changeDuration);
-            _image.color = lerpedColor;
-
-            elapsedTime += Time.deltaTime;
-
+            elapsedTime = ChangeColor(_startColor, _endColor, elapsedTime);
             yield return null;
         }
 
@@ -50,31 +44,27 @@ public class BaseSceneUI : MonoBehaviour
 
         _image.sprite = UnityImage;
         elapsedTime = 0f;
-
-        // 어두운 색 -> 기존 색
         while (elapsedTime < _changeDuration)
         {
-            Color lerpedColor = Color.Lerp(_endColor, _startColor, elapsedTime / _changeDuration);
-            _image.color = lerpedColor;
-            
-            elapsedTime += Time.deltaTime;
-
+            elapsedTime = ChangeColor(_endColor, _startColor, elapsedTime);
             yield return null;
         }
 
         elapsedTime = 0f;
-
-        // 기존 색 -> 어두운 색
         while (elapsedTime < _changeDuration)
         {
-            Color lerpedColor = Color.Lerp(_startColor, _endColor, elapsedTime / _changeDuration);
-            _image.color = lerpedColor;
-
-            elapsedTime += Time.deltaTime;
-
+            elapsedTime = ChangeColor(_startColor, _endColor, elapsedTime);
             yield return null;
         }
 
         SceneManager.LoadScene(_playScene);
+    }
+
+    float ChangeColor(Color start, Color end, float time)
+    {
+        Color lerpedColor = Color.Lerp(start, end, time / _changeDuration);
+        _image.color = lerpedColor;
+
+        return time += Time.deltaTime;
     }
 }
