@@ -26,7 +26,7 @@ public class LoadingUI : MonoBehaviour
     }
 
 
-    private IEnumerator DecreaseVolumeOverTime(AudioSource audioSource, float targetVolume, float duration)
+    IEnumerator DecreaseVolumeOverTime(AudioSource audioSource, float targetVolume, float duration)
     {
         float startVolume = audioSource.volume;
         float startTime = Time.time;
