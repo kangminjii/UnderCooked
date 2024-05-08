@@ -13,8 +13,8 @@ public class LoadingUI : MonoBehaviour
 
     void Start()
     {
-        _loadingBar = Managers.UI.FindDeepChild(transform, "Filled").GetComponent<Image>();
-        _fadeInOut = Managers.UI.FindDeepChild(transform, "FadeInOut").GetComponent<Image>();
+        _loadingBar = Define.FindDeepChild(transform, "Filled").GetComponent<Image>();
+        _fadeInOut = Define.FindDeepChild(transform, "FadeInOut").GetComponent<Image>();
 
         Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
 

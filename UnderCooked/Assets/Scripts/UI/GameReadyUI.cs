@@ -21,10 +21,10 @@ public class GameReadyUI : MonoBehaviour
         Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
         Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
 
-        _spaceBar = Managers.UI.FindDeepChild(transform, "SpaceBarCount").GetComponent<Image>();
-        _recipe = Managers.UI.FindDeepChild(transform, "Recipe").gameObject;
-        _ready = Managers.UI.FindDeepChild(transform, "Ready").gameObject;
-        _start = Managers.UI.FindDeepChild(transform, "Start").gameObject;
+        _spaceBar = Define.FindDeepChild(transform, "SpaceBarCount").GetComponent<Image>();
+        _recipe = Define.FindDeepChild(transform, "Recipe").gameObject;
+        _ready = Define.FindDeepChild(transform, "Ready").gameObject;
+        _start = Define.FindDeepChild(transform, "Start").gameObject;
 
         StartCoroutine(SpaceBarCheck());
         Time.timeScale = 0;

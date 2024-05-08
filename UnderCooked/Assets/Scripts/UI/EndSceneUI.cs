@@ -66,17 +66,17 @@ public class EndSceneUI : MonoBehaviour
     {
         if(_totalScore >= 20)
         {
-            GameObject star = Managers.UI.FindDeepChild(transform, "Star1_Filled").gameObject;
+            GameObject star = Define.FindDeepChild(transform, "Star1_Filled").gameObject;
             StartCoroutine(ActivateStar(star, 0.5f, "AudioClip/RoundResults_Star_01"));
         }
         if(_totalScore >= 60)
         {
-            GameObject star = Managers.UI.FindDeepChild(transform, "Star2_Filled").gameObject;
+            GameObject star = Define.FindDeepChild(transform, "Star2_Filled").gameObject;
             StartCoroutine(ActivateStar(star,1.5f, "AudioClip/RoundResults_Star_02"));
         }
         if (_totalScore >= 240)
         {
-            GameObject star = Managers.UI.FindDeepChild(transform, "Star3_Filled").gameObject;
+            GameObject star = Define.FindDeepChild(transform, "Star3_Filled").gameObject;
             StartCoroutine(ActivateStar(star, 2.5f, "AudioClip/RoundResults_Star_03"));
         }
     }
@@ -93,8 +93,8 @@ public class EndSceneUI : MonoBehaviour
 
     void ChangeText()
     {
-        Managers.UI.FindDeepChild(transform, "PassCount").GetComponent<Text>().text = _successOrder.ToString();
-        Managers.UI.FindDeepChild(transform, "FailCount").GetComponent<Text>().text = _failOrder.ToString();
+        Define.FindDeepChild(transform, "PassCount").GetComponent<Text>().text = _successOrder.ToString();
+        Define.FindDeepChild(transform, "FailCount").GetComponent<Text>().text = _failOrder.ToString();
 
         int successScore = _successOrder * _addingScore;
         int failScore = _failOrder * _minusScore;
@@ -103,9 +103,9 @@ public class EndSceneUI : MonoBehaviour
         if (_totalScore < 0)
             _totalScore = 0;
 
-        Managers.UI.FindDeepChild(transform, "PassScore").GetComponent<Text>().text = successScore.ToString();
-        Managers.UI.FindDeepChild(transform, "FailScore").GetComponent<Text>().text = failScore.ToString();
-        Managers.UI.FindDeepChild(transform, "TotalScore").GetComponent<Text>().text = _totalScore.ToString();
+        Define.FindDeepChild(transform, "PassScore").GetComponent<Text>().text = successScore.ToString();
+        Define.FindDeepChild(transform, "FailScore").GetComponent<Text>().text = failScore.ToString();
+        Define.FindDeepChild(transform, "TotalScore").GetComponent<Text>().text = _totalScore.ToString();
     }
 
 }
