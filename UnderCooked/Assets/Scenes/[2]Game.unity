@@ -15946,7 +15946,6 @@ GameObject:
   - component: {fileID: 1038127522}
   - component: {fileID: 1038127526}
   - component: {fileID: 1038127525}
-  - component: {fileID: 1038127524}
   - component: {fileID: 1038127523}
   m_Layer: 0
   m_Name: Plate
@@ -15991,18 +15990,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1038127524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038127521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f63cad60a55d34f88aae3ba442af9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &1038127525
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21252,6 +21239,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1447040409, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1186960611942983899, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
       propertyPath: m_Name
       value: Chef
@@ -21483,7 +21474,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bin
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 763418275, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c42c839aeb50deb4da43f3e64b329805, type: 3}
 --- !u!4 &1424115418 stripped
 Transform:
@@ -28983,7 +28975,6 @@ GameObject:
   - component: {fileID: 1917830579}
   - component: {fileID: 1917830583}
   - component: {fileID: 1917830582}
-  - component: {fileID: 1917830581}
   - component: {fileID: 1917830580}
   m_Layer: 0
   m_Name: Plate (1)
@@ -29028,18 +29019,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1917830581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917830578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f63cad60a55d34f88aae3ba442af9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &1917830582
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32297,7 +32276,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 160057472, guid: 94a8deb685cc87c408fbc3d92ce87c29, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 94a8deb685cc87c408fbc3d92ce87c29, type: 3}
 --- !u!1001 &2066529198
 PrefabInstance:

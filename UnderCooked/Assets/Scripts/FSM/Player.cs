@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 
 public delegate void ObjectSelectHandler(GameObject obj);
+public delegate void PlateReturnedHandler();
+
 
 public class Player : StateMachine
 {
@@ -32,6 +34,8 @@ public class Player : StateMachine
     float _lastDashTime = 0f;
     float _dashCoolDown = 0.3f;
     Vector3 _lookDir;
+    
+    // 구독 이벤트 발생 ( 옵저버 패턴)
     Overlap _overlap;
 
 
@@ -46,6 +50,18 @@ public class Player : StateMachine
         _overlap = GetComponent<Overlap>();
         _overlap.OverlapHandler += new ObjectSelectHandler(Select);
     }
+
+
+    public event PlateReturnedHandler PlateReturned;
+    
+    protected virtual void OnPlateReturned()
+    {
+        if (PlateReturned != null)
+        {
+            PlateReturned.Invoke();
+        }
+    }
+
 
     private void OnDestroy()
     {
@@ -166,7 +182,7 @@ public class Player : StateMachine
             {
                 PlateReturn plateReturn = SelectObj.GetComponent<PlateReturn>();
 
-                if (plateReturn.CurrentPlateNumber > 0 && SpawnPos.childCount < 1)
+                if (SpawnPos.childCount < 1)
                 {
                     if (plateReturn.PlateSpawnPos.childCount == 0)
                         return;
@@ -253,6 +269,16 @@ public class Player : StateMachine
                 Managers.Sound.Play("AudioClip/TrashCan", Define.Sound.Effect);
                 Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
                 Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+
+                trash.GetChild(0).gameObject.GetComponent<Animator>().SetTrigger("binTrigger");
+
+                if (SpawnPos.GetChild(0).name.Contains("Plate"))
+                {
+                    Animator.SetBool("Grab", false);
+
+                    // Plate 생성 이벤트 발생
+                    OnPlateReturned();
+                }
             }
             break;
 
@@ -271,10 +297,9 @@ public class Player : StateMachine
                 {
                     Animator.SetBool("Grab", false);
 
-                    PassingGate PassingGate = SelectObj.GetComponent<PassingGate>();
+                    // Plate 생성 이벤트 발생
+                    OnPlateReturned();
 
-                    PassingGate.PlateReturn.PlateList.RemoveAt(PassingGate.PlateReturn.PlateList.Count - 1);
-                    PassingGate.PlateReturn.CurrentPlateNumber--;
 
                     string returnFoodName;
 
@@ -335,4 +360,5 @@ public class Player : StateMachine
             }
         }
     }
+
 }
