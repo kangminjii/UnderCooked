@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
+
 
 public class Overlap : MonoBehaviour
 {
     float _radius = 0.41f;
     float _maxDistance = 0.7f; // 정면으로 체크할 최대 거리
-    
     Collider _collidedObject;
     GameObject _selectedObject;
     Color _originalColor;
@@ -13,7 +12,14 @@ public class Overlap : MonoBehaviour
 
     public LayerMask Layermask;
     public GameObject OverlappedGameObject;
-    public static Action<GameObject> ObjectSelectEnter;
+    public event ObjectSelectHandler OverlapHandler;
+
+
+    protected virtual void Overlapped(GameObject obj)
+    {
+        if (OverlapHandler != null)
+            OverlapHandler(obj);
+    }
 
 
     void Update()
@@ -37,7 +43,7 @@ public class Overlap : MonoBehaviour
 
             _selectedObject = OverlappedGameObject;
 
-            ObjectSelectEnter.Invoke(OverlappedGameObject);
+            Overlapped(OverlappedGameObject);
         }
         else
         {
@@ -45,7 +51,8 @@ public class Overlap : MonoBehaviour
             OverlappedGameObject = null;
 
             RestoreObjectColor();
-            ObjectSelectEnter.Invoke(OverlappedGameObject);
+
+            Overlapped(OverlappedGameObject);
         }
     }
 

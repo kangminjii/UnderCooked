@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+public delegate void ObjectSelectHandler(GameObject obj);
+
 public class Player : StateMachine
 {
     [HideInInspector]
@@ -23,7 +25,6 @@ public class Player : StateMachine
     public bool CanGrab;
     public float Speed = 5.0f;
 
-    public delegate void ObjectSelectHandler(GameObject gameObject);
     public GameObject SelectObj = null;
     public static Action<string> FoodOrderCheck;
 
@@ -31,6 +32,7 @@ public class Player : StateMachine
     float _lastDashTime = 0f;
     float _dashCoolDown = 0.3f;
     Vector3 _lookDir;
+    Overlap _overlap;
 
 
     private void Awake()
@@ -41,12 +43,13 @@ public class Player : StateMachine
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
 
-        Overlap.ObjectSelectEnter += Select;
+        _overlap = GetComponent<Overlap>();
+        _overlap.OverlapHandler += new ObjectSelectHandler(Select);
     }
 
     private void OnDestroy()
     {
-        Overlap.ObjectSelectEnter -= Select;
+        _overlap.OverlapHandler -= new ObjectSelectHandler(Select);
     }
 
     protected override BaseState GetInitialState()
