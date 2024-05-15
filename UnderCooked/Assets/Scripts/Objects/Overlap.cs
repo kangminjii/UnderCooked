@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class Overlap : MonoBehaviour
 {
-    float _radius = 0.41f;
-    float _maxDistance = 0.7f; // 정면으로 체크할 최대 거리
-    Collider _collidedObject;
-    GameObject _selectedObject;
-    Color _originalColor;
+    float       _radius = 0.41f;
+    float       _maxDistance = 0.7f;
+    Collider    _collidedObject;
+    GameObject  _selectedObject;
+    Color       _originalColor;
 
 
-    public LayerMask Layermask;
-    public GameObject OverlappedGameObject;
+    public LayerMask    Layermask;
+    public GameObject   OverlappedGameObject;
     public event ObjectSelectHandler OverlapHandler;
 
 

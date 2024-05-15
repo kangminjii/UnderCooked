@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
-    GameObject _player;
-    Vector3 _offset = new Vector3(-0.08f, 9.7f, -6.81f);
-    float _cameraSpeed = 2f;       
+    GameObject  _player;
+    Vector3     _offset = new Vector3(-0.08f, 9.7f, -6.81f);
+    float       _cameraSpeed = 2f;       
 
 
     public delegate void MovingCamera();
