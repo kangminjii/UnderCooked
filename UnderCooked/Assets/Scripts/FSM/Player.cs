@@ -1,12 +1,30 @@
 using System;
 using UnityEngine;
 
-public delegate void ObjectSelectHandler(GameObject obj);
 public delegate void PlateReturnHandler();
 public delegate void CookingPlaceHandler();
 
 public class Player : StateMachine
 {
+    float   _lastDashTime = 0f;
+    float   _dashCoolDown = 0.3f;
+    Vector3 _lookDir;
+    
+
+    public Animator   Animator;
+    public Rigidbody  Rigidbody;
+    public GameObject Knife;
+    public GameObject SelectObj;
+    public Transform  SpawnPos;
+    public Transform  ChopPos;
+    public bool       CanCut;
+    public bool       CanGrab;
+    public float      Speed = 5.0f;
+
+
+    /*
+     * Player의 상태들
+     */
     [HideInInspector]
     public Idle IdleState;
     [HideInInspector]
@@ -18,31 +36,20 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-    public Animator     Animator;
-    public Rigidbody    Rigidbody;
-    public GameObject Knife;
-    public GameObject SelectObj;
-    public Transform    SpawnPos;
-    public Transform    ChopPos;
-    public bool           CanCut;
-    public bool           CanGrab;
-    public float           Speed = 5.0f;
 
-
-    float       _lastDashTime = 0f;
-    float       _dashCoolDown = 0.3f;
-    Vector3   _lookDir;
-    
-
-
-    // 구독 이벤트 발생 ( 옵저버 패턴)
-    public static Action<string> FoodOrderCheck;
-    Overlap _overlap;
-    public event PlateReturnHandler PlateReturned;
+    /*
+     * Player(옵저버 패턴의 주체)가 구독한 이벤트 목록 
+     */
+    public event PlateReturnHandler  PlateReturned;
     public event CookingPlaceHandler Cooking;
     public event CookingPlaceHandler ChopCounting;
+    Seeking _seeking;
+    public static Action<string> FoodOrderCheck;
 
 
+    /*
+     * **************************OverLap 부분 구독 다시 생각해보기
+     */
     private void Awake()
     {
         IdleState = new Idle(this);
@@ -51,17 +58,27 @@ public class Player : StateMachine
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
 
-        _overlap = GetComponent<Overlap>();
-        _overlap.OverlapHandler += new ObjectSelectHandler(Select);
+        _seeking = GetComponent<Seeking>();
+        
+        if(_seeking != null)
+        {
+            _seeking.OverlapHandler += Select;
+        }
     }
 
     private void OnDestroy()
     {
-        _overlap.OverlapHandler -= new ObjectSelectHandler(Select);
+        if (_seeking != null)
+        {
+            _seeking.OverlapHandler -= Select;
+        }
     }
 
 
-    
+    /*
+     * .NET 이벤트 발생
+     * -> 이벤트에 등록된 모든 delegate를 호출한다
+     */
     protected virtual void OnPlateReturned()
     {
         if (PlateReturned != null)
@@ -70,28 +87,40 @@ public class Player : StateMachine
         }
     }
 
+
     protected virtual void OnCooking()
     {
         if (Cooking != null)
         {
             Cooking.Invoke();
         }
+    }
 
-        if(ChopCounting != null)
+
+    protected virtual void OnChopCounting()
+    {
+        if (ChopCounting != null)
         {
             ChopCounting.Invoke();
         }
     }
 
 
-
+    /*
+     * Player FSM의 초기 상태를 Idle로 정의함
+     */
     protected override BaseState GetInitialState()
     {
         return IdleState;
     }
 
-    
-    // Player 움직임
+
+    /*
+     * Player 움직임
+     * -> 키입력에 따라 위치, 방향이 바뀜
+     * -> 특정키로 대쉬를 사용하면 쿨타임에 따라 바라보는 방향으로 Rigidbody 힘이 가해짐
+     * -> 이펙트 생성 및 사운드 출력
+     */
     public void PlayerMove()
     {
         Vector3 moveDirection = Vector3.zero;
@@ -104,52 +133,45 @@ public class Player : StateMachine
             moveDirection += Vector3.back;
         if (Input.GetKey(KeyCode.RightArrow))
             moveDirection += Vector3.right;
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            float dashForce = 7f;
+
+            // 쿨타임 체크
+            if (Time.time - _lastDashTime >= _dashCoolDown)
+            {
+                Rigidbody.velocity = _lookDir * dashForce;
+                Rigidbody.AddForce(_lookDir * dashForce, ForceMode.Force);
+
+                Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, transform.Find("Chararcter"));
+                Managers.Sound.Play("AudioClip/Dash5", Define.Sound.Effect);
+
+                // 다시 쿨타임을 시작하기 위해 시간 기록
+                _lastDashTime = Time.time;
+            }
+        }
 
         Rigidbody.position += moveDirection.normalized * Time.deltaTime * Speed;
 
         if (moveDirection != Vector3.zero)
-            PlayerRotate(moveDirection);
-
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
-    }
-
-    public void PlayerRotate(Vector3 moveDir)
-    {
-        Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.06f);
-        _lookDir = transform.forward;
-    }
-
-    public void Dash()
-    {
-        float dashForce = 7f;
-
-        // 쿨타임 체크
-        if (Time.time - _lastDashTime >= _dashCoolDown)       
         {
-            Transform DashPos = transform.Find("Chararcter");
-            Rigidbody.velocity = _lookDir * dashForce;
-            Rigidbody.AddForce(_lookDir * dashForce, ForceMode.Force);
-            Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, DashPos);
-            Managers.Sound.Play("AudioClip/Dash5", Define.Sound.Effect);
-            // 다시 쿨타임을 시작하기 위해 시간 기록
-            _lastDashTime = Time.time;
+            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.06f);
+            _lookDir = transform.forward;
         }
     }
+
 
     //////////////////////// 고칠곳
     // Chop 조건
     private void Select(GameObject obj)
     {
-
-        if (obj != null)
+        if (obj != null) // 물체 감지할때
         {
             SelectObj = obj;
             CookingPlace place = obj.GetComponent<CookingPlace>();
 
-            if (place != null)
+            if (place != null) // 도마일때
             {
                 OnCooking();
 
@@ -165,12 +187,12 @@ public class Player : StateMachine
                 else 
                     CanGrab = true;
             }
-            else
+            else // 도마 아닐때
             {
                 CanCut = false;
             }
         }
-        else
+        else // 감지 안할때
         {
             CanCut = false;
             SelectObj = null;
@@ -183,7 +205,8 @@ public class Player : StateMachine
      */
     private void Cutting()
     {
-        OnCooking();
+        Debug.Log("Cutting 함수");
+        OnChopCounting();
     }
 
 

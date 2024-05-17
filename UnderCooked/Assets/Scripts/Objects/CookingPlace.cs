@@ -3,22 +3,21 @@ using UnityEngine.UI;
 
 public class CookingPlace : MonoBehaviour
 {
-    string _prawnObjectName = "Prawn(Clone)";
-    string _fishObjectName = "Fish(Clone)";
-    Player _player;
+    private string[] _foodIngredient = new string[2] { "Prawn(Clone)", "Fish(Clone)" };
+    private Player   _player;
 
 
-    public GameObject   CookingKnife;
-    public GameObject   OnFood;
-    public Transform      SpawnPos;
-    public Slider            Slider;
-    public float             ChopCount = 0;
-    public bool             CanChop = false;
+    public GameObject CookingKnife;
+    public GameObject OnFood;
+    public Transform  SpawnPos;
+    public Slider     Slider;
+    public float      ChopCount = 0;
+    public bool       CanChop = false;
 
 
     /*
-     * Player가 Chop 스킬을 사용할 수 있는 Table (도마)
-     * -> 시작시 Prefab Object 비활성화 상태
+     * Player가 Chop 스킬을 사용할 수 있는 Table (도마) - CookingPlace
+     * -> 시작시 Object(CookingKnife, Slider) 비활성화 상태
      * -> Player를 Observer로 등록 후 HandleCooking() 함수 구독
      */
     private void Start()
@@ -56,35 +55,34 @@ public class CookingPlace : MonoBehaviour
      */
     private void HandleCooking()
     {
-        // 음식이 놓였는가?
         if (SpawnPos.childCount > 0)
         {
-            Debug.Log("음식이 놓였다");
-
+            // 음식이 놓임
             CookingKnife.SetActive(false);
 
             OnFood = SpawnPos.GetChild(0).gameObject;
 
-            if (OnFood.name == _prawnObjectName || OnFood.name == _fishObjectName)
+            for(int i = 0; i < _foodIngredient.Length; i++)
             {
-                CanChop = true;
-                Slider.gameObject.SetActive(true);
-                Slider.value = ChopCount;
-            }
-            else
-            {
+                if(OnFood.name == _foodIngredient[i])
+                {
+                    CanChop = true;
+                    Slider.gameObject.SetActive(true);
+                    break;
+                }
+                
                 CanChop = false;
                 Slider.gameObject.SetActive(false);
             }
         }
         else
         {
-            Debug.Log("음식이 안놓였다");
-
+            // 음식이 안놓임
             CookingKnife.SetActive(true);
             Slider.gameObject.SetActive(false);
         }
        
+
         // 다 썰렸는가?
         if (ChopCount >= 10)
         {
@@ -107,9 +105,11 @@ public class CookingPlace : MonoBehaviour
     public void HandleChopCounting()
     {
         ChopCount++;
+        Slider.value = ChopCount;
 
         Managers.Resource.Instantiate("Chophit", _player.ChopPos.position, Quaternion.identity, _player.ChopPos);
         Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
+       
     }
    
 }

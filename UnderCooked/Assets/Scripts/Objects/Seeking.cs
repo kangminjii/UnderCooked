@@ -1,7 +1,8 @@
 using UnityEngine;
 
+public delegate void ObjectSelectHandler(GameObject obj);
 
-public class Overlap : MonoBehaviour
+public class Seeking : MonoBehaviour
 {
     float       _radius = 0.41f;
     float       _maxDistance = 0.7f;
@@ -18,7 +19,7 @@ public class Overlap : MonoBehaviour
     protected virtual void Overlapped(GameObject obj)
     {
         if (OverlapHandler != null)
-            OverlapHandler(obj);
+            OverlapHandler.Invoke(obj);
     }
 
 

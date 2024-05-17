@@ -17,6 +17,7 @@ public class PlateReturn : MonoBehaviour
 
 
     /*
+     * 접시를 생성하는 사물 - PlateReturn
      * -> 게임 시작시 접시 소환
      * -> Player를 Observer로 등록 후 HandlePlateReturned() 함수 구독
      */
