@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 public delegate void ObjectSelectHandler(GameObject obj);
-public delegate void PlateReturnedHandler();
-
+public delegate void PlateReturnHandler();
+public delegate void CookingPlaceHandler();
 
 public class Player : StateMachine
 {
@@ -18,25 +18,29 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-    public Animator Animator;
-    public Rigidbody Rigidbody;
+    public Animator     Animator;
+    public Rigidbody    Rigidbody;
     public GameObject Knife;
-    public Transform SpawnPos;
-    public Transform ChopPos;
-    public bool CanCut;
-    public bool CanGrab;
-    public float Speed = 5.0f;
-
-    public GameObject SelectObj = null;
-    public static Action<string> FoodOrderCheck;
+    public GameObject SelectObj;
+    public Transform    SpawnPos;
+    public Transform    ChopPos;
+    public bool           CanCut;
+    public bool           CanGrab;
+    public float           Speed = 5.0f;
 
 
-    float _lastDashTime = 0f;
-    float _dashCoolDown = 0.3f;
-    Vector3 _lookDir;
+    float       _lastDashTime = 0f;
+    float       _dashCoolDown = 0.3f;
+    Vector3   _lookDir;
     
+
+
     // 구독 이벤트 발생 ( 옵저버 패턴)
+    public static Action<string> FoodOrderCheck;
     Overlap _overlap;
+    public event PlateReturnHandler PlateReturned;
+    public event CookingPlaceHandler Cooking;
+    public event CookingPlaceHandler ChopCounting;
 
 
     private void Awake()
@@ -51,8 +55,12 @@ public class Player : StateMachine
         _overlap.OverlapHandler += new ObjectSelectHandler(Select);
     }
 
+    private void OnDestroy()
+    {
+        _overlap.OverlapHandler -= new ObjectSelectHandler(Select);
+    }
 
-    public event PlateReturnedHandler PlateReturned;
+
     
     protected virtual void OnPlateReturned()
     {
@@ -62,11 +70,20 @@ public class Player : StateMachine
         }
     }
 
-
-    private void OnDestroy()
+    protected virtual void OnCooking()
     {
-        _overlap.OverlapHandler -= new ObjectSelectHandler(Select);
+        if (Cooking != null)
+        {
+            Cooking.Invoke();
+        }
+
+        if(ChopCounting != null)
+        {
+            ChopCounting.Invoke();
+        }
     }
+
+
 
     protected override BaseState GetInitialState()
     {
@@ -122,10 +139,11 @@ public class Player : StateMachine
         }
     }
 
-
+    //////////////////////// 고칠곳
     // Chop 조건
     private void Select(GameObject obj)
     {
+
         if (obj != null)
         {
             SelectObj = obj;
@@ -133,6 +151,8 @@ public class Player : StateMachine
 
             if (place != null)
             {
+                OnCooking();
+
                 Transform spawnPos = place.transform.Find("SpawnPos");
 
                 if (spawnPos.childCount == 1 && place.CanChop == true)
@@ -157,15 +177,13 @@ public class Player : StateMachine
         }
     }
 
-    
-    // Chop할때 효과들
+    /*
+     * Chop 애니메이션 발생시 호출되는 Animation Event
+     * -> Chop 횟수 카운트할 때 필요함
+     */
     private void Cutting()
     {
-        CookingPlace cook = SelectObj.GetComponent<CookingPlace>();
-        cook.CuttingFood();
-
-        Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
-        Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
+        OnCooking();
     }
 
 
@@ -195,7 +213,7 @@ public class Player : StateMachine
 
             case "Crate": // 재료상자
             {
-                if(SpawnPos.childCount < 1)
+                if (SpawnPos.childCount < 1)
                 {
                     Animator crateBoxAnimator = SelectObj.GetComponent<Animator>();
                     crateBoxAnimator.SetTrigger("IsOpen");
@@ -218,9 +236,10 @@ public class Player : StateMachine
 
             case "CuttingBoard":  // 도마
             {
-                if (CanGrab == false)
+                if (SpawnPos.childCount > 0)
                 {
-                    return;
+                    // Chop 가능 이벤트 발생
+                    //OnCooking();
                 }
             }
             break;
@@ -249,6 +268,7 @@ public class Player : StateMachine
     {
         string grabObjectName = this.SpawnPos.GetChild(0).name.Replace("(Clone)", "");
 
+        // 바닥에 물체를 떨어뜨릴 때
         if (SelectObj == null)
         {
             Animator.SetBool("Grab", false);
@@ -284,6 +304,7 @@ public class Player : StateMachine
 
             case "Food": // 음식
             {
+                Debug.Log("Food 일때");
                 Animator.SetBool("Grab", false);
 
                 Managers.Resource.Instantiate(grabObjectName + "_Drop", SpawnPos.position, Quaternion.identity);
@@ -325,8 +346,11 @@ public class Player : StateMachine
         if (table != null)
         {
             //도마 위에 접시 안올라가게 함
-            if (SelectObj.tag == "CuttingBoard" && table.childCount < 1 && SpawnPos.GetChild(0).tag.Contains("Plate"))
-                return;
+            if (SelectObj.tag == "CuttingBoard")
+            { 
+                if (table.childCount < 1 && SpawnPos.GetChild(0).tag.Contains("Plate"))
+                    return;
+            }
 
             if (table.childCount == 1)
             {
