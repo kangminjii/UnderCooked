@@ -4,12 +4,14 @@ using UnityEngine;
 public delegate void PlateReturnHandler();
 public delegate void CookingPlaceHandler();
 
+
 public class Player : StateMachine
 {
     float   _lastDashTime = 0f;
     float   _dashCoolDown = 0.3f;
     Vector3 _lookDir;
-    
+    Seeking _seeking;
+
 
     public Animator   Animator;
     public Rigidbody  Rigidbody;
@@ -42,13 +44,13 @@ public class Player : StateMachine
      */
     public event PlateReturnHandler  PlateReturned;
     public event CookingPlaceHandler Cooking;
-    public event CookingPlaceHandler ChopCounting;
-    Seeking _seeking;
-    public static Action<string> FoodOrderCheck;
+    public static Action<string>     FoodOrderCheck;
 
 
     /*
-     * **************************OverLap 부분 구독 다시 생각해보기
+     * Player 상태 객체 초기화
+     * 
+     * Object를 감지하는 Seeking 클래스 구독
      */
     private void Awake()
     {
@@ -62,7 +64,7 @@ public class Player : StateMachine
         
         if(_seeking != null)
         {
-            _seeking.OverlapHandler += Select;
+            _seeking.Seek += Select;
         }
     }
 
@@ -70,13 +72,13 @@ public class Player : StateMachine
     {
         if (_seeking != null)
         {
-            _seeking.OverlapHandler -= Select;
+            _seeking.Seek -= Select;
         }
     }
 
 
     /*
-     * .NET 이벤트 발생
+     * .NET 이벤트 발생은 가상함수를 주로 사용함
      * -> 이벤트에 등록된 모든 delegate를 호출한다
      */
     protected virtual void OnPlateReturned()
@@ -93,15 +95,6 @@ public class Player : StateMachine
         if (Cooking != null)
         {
             Cooking.Invoke();
-        }
-    }
-
-
-    protected virtual void OnChopCounting()
-    {
-        if (ChopCounting != null)
-        {
-            ChopCounting.Invoke();
         }
     }
 
@@ -162,22 +155,26 @@ public class Player : StateMachine
     }
 
 
-    //////////////////////// 고칠곳
-    // Chop 조건
+    /*
+     * Player가 Object와 충돌될 때 불러지는 함수
+     * 
+     * 도마 Tag를 감지할 때 CookingPlace에서 구독한 이벤트 발생
+     * -> 조건에 따라 Chop 상태와 Grab 상태를 업데이트
+     */
     private void Select(GameObject obj)
     {
-        if (obj != null) // 물체 감지할때
-        {
-            SelectObj = obj;
-            CookingPlace place = obj.GetComponent<CookingPlace>();
+        SelectObj = obj;
+        CanCut = false;
 
-            if (place != null) // 도마일때
+        if(obj != null)
+        {
+            if (obj.CompareTag("CuttingBoard"))
             {
                 OnCooking();
+            
+                CookingPlace place = obj.GetComponent<CookingPlace>();
 
-                Transform spawnPos = place.transform.Find("SpawnPos");
-
-                if (spawnPos.childCount == 1 && place.CanChop == true)
+                if (place.CanChop == true)
                     CanCut = true;
                 else
                     CanCut = false;
@@ -187,29 +184,25 @@ public class Player : StateMachine
                 else 
                     CanGrab = true;
             }
-            else // 도마 아닐때
-            {
-                CanCut = false;
-            }
-        }
-        else // 감지 안할때
-        {
-            CanCut = false;
-            SelectObj = null;
         }
     }
+
 
     /*
      * Chop 애니메이션 발생시 호출되는 Animation Event
-     * -> Chop 횟수 카운트할 때 필요함
+     * -> Chop한 횟수를 카운트할 때 필요
      */
     private void Cutting()
     {
-        Debug.Log("Cutting 함수");
-        OnChopCounting();
+        if(SelectObj != null)
+        {
+            CookingPlace place = SelectObj.GetComponent<CookingPlace>();
+            place.HandleChopCounting();
+        }
     }
 
 
+    // 고칠부분*******************************
     // Idle & Moving에서 Object 탐지시
     public void InteractObject()
     {
