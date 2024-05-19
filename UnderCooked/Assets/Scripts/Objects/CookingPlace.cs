@@ -7,12 +7,12 @@ public class CookingPlace : MonoBehaviour
     Player   _player;
 
 
-    public GameObject CookingKnife;
-    public GameObject FoodAtTable;
-    public Transform  SpawnPos;
-    public Slider     Slider;
-    public float      ChopCount;
-    public bool       CanChop;
+    public GameObject   CookingKnife;
+    public GameObject   FoodAtTable;
+    public Transform    SpawnPos;
+    public Slider       Slider;
+    public float        ChopCount;
+    public bool         CanChop;
 
 
     /*

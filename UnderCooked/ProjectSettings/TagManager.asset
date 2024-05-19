@@ -9,13 +9,13 @@ TagManager:
   - Table
   - Bin
   - Crate
-  - PlateReturn
   - Passing
   - Plane
   - Prawn
   - Plate
   - SlicedFood
   - EmptyPlate
+  - PlateGenerator
   layers:
   - Default
   - TransparentFX
@@ -30,7 +30,7 @@ TagManager:
   - Crate
   - Bin
   - Passing
-  - PlateReturn
+  - PlateGenerator
   - CuttingBoard
   - 
   - 

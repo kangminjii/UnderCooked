@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class GameReadyUI : MonoBehaviour
 {
-    Image _spaceBar;
-    GameObject _recipe;
-    GameObject _ready;
-    GameObject _start;
+    Image       _spaceBar;
+    GameObject  _recipe;
+    GameObject  _ready;
+    GameObject  _start;
     
 
-    public static Action OrderStart;
+    public static Action OrderAction;
     public static Action CameraAction;
 
 
@@ -27,8 +27,8 @@ public class GameReadyUI : MonoBehaviour
         _start = Define.FindDeepChild(transform, "Start").gameObject;
 
         StartCoroutine(SpaceBarCheck());
+        
         Time.timeScale = 0;
-
         Cursor.visible = false;
     }
    
@@ -72,7 +72,7 @@ public class GameReadyUI : MonoBehaviour
 
     IEnumerator ResumeGame()
     {
-        CameraAction.Invoke();
+        CameraAction?.Invoke();
 
         yield return WaitForRealSeconds(2f);
 
@@ -87,7 +87,7 @@ public class GameReadyUI : MonoBehaviour
         
         Time.timeScale = 1;
 
-        OrderStart.Invoke();
+        OrderAction?.Invoke();
 
         yield return new WaitForSeconds(1.0f);
 

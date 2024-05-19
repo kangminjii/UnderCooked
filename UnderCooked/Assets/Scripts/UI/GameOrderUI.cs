@@ -40,7 +40,7 @@ public class GameOrderUI : MonoBehaviour
 
     private void Start()
     {
-        GameReadyUI.OrderStart += SceneStart;
+        GameReadyUI.OrderAction += SceneStart;
     }
 
 
@@ -64,7 +64,7 @@ public class GameOrderUI : MonoBehaviour
     void OnDestroy()
     {
         Player.FoodOrderCheck -= OrderListChecking;
-        GameReadyUI.OrderStart -= SceneStart;
+        GameReadyUI.OrderAction -= SceneStart;
     }
 
 

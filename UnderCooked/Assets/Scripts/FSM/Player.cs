@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public delegate void PlateReturnHandler();
+public delegate void PlateGeneratorHandler();
 public delegate void CookingPlaceHandler();
 
 
@@ -42,9 +42,9 @@ public class Player : StateMachine
     /*
      * Player(옵저버 패턴의 주체)가 구독한 이벤트 목록 
      */
-    public event PlateReturnHandler  PlateReturned;
-    public event CookingPlaceHandler Cooking;
-    public static Action<string>     FoodOrderCheck;
+    public event PlateGeneratorHandler  PlateGenerate;
+    public event CookingPlaceHandler    Cooking;
+    public static Action<string>        FoodOrderCheck;
 
 
     /*
@@ -81,11 +81,11 @@ public class Player : StateMachine
      * .NET 이벤트 발생은 가상함수를 주로 사용함
      * -> 이벤트에 등록된 모든 delegate를 호출한다
      */
-    protected virtual void OnPlateReturned()
+    protected virtual void OnPlateGenerate()
     {
-        if (PlateReturned != null)
+        if (PlateGenerate != null)
         {
-            PlateReturned.Invoke();
+            PlateGenerate.Invoke();
         }
     }
 
@@ -156,7 +156,7 @@ public class Player : StateMachine
 
 
     /*
-     * Player가 Object와 충돌될 때 불러지는 함수
+     * Player가 Object와 충돌될 때 호출되는 함수
      * 
      * 도마 Tag를 감지할 때 CookingPlace에서 구독한 이벤트 발생
      * -> 조건에 따라 Chop 상태와 Grab 상태를 업데이트
@@ -184,6 +184,8 @@ public class Player : StateMachine
                 else 
                     CanGrab = true;
             }
+
+            Debug.Log(CanGrab);
         }
     }
 
@@ -202,46 +204,55 @@ public class Player : StateMachine
     }
 
 
-    // 고칠부분*******************************
-    // Idle & Moving에서 Object 탐지시
+    /*
+     * Idle & Moving에서 Object와 상호작용할 때 호출되는 함수
+     * -> Player가 탐지한 SelectObj의 tag에 따라 행동이 나뉨
+     *  -> PlateGenerator(접시 생성대) : 접시를 잡는 용도
+     *      -> Player 손 위에 접시 생성, 접시 생성대에 있는 접시 파괴
+     *      
+     *  -> Crate(재료 상자) : 재료를 잡는 용도
+     *      -> 애니메이션 재생, 재료 상자 이름에 따라 Player 손 위에 재료 생성
+     *      
+     *  -> Food(음식) : 땅에 떨어진 음식을 잡는 용도
+     *      -> Player 손 위에 떨어진 음식 이름에 따라 생성, 땅에 있는 음식 파괴
+     *      
+     *  -> Table(식탁) : 식탁 위에 있는 Object를 잡는 용도
+     *      -> Player가 잡을 수 있는 상태의 Object만 손 위에 생성, 식탁에 있는 Object 파괴
+     *  
+     *  -> CuttingBoard(도마) : 도마 위에 있는 Object를 잡는 용도
+     *      -> Table과 같으며 썰리지 않았을 때만 잡을 수 있는 조건 추가
+     */
     public void InteractObject()
     {
         if (SelectObj == null)
             return;
         
-
         switch (SelectObj.tag)
         {
-            case "PlateReturn": // 접시
+            case "PlateGenerator":
             {
-                PlateReturn plateReturn = SelectObj.GetComponent<PlateReturn>();
+                PlateGenerator plateGenerator = SelectObj.GetComponent<PlateGenerator>();
+                
+                if (plateGenerator.PlateSpawnPos.childCount == 0)
+                    return;
 
-                if (SpawnPos.childCount < 1)
-                {
-                    if (plateReturn.PlateSpawnPos.childCount == 0)
-                        return;
-
-                    Managers.Resource.Instantiate("Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                    Managers.Resource.Destroy(plateReturn.PlateSpawnPos.GetChild(plateReturn.PlateSpawnPos.childCount - 1).gameObject);
-                }
+                Managers.Resource.Instantiate("Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                Managers.Resource.Destroy(plateGenerator.PlateSpawnPos.GetChild(plateGenerator.PlateSpawnPos.childCount - 1).gameObject);
             }
             break;
 
-            case "Crate": // 재료상자
+            case "Crate":
             {
-                if (SpawnPos.childCount < 1)
-                {
-                    Animator crateBoxAnimator = SelectObj.GetComponent<Animator>();
-                    crateBoxAnimator.SetTrigger("IsOpen");
+                Animator crateBoxAnimator = SelectObj.GetComponent<Animator>();
+                crateBoxAnimator.SetTrigger("IsOpen");
 
-                    string ingredientName = SelectObj.transform.GetChild(0).name.Remove(0, "Crate_".Length);
+                string ingredientName = SelectObj.transform.GetChild(0).name.Remove(0, "Crate_".Length);
 
-                    Managers.Resource.Instantiate(ingredientName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                }
+                Managers.Resource.Instantiate(ingredientName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
             }
             break;
 
-            case "Food": // 음식
+            case "Food":
             {
                 string droppedItemName = SelectObj.name.Replace("_Drop(Clone)", "");
 
@@ -250,36 +261,47 @@ public class Player : StateMachine
             }
             break;
 
-            case "CuttingBoard":  // 도마
+            case "Table":
             {
-                if (SpawnPos.childCount > 0)
+                Transform tableSpawnPos = SelectObj.transform.Find("SpawnPos");
+
+                if (tableSpawnPos != null)
                 {
-                    // Chop 가능 이벤트 발생
-                    //OnCooking();
+                    if (tableSpawnPos.childCount == 1)
+                    {
+                        string tableObjectName = tableSpawnPos.GetChild(0).name.Replace("(Clone)", "");
+
+                        Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                        Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
+                    }
+                }
+            }
+            break;
+
+            case "CuttingBoard":
+            {
+                Transform tableSpawnPos = SelectObj.transform.Find("SpawnPos");
+
+                if (tableSpawnPos != null)
+                {
+                    if (CanGrab && tableSpawnPos.childCount == 1)
+                    {
+                        string tableObjectName = tableSpawnPos.GetChild(0).name.Replace("(Clone)", "");
+
+                        Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                        Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
+                    }
                 }
             }
             break;
         }
-
-
-        // Grab
-        // 테이블
-        Transform spawnPos = SelectObj.transform.Find("SpawnPos");
-
-        if (spawnPos != null)
-        {
-            if(spawnPos.childCount == 1)
-            {
-                Transform table = SelectObj.transform.Find("SpawnPos");
-                string tableObjectName = table.GetChild(0).name.Replace("(Clone)", "");
-
-                Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                Managers.Resource.Destroy(table.GetChild(0).gameObject);
-            }
-        }
     }
 
 
+    /*
+     * Grab_Idle & Grab_Moving에서 Object와 상호작용할 때 호출되는 함수
+     * 
+     */
     public void InteractObjectWhileGrabbing()
     {
         string grabObjectName = this.SpawnPos.GetChild(0).name.Replace("(Clone)", "");
@@ -313,7 +335,7 @@ public class Player : StateMachine
                     Animator.SetBool("Grab", false);
 
                     // Plate 생성 이벤트 발생
-                    OnPlateReturned();
+                    OnPlateGenerate();
                 }
             }
             break;
@@ -335,7 +357,7 @@ public class Player : StateMachine
                     Animator.SetBool("Grab", false);
 
                     // Plate 생성 이벤트 발생
-                    OnPlateReturned();
+                    OnPlateGenerate();
 
 
                     string returnFoodName;

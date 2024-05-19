@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlateReturn : MonoBehaviour
+public class PlateGenerator : MonoBehaviour
 {
     Player  _player;
     float   _plateSpawnTime = 1.0f;
@@ -17,11 +17,11 @@ public class PlateReturn : MonoBehaviour
 
 
     /*
-     * 접시를 생성하는 사물 - PlateReturn
+     * 접시를 생성하는 사물 - PlateGenerator
      * -> 게임 시작시 접시 소환
-     * -> Player를 Observer로 등록 후 HandlePlateReturned() 함수 구독
+     * -> Player를 Observer로 등록 후 HandlePlateGenerator() 함수 구독
      */
-    private void Start()
+    private void Awake()
     {
         for(int i = 0; i < _maxPlateNumber; i++)
             StartCoroutine(SpawnPlate());
@@ -30,7 +30,7 @@ public class PlateReturn : MonoBehaviour
         
         if (_player != null)
         {
-            _player.PlateReturned += HandlePlateReturned;
+            _player.PlateGenerate += HandlePlateGenerator;
         }
     }
 
@@ -42,7 +42,7 @@ public class PlateReturn : MonoBehaviour
     {
         if (_player != null)
         {
-            _player.PlateReturned -= HandlePlateReturned;
+            _player.PlateGenerate -= HandlePlateGenerator;
         }
     }
 
@@ -52,7 +52,7 @@ public class PlateReturn : MonoBehaviour
      * -> PlateList 갱신
      * -> 새로운 Plate 생성하는 코루틴 호출
      */
-    public void HandlePlateReturned()
+    public void HandlePlateGenerator()
     {
         PlateList.RemoveAt(PlateList.Count - 1);
         StartCoroutine(SpawnPlate());

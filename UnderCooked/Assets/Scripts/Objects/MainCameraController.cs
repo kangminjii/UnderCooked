@@ -1,56 +1,65 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class MainCameraController : MonoBehaviour
 {
-    GameObject  _player;
+    Transform   _player;
     Vector3     _offset = new Vector3(-0.08f, 9.7f, -6.81f);
     float       _cameraSpeed = 2f;       
 
 
-    public delegate void MovingCamera();
-    public event MovingCamera CameraAction;
-
-
-    private void Start()
+    /*
+     * 게임 시작할 때 카메라를 움직이기 위해 GameReadyUI 구독
+     */
+    private void Awake()
     {
-        _player = GameObject.Find("Chef").gameObject;
+        _player = GameObject.Find("Chef").transform;
         GameReadyUI.CameraAction += MoveCamera;
     }
 
+
+    /*
+     * 프로젝트 종료시 구독 해제
+     */
     private void OnDestroy()
     {
         GameReadyUI.CameraAction -= MoveCamera;
     }
 
 
+    /*
+     * Player의 위치에 따라 MainCamera의 위치를 변화시킴
+     */
     void FixedUpdate()
     {
-        if (_player.transform.position.z < -1f)
-        {
+        if (_player.position.z < -1f)
             transform.position = Vector3.Lerp(transform.position, _offset + new Vector3(0, 0.8f, 0), Time.deltaTime * _cameraSpeed * 0.25f);
-        }
         else
-        {
             transform.position = Vector3.Lerp(transform.position, _offset, Time.deltaTime * _cameraSpeed * 0.25f);
-        }
 
-        if(_player.transform.position.x < -3f)
-        {
+
+        if(_player.position.x < -3f)
             transform.position = Vector3.Lerp(transform.position, _offset + new Vector3(-0.9f, 0, 0), Time.deltaTime * _cameraSpeed * 0.25f);
-        }
         else
-        {
             transform.position = Vector3.Lerp(transform.position, _offset, Time.deltaTime * _cameraSpeed * 0.25f);
-        }
     }
 
 
+    /*
+     * GameReadyUI에서 CameraAction이 Invoke될 때 호출되는 함수
+     * -> 카메라 움직임을 재현한 코루틴을 호출
+     */
     void MoveCamera()
     {
         StartCoroutine(StartMoving());
     }
 
+
+    /*
+     * 카메라 움직임을 재현한 코루틴
+     * -> 시작 좌표, 목표 좌표, 지속 시간에 따라 while문이 실행됨
+     */
     IEnumerator StartMoving()
     {
         float startY = transform.position.y;
