@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlateGenerator : MonoBehaviour
 {
-    Player  _player;
     float   _plateSpawnTime = 1.0f;
     int     _maxPlateNumber = 3;
     string  _plateName = "Plate";
@@ -26,12 +25,7 @@ public class PlateGenerator : MonoBehaviour
         for(int i = 0; i < _maxPlateNumber; i++)
             StartCoroutine(SpawnPlate());
 
-        _player = FindObjectOfType<Player>();
-        
-        if (_player != null)
-        {
-            _player.PlateGenerate += HandlePlateGenerator;
-        }
+        Player.PlateGenerate += HandlePlateGenerator;
     }
 
 
@@ -40,10 +34,7 @@ public class PlateGenerator : MonoBehaviour
      */
     private void OnDestroy()
     {
-        if (_player != null)
-        {
-            _player.PlateGenerate -= HandlePlateGenerator;
-        }
+        Player.PlateGenerate -= HandlePlateGenerator;
     }
 
 
@@ -75,5 +66,4 @@ public class PlateGenerator : MonoBehaviour
 
         Managers.Sound.Play("AudioClip/WashedPlate", Define.Sound.Effect);
     }
-
 }
