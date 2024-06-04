@@ -1,9 +1,6 @@
 using System;
 using UnityEngine;
 
-public delegate void CookingPlaceHandler();
-public delegate void OrderCheckHandler();
-
 
 public class Player : StateMachine
 {
@@ -42,9 +39,11 @@ public class Player : StateMachine
     /*
      * Player(옵저버 패턴의 주체)가 구독한 이벤트 목록 
      */
-    public event CookingPlaceHandler    Cooking;
-    public static Action                PlateGenerate;
-    public static Action<string>        FoodOrderCheck;
+    public static Action         Cooking;
+    public static Action         ChopCounting;
+    public static Action         PlateGenerate;
+    public static Action         PlateDestroy;
+    public static Action<string> FoodOrderCheck;
 
 
     /*
@@ -73,19 +72,6 @@ public class Player : StateMachine
         if (_seeking != null)
         {
             _seeking.Seek -= Select;
-        }
-    }
-
-
-    /*
-     * .NET 이벤트 발생은 가상함수를 주로 사용함
-     * -> 이벤트에 등록된 모든 delegate를 호출한다
-     */
-    protected virtual void OnCooking()
-    {
-        if (Cooking != null)
-        {
-            Cooking.Invoke();
         }
     }
 
@@ -148,9 +134,8 @@ public class Player : StateMachine
 
     /*
      * Player가 Object와 충돌될 때 호출되는 함수
-     * 
-     * 도마 Tag를 감지할 때 CookingPlace에서 구독한 이벤트 발생
-     * -> 조건에 따라 Chop 상태와 Grab 상태를 업데이트
+     * -> 도마 Tag를 감지할 때 CookingPlace에서 구독한 이벤트 발생
+     *  -> 조건에 따라 Chop 상태와 Grab 상태를 업데이트
      */
     private void Select(GameObject obj)
     {
@@ -161,7 +146,7 @@ public class Player : StateMachine
         {
             if (obj.CompareTag("CuttingBoard"))
             {
-                OnCooking();
+                Cooking.Invoke();
 
                 CookingPlace place = obj.GetComponent<CookingPlace>();
 
@@ -181,15 +166,17 @@ public class Player : StateMachine
 
     /*
      * Chop 애니메이션 발생시 호출되는 Animation Event
-     * -> Chop한 횟수를 카운트할 때 필요
+     * -> CookingPlace에서 구독한 이벤트 발생
+     *  -> Chop한 횟수를 카운트할 때 필요
+     * 
+     * -> Chop할 때 나오는 이펙트 생성 및 사운드 재생
      */
     private void Cutting()
     {
-        if(SelectObj != null)
-        {
-            CookingPlace place = SelectObj.GetComponent<CookingPlace>();
-            place.HandleChopCounting();
-        }
+        ChopCounting.Invoke();
+
+        Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity, ChopPos);
+        Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
     }
 
 
@@ -221,13 +208,11 @@ public class Player : StateMachine
         {
             case "PlateGenerator":
             {
-                PlateGenerator plateGenerator = SelectObj.GetComponent<PlateGenerator>();
-                
-                if (plateGenerator.PlateSpawnPos.childCount == 0)
+                if (SelectObj.transform.GetChild(0).childCount == 0)
                     return;
 
+                PlateDestroy.Invoke();
                 Managers.Resource.Instantiate("Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                Managers.Resource.Destroy(plateGenerator.PlateSpawnPos.GetChild(plateGenerator.PlateSpawnPos.childCount - 1).gameObject);
             }
             break;
 
@@ -261,7 +246,9 @@ public class Player : StateMachine
                         string tableObjectName = tableSpawnPos.GetChild(0).name.Replace("(Clone)", "");
 
                         Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                        Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
+                        
+                            // 고치기
+                            Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
                     }
                 }
             }
@@ -278,7 +265,9 @@ public class Player : StateMachine
                         string tableObjectName = tableSpawnPos.GetChild(0).name.Replace("(Clone)", "");
 
                         Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                        Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
+
+                            // 고치기
+                            Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
                     }
                 }
             }

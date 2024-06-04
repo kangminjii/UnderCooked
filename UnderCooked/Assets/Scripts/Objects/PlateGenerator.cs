@@ -10,8 +10,8 @@ public class PlateGenerator : MonoBehaviour
     string  _plateName = "Plate";
 
 
-    public int              CurrentPlateNumber = 0;
-    public Transform        PlateSpawnPos;
+    [SerializeField]
+    Transform               _plateSpawnPos;
     public List<GameObject> PlateList = new List<GameObject>();
 
 
@@ -26,6 +26,7 @@ public class PlateGenerator : MonoBehaviour
             StartCoroutine(SpawnPlate());
 
         Player.PlateGenerate += HandlePlateGenerator;
+        Player.PlateDestroy += HandlePlateDestroy;
     }
 
 
@@ -35,6 +36,7 @@ public class PlateGenerator : MonoBehaviour
     private void OnDestroy()
     {
         Player.PlateGenerate -= HandlePlateGenerator;
+        Player.PlateDestroy -= HandlePlateDestroy;
     }
 
 
@@ -60,10 +62,21 @@ public class PlateGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(_plateSpawnTime);
 
-        Vector3 spwanPlatePos = PlateSpawnPos.position + new Vector3(0, (PlateSpawnPos.childCount - 1) * 0.05f, 0);
-        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, PlateSpawnPos);
+        Vector3 spwanPlatePos = _plateSpawnPos.position + new Vector3(0, (_plateSpawnPos.childCount - 1) * 0.05f, 0);
+        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, _plateSpawnPos);
         PlateList.Add(plate);
 
         Managers.Sound.Play("AudioClip/WashedPlate", Define.Sound.Effect);
     }
+
+
+    /*
+     * 접시가 파괴 될 때 호출되는 이벤트
+     * 
+     */
+    public void HandlePlateDestroy()
+    {
+        Managers.Resource.Destroy(_plateSpawnPos.GetChild(_plateSpawnPos.childCount - 1).gameObject);
+    }
+
 }

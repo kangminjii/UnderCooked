@@ -3,34 +3,33 @@ using UnityEngine.UI;
 
 public class CookingPlace : MonoBehaviour
 {
-    string[] _foodIngredient = new string[2] { "Prawn(Clone)", "Fish(Clone)" };
-    Player   _player;
+    [SerializeField]
+    GameObject  CookingKnife;
+    [SerializeField]
+    Transform   SpawnPos;
+    [SerializeField]
+    Slider      Slider;
+    
+    string[]    _foodIngredient = new string[2] { "Prawn(Clone)", "Fish(Clone)" };
+    GameObject  _foodOnTable;
+    
 
-
-    public GameObject   CookingKnife;
-    public GameObject   FoodAtTable;
-    public Transform    SpawnPos;
-    public Slider       Slider;
-    public float        ChopCount;
-    public bool         CanChop;
+    public float ChopCount;
+    public bool  CanChop;
 
 
     /*
      * Player가 Chop 스킬을 사용할 수 있는 Table (도마) - CookingPlace
      * -> 시작시 Object(CookingKnife, Slider) 비활성화 상태
-     * -> Player를 Observer로 등록 후 HandleCooking() 함수 구독
+     * -> Player를 Observer로 등록 후 HandleCooking(), HandleChopCounting() 함수 구독
      */
     private void Awake()
     {
         CookingKnife.SetActive(true);
         Slider.gameObject.SetActive(false);
 
-        _player = FindObjectOfType<Player>();
-
-        if (_player != null)
-        {
-            _player.Cooking += HandleCooking;
-        }
+        Player.Cooking += HandleCooking;
+        Player.ChopCounting += HandleChopCounting;
     }
     
 
@@ -39,10 +38,8 @@ public class CookingPlace : MonoBehaviour
     */
     private void OnDestroy()
     {
-        if (_player != null)
-        {
-            _player.Cooking -= HandleCooking;
-        }
+        Player.Cooking -= HandleCooking;
+        Player.ChopCounting -= HandleChopCounting;
     }
 
 
@@ -61,11 +58,11 @@ public class CookingPlace : MonoBehaviour
         if (SpawnPos.childCount > 0)
         {
             CookingKnife.SetActive(false);
-            FoodAtTable = SpawnPos.GetChild(0).gameObject;
+            _foodOnTable = SpawnPos.GetChild(0).gameObject;
 
             for (int i = 0; i < _foodIngredient.Length; i++)
             {
-                if(FoodAtTable.name == _foodIngredient[i])
+                if(_foodOnTable.name == _foodIngredient[i])
                 {
                     CanChop = true;
                     Slider.gameObject.SetActive(true);
@@ -101,9 +98,6 @@ public class CookingPlace : MonoBehaviour
         {
             ChopCount++;
             Slider.value = ChopCount;
-
-            Managers.Resource.Instantiate("Chophit", _player.ChopPos.position, Quaternion.identity, _player.ChopPos);
-            Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
         }
         else
         {
@@ -112,9 +106,9 @@ public class CookingPlace : MonoBehaviour
             Slider.value = ChopCount;
             Slider.gameObject.SetActive(false);
 
-            string slicedObjectName = FoodAtTable.name.Replace("(Clone)", "");
+            string slicedObjectName = _foodOnTable.name.Replace("(Clone)", "");
 
-            Destroy(FoodAtTable);
+            Destroy(_foodOnTable);
             
             Managers.Resource.Instantiate(slicedObjectName + "_Sliced", SpawnPos.position, Quaternion.Euler(0, -90, 0), SpawnPos);
         }

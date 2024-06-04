@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 1731734816}
   m_Layer: 13
   m_Name: Plate_Return
-  m_TagString: PlateReturn
+  m_TagString: PlateGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,6 +157,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a601a9cefd503774a9fbc84e45df72fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentPlateNumber: 0
-  PlateSpawnPos: {fileID: 1592834266}
+  _plateSpawnPos: {fileID: 1592834266}
   PlateList: []

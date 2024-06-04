@@ -16397,10 +16397,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 1470950403174921113, guid: 97ec39c47cba25d49854abc7f916bdfc, type: 3}
-      propertyPath: m_TagString
-      value: PlateGenerator
-      objectReference: {fileID: 0}
     - target: {fileID: 4372525488428876090, guid: 97ec39c47cba25d49854abc7f916bdfc, type: 3}
       propertyPath: m_RootOrder
       value: 17
