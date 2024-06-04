@@ -5,7 +5,7 @@ using System.Collections;
 
 public class BaseSceneUI : MonoBehaviour
 {
-    Image _image;
+    public Image _image;
     Color _startColor = Color.white;
     Color _endColor = Color.black;
     float _changeDuration = 2.0f;
@@ -20,7 +20,7 @@ public class BaseSceneUI : MonoBehaviour
     void Start()
     {
         Screen.SetResolution(_width, _height, true);
-        _image = GetComponent<Image>();
+        //_image = GetComponent<Image>();
         
         StartCoroutine(ChangeToDark());
     }

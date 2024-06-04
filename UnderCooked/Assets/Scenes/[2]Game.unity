@@ -6122,6 +6122,11 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00028782093, y: 0.0004696187, z: -0.0010978675}
     m_Extent: {x: 0.0013457135, y: 0.0012169827, z: 0.0014996359}
   m_DirtyAABB: 0
+--- !u!4 &319377759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 207446370, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
+  m_PrefabInstance: {fileID: 1417535683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &319911287
 GameObject:
   m_ObjectHideFlags: 0
@@ -21281,6 +21286,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2069834705226764071, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
+      propertyPath: _chopPos
+      value: 
+      objectReference: {fileID: 319377759}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b11190e66ac72a4b8f988b80b82cdf8, type: 3}
 --- !u!1001 &1421175525
