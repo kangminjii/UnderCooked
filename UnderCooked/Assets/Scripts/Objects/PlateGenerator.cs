@@ -5,20 +5,18 @@ using UnityEngine;
 
 public class PlateGenerator : MonoBehaviour
 {
-    float   _plateSpawnTime = 1.0f;
-    int     _maxPlateNumber = 3;
-    string  _plateName = "Plate";
-
-
-    public int              CurrentPlateNumber = 0;
-    public Transform        PlateSpawnPos;
-    public List<GameObject> PlateList = new List<GameObject>();
+    float            _plateSpawnTime = 1.0f;
+    string           _plateName = "Plate";
+    int              _maxPlateNumber = 3;
+    List<GameObject> _plateList = new List<GameObject>();
+    [SerializeField]
+    Transform        _plateSpawnPos;
 
 
     /*
      * 접시를 생성하는 사물 - PlateGenerator
      * -> 게임 시작시 접시 소환
-     * -> Player를 Observer로 등록 후 HandlePlateGenerator() 함수 구독
+     * -> Player를 Observer로 등록 후 주체의 상태 변화에 따라 갱신
      */
     private void Awake()
     {
@@ -26,6 +24,7 @@ public class PlateGenerator : MonoBehaviour
             StartCoroutine(SpawnPlate());
 
         Player.PlateGenerate += HandlePlateGenerator;
+        Player.PlateDestroy += HandlePlateDestroy;
     }
 
 
@@ -35,6 +34,7 @@ public class PlateGenerator : MonoBehaviour
     private void OnDestroy()
     {
         Player.PlateGenerate -= HandlePlateGenerator;
+        Player.PlateDestroy -= HandlePlateDestroy;
     }
 
 
@@ -45,7 +45,7 @@ public class PlateGenerator : MonoBehaviour
      */
     public void HandlePlateGenerator()
     {
-        PlateList.RemoveAt(PlateList.Count - 1);
+        _plateList.RemoveAt(_plateList.Count - 1);
         StartCoroutine(SpawnPlate());
     }
 
@@ -60,10 +60,19 @@ public class PlateGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(_plateSpawnTime);
 
-        Vector3 spwanPlatePos = PlateSpawnPos.position + new Vector3(0, (PlateSpawnPos.childCount - 1) * 0.05f, 0);
-        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, PlateSpawnPos);
-        PlateList.Add(plate);
+        Vector3 spwanPlatePos = _plateSpawnPos.position + new Vector3(0, (_plateSpawnPos.childCount - 1) * 0.05f, 0);
+        GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, _plateSpawnPos);
+        _plateList.Add(plate);
 
         Managers.Sound.Play("AudioClip/WashedPlate", Define.Sound.Effect);
+    }
+
+
+    /*
+     * Player가 접시를 가져갈 때 접시를 파괴하는 함수
+     */
+    public void HandlePlateDestroy()
+    {
+        Managers.Resource.Destroy(_plateSpawnPos.GetChild(_plateSpawnPos.childCount - 1).gameObject);
     }
 }

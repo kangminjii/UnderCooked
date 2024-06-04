@@ -1,29 +1,18 @@
 using UnityEngine;
 
-public delegate void ObjectSelectHandler(GameObject obj);
 
 public class Seeking : MonoBehaviour
 {
-    float        _radius = 0.41f;
-    float        _maxDistance = 0.7f;
-    Color        _originalColor;
-    Collider     _collidedObject;
-    GameObject   _selectedObject;
-
-
-    public LayerMask                 Layermask;
-    public GameObject                SeekedGameObject;
-    public event ObjectSelectHandler Seek;
-
-
-    /*
-     * 이벤트에 등록된 모든 delegate를 호출한다
-     */
-    protected virtual void OnSeek(GameObject obj)
-    {
-        if (Seek != null)
-            Seek.Invoke(obj);
-    }
+    float       _radius = 0.41f;
+    float       _maxDistance = 0.7f;
+    Color       _originalColor;
+    Collider    _collidedObject;
+    GameObject  _selectedObject;
+    GameObject  _seekedGameObject;
+    [SerializeField]
+    LayerMask   _layermask;
+    [SerializeField]
+    Player      _player;
 
 
     /*
@@ -34,9 +23,7 @@ public class Seeking : MonoBehaviour
      * -> MeshRenderer의 Emission을 활성화시켜 색을 바꿈
      * -> 원본 색상을 저장하여 충돌되지 않을 때 색을 복구할 수 있게함
      * 
-     * 충돌된 물체를 Player에게 전달하는 OnSeek 이벤트를 호출
-     * 
-     * 고민: Update가 아닌 충돌 물체가 바뀔때만 호출되게 만드려면? 
+     * 충돌된 물체를 Player에게 전달
      */
     void Update()
     {
@@ -44,30 +31,30 @@ public class Seeking : MonoBehaviour
         Vector3 playerForward = transform.forward;
         RaycastHit hit;
 
-        if (Physics.SphereCast(playerPosition, _radius, playerForward, out hit, _maxDistance, Layermask))
+        if (Physics.SphereCast(playerPosition, _radius, playerForward, out hit, _maxDistance, _layermask))
         {
             _collidedObject = hit.collider;
-            SeekedGameObject = _collidedObject.gameObject;
+            _seekedGameObject = _collidedObject.gameObject;
 
             RestoreObjectColor();
 
-            MeshRenderer objRenderer = SeekedGameObject.GetComponent<MeshRenderer>();
+            MeshRenderer objRenderer = _seekedGameObject.GetComponent<MeshRenderer>();
 
             objRenderer.material.SetColor("_EmissionColor", new Color(0.5f, 0.45f, 0.4f, 0f));
             objRenderer.material.EnableKeyword("_EMISSION");
             _originalColor = objRenderer.material.color;
 
-            _selectedObject = SeekedGameObject;
+            _selectedObject = _seekedGameObject;
         }
         else
         {
             _collidedObject = null;
-            SeekedGameObject = null;
+            _seekedGameObject = null;
 
             RestoreObjectColor();
         }
 
-        OnSeek(SeekedGameObject);
+        _player.Select(_seekedGameObject);
     }
 
 

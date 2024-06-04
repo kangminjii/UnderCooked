@@ -1723,16 +1723,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bebd4ff3cb4c842800e5e1bece7d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cook: {fileID: 0}
-  Animator: {fileID: 0}
-  Rigidbody: {fileID: 0}
-  SpawnPos: {fileID: 0}
+  Animator: {fileID: 5607845869705521179}
+  Rigidbody: {fileID: 2069834705226764069}
   Knife: {fileID: 5260627731516699849}
-  LookDir: {x: 0, y: 0, z: 0}
-  canCut: 0
-  FoodGrab: 0
-  _speed: 5
   SelectObj: {fileID: 0}
+  SpawnPos: {fileID: 2069834705864232292}
+  ChopPos: {fileID: 207446370}
+  CanCut: 0
+  CanGrab: 0
+  Speed: 5
 --- !u!114 &1447040409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1745,10 +1744,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf46d0c1caca5044aae1196bc96982d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Layermask:
+  _layermask:
     serializedVersion: 2
     m_Bits: 32512
-  SelectGameObject: {fileID: 0}
 --- !u!1 &1196512682497571478
 GameObject:
   m_ObjectHideFlags: 0

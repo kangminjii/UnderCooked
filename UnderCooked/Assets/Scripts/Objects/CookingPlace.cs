@@ -3,34 +3,34 @@ using UnityEngine.UI;
 
 public class CookingPlace : MonoBehaviour
 {
-    string[] _foodIngredient = new string[2] { "Prawn(Clone)", "Fish(Clone)" };
-    Player   _player;
+    string[]    _foodIngredient = new string[2] { "Prawn(Clone)", "Fish(Clone)" };
+    GameObject  _foodOnTable;
+    [SerializeField]
+    GameObject  _cookingKnife;
+    [SerializeField]
+    Transform   _objectSpawnPos;
+    [SerializeField]
+    Slider      _slider;
 
 
-    public GameObject   CookingKnife;
-    public GameObject   FoodAtTable;
-    public Transform    SpawnPos;
-    public Slider       Slider;
-    public float        ChopCount;
-    public bool         CanChop;
+    [HideInInspector]
+    public float ChopCount;
+    [HideInInspector]
+    public bool  CanChop;
 
 
     /*
      * Player가 Chop 스킬을 사용할 수 있는 Table (도마) - CookingPlace
      * -> 시작시 Object(CookingKnife, Slider) 비활성화 상태
-     * -> Player를 Observer로 등록 후 HandleCooking() 함수 구독
+     * -> Player를 Observer로 등록 후 주체의 상태 변화에 따라 갱신
      */
     private void Awake()
     {
-        CookingKnife.SetActive(true);
-        Slider.gameObject.SetActive(false);
+        _cookingKnife.SetActive(true);
+        _slider.gameObject.SetActive(false);
 
-        _player = FindObjectOfType<Player>();
-
-        if (_player != null)
-        {
-            _player.Cooking += HandleCooking;
-        }
+        Player.Cooking += HandleCooking;
+        Player.ChopCounting += HandleChopCounting;
     }
     
 
@@ -39,10 +39,8 @@ public class CookingPlace : MonoBehaviour
     */
     private void OnDestroy()
     {
-        if (_player != null)
-        {
-            _player.Cooking -= HandleCooking;
-        }
+        Player.Cooking -= HandleCooking;
+        Player.ChopCounting -= HandleChopCounting;
     }
 
 
@@ -58,17 +56,17 @@ public class CookingPlace : MonoBehaviour
      */
     private void HandleCooking()
     {
-        if (SpawnPos.childCount > 0)
+        if (_objectSpawnPos.childCount > 0)
         {
-            CookingKnife.SetActive(false);
-            FoodAtTable = SpawnPos.GetChild(0).gameObject;
+            _cookingKnife.SetActive(false);
+            _foodOnTable = _objectSpawnPos.GetChild(0).gameObject;
 
             for (int i = 0; i < _foodIngredient.Length; i++)
             {
-                if(FoodAtTable.name == _foodIngredient[i])
+                if(_foodOnTable.name == _foodIngredient[i])
                 {
                     CanChop = true;
-                    Slider.gameObject.SetActive(true);
+                    _slider.gameObject.SetActive(true);
                     break;
                 }
                 
@@ -80,10 +78,10 @@ public class CookingPlace : MonoBehaviour
 
         CanChop = false;
         ChopCount = 0;
-        Slider.value = ChopCount;
+        _slider.value = ChopCount;
 
-        CookingKnife.SetActive(true);
-        Slider.gameObject.SetActive(false);
+        _cookingKnife.SetActive(true);
+        _slider.gameObject.SetActive(false);
     }
 
 
@@ -100,23 +98,20 @@ public class CookingPlace : MonoBehaviour
         if (ChopCount < 10)
         {
             ChopCount++;
-            Slider.value = ChopCount;
-
-            Managers.Resource.Instantiate("Chophit", _player.ChopPos.position, Quaternion.identity, _player.ChopPos);
-            Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
+            _slider.value = ChopCount;
         }
         else
         {
             CanChop = false;
             ChopCount = 0;
-            Slider.value = ChopCount;
-            Slider.gameObject.SetActive(false);
+            _slider.value = ChopCount;
+            _slider.gameObject.SetActive(false);
 
-            string slicedObjectName = FoodAtTable.name.Replace("(Clone)", "");
+            string slicedObjectName = _foodOnTable.name.Replace("(Clone)", "");
 
-            Destroy(FoodAtTable);
+            Destroy(_foodOnTable);
             
-            Managers.Resource.Instantiate(slicedObjectName + "_Sliced", SpawnPos.position, Quaternion.Euler(0, -90, 0), SpawnPos);
+            Managers.Resource.Instantiate(slicedObjectName + "_Sliced", _objectSpawnPos.position, Quaternion.Euler(0, -90, 0), _objectSpawnPos);
         }
     }
    
