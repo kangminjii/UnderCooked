@@ -3,19 +3,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-public class LoadingUI : MonoBehaviour
+public class LoadingUI : FadeInFadeOut
 {
+    Color _startColor = new Color(0,0,0,0);
+    Color _endColor = Color.black;
+    [SerializeField]
     Image _loadingBar;
-    Image _fadeInOut;
-    float _speed = 0.003f;
+    [SerializeField]
+    Image _image;
 
 
-    void Start()
+    void Awake()
     {
-        _loadingBar = Define.FindDeepChild(transform, "Filled").GetComponent<Image>();
-        _fadeInOut = Define.FindDeepChild(transform, "FadeInOut").GetComponent<Image>();
-
         Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
 
         StartCoroutine(FadeIn());
@@ -42,19 +41,6 @@ public class LoadingUI : MonoBehaviour
     }
 
 
-    IEnumerator FadeIn()
-    {
-        Color temp = _fadeInOut.color;
-        
-        while (_fadeInOut.color.a > 0)
-        {    
-            temp.a -= _speed;
-            _fadeInOut.color = temp;
-            yield return null;
-        }
-    }
-    
-
     IEnumerator LoadingBar()
     {
         while(_loadingBar.fillAmount < 1)
@@ -67,23 +53,31 @@ public class LoadingUI : MonoBehaviour
     }
 
 
-    IEnumerator FadeOut()
+    public override IEnumerator FadeIn()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < _changeDuration)
+        {
+            elapsedTime = ChangeColor(_endColor, _startColor, elapsedTime, _image);
+            yield return null;
+        }
+    }
+
+
+    public override IEnumerator FadeOut()
     {
         yield return new WaitForSeconds(1.0f);
-
-        Color temp = _fadeInOut.color;
 
         Managers.Sound.Play("AudioClip/UI_Screen_Out", Define.Sound.Effect);
         Managers.Sound.Play("AudioClip/Tutorial_Pop_In", Define.Sound.Effect, 1f , 0.2f);
 
-        while (_fadeInOut.color.a < 1)
+        float elapsedTime = 0f;
+        while (elapsedTime < _changeDuration)
         {
-            temp.a += _speed;
-            _fadeInOut.color = temp;
-
+            elapsedTime = ChangeColor(_startColor, _endColor, elapsedTime, _image);
             yield return null;
         }
-        
+
         SceneManager.LoadScene(PlayerPrefs.GetString("SceneName"));
     }
 
