@@ -7,7 +7,6 @@ public class BaseSceneUI : FadeInFadeOut
 {
     Color   _startColor = Color.white;
     Color   _endColor = Color.black;
-    //float   _changeDuration = 2.0f;
     string  _playScene = "[1]Start";
     int     _width = 1920;
     int     _height = 1080;
@@ -18,69 +17,49 @@ public class BaseSceneUI : FadeInFadeOut
 
 
     /*
-     * 해상도 크기 고정 및 코루틴으로 FadeInFadeOut 실행
+     * 해상도 크기 고정
+     * FadeOut 코루틴 실행
      */
     void Awake()
     {
         Screen.SetResolution(_width, _height, true);
-        StartCoroutine(FadeOut());
-    }
-
-
-    public override IEnumerator FadeIn()
-    {
-        yield return null;
+        StartCoroutine(FadeOut(_startColor, _endColor, _image));
     }
 
 
     /*
-     * FadeOut하는 코루틴
+     * FadeOut하는 코루틴 override
      * -> 3초후 배경음 재생
-     * -> 이미지의 색상을 흰색->검정으로 변화
-     * -> 2초후 다음 코루틴 시작
+     * -> 부모의 FadeOut 코루틴 실행
+     * -> 2초후 FadeIn 시작
      */
-    public override IEnumerator FadeOut()
+    public override IEnumerator FadeOut(Color start, Color end, Image image)
     {
         yield return new WaitForSeconds(3f);
 
         Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
 
-        float elapsedTime = 0f;
-        while (elapsedTime < _changeDuration)
-        {
-            elapsedTime = ChangeColor(_startColor, _endColor, elapsedTime, _image);
-            yield return null;
-        }
-
+        yield return base.FadeOut(start, end, image);
         yield return new WaitForSeconds(2f);
-        StartCoroutine(FadeInFadeOut());
+        
+        StartCoroutine(FadeIn(start, end, image));
     }
 
 
     /*
-     * 이미지를 변경하고 FadeInFadeOut하는 코루틴 
-     * -> 이미지의 색상을 검정->흰색->검정으로 변화
-     * -> 다음 씬을 로드한다
+     * FadeIn하는 코루틴 override
+     * -> 이미지 교체
+     * -> 부모의 FadeIn 코루틴 실행
+     * -> 부모의 FadeOut 코루틴 실행
+     * -> 다음 씬 로드
      */
-    IEnumerator FadeInFadeOut()
+    public override IEnumerator FadeIn(Color start, Color end, Image image)
     {
         _image.sprite = _changeImage;
 
-        float elapsedTime = 0f;
-        while (elapsedTime < _changeDuration)
-        {
-            elapsedTime = ChangeColor(_endColor, _startColor, elapsedTime, _image);
-            yield return null;
-        }
-
-        elapsedTime = 0f;
-        while (elapsedTime < _changeDuration)
-        {
-            elapsedTime = ChangeColor(_startColor, _endColor, elapsedTime, _image);
-            yield return null;
-        }
-
+        yield return base.FadeIn(start, end, image);
+        yield return base.FadeOut(start, end, image);
+        
         SceneManager.LoadScene(_playScene);
     }
-
 }
