@@ -15,7 +15,7 @@ public class GameEndUI : MonoBehaviour
 
     void Start()
     {
-        _endImage = Managers.UI.FindDeepChild(transform, "Image").gameObject;
+        _endImage = Define.FindDeepChild(transform, "Image").gameObject;
 
         GameTimerUI.GameEnd += AppearEndingObject;
     }

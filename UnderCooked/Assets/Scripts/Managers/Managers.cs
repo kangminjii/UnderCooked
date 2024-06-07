@@ -5,13 +5,13 @@ public class Managers : MonoBehaviour
     static Managers _instance;
 
     ResourceManager _resource = new ResourceManager();
-    UIManager _ui = new UIManager();
+    //UIManager _ui = new UIManager();
     SoundManager _sound = new SoundManager();
 
 
     public static Managers Instance { get { Init(); return _instance; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
-    public static UIManager UI { get { return Instance._ui; } }
+    //public static UIManager UI { get { return Instance._ui; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     
 

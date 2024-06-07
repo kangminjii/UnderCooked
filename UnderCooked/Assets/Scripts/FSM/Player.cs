@@ -1,8 +1,30 @@
 using System;
 using UnityEngine;
 
+
 public class Player : StateMachine
 {
+    float       _lastDashTime = 0f;
+    float       _dashCoolDown = 0.3f;
+    Vector3     _lookDir;
+    [SerializeField]
+    GameObject  _selectObject;
+    [SerializeField]
+    Transform   _chopPos;
+
+
+    public Animator   Animator;
+    public Rigidbody  Rigidbody;
+    public GameObject Knife;
+    public Transform  SpawnPos;
+    public bool       CanCut;
+    public bool       CanGrab;
+    public float      Speed = 5.0f;
+
+
+    /*
+     * Player의 상태들
+     */
     [HideInInspector]
     public Idle IdleState;
     [HideInInspector]
@@ -14,25 +36,22 @@ public class Player : StateMachine
     [HideInInspector]
     public Grab_Moving GrabMovingState;
 
-    public Animator Animator;
-    public Rigidbody Rigidbody;
-    public GameObject Knife;
-    public Transform SpawnPos;
-    public Transform ChopPos;
-    public bool CanCut;
-    public bool CanGrab;
-    public float Speed = 5.0f;
 
-    public delegate void ObjectSelectHandler(GameObject gameObject);
-    public GameObject SelectObj = null;
+    /*
+     * Player(옵저버 패턴의 주체)가 구독한 이벤트 목록 
+     */
+    public static Action         Cooking;
+    public static Action         ChopCounting;
+    public static Action         PlateGenerate;
+    public static Action         PlateDestroy;
     public static Action<string> FoodOrderCheck;
 
 
-    float _lastDashTime = 0f;
-    float _dashCoolDown = 0.3f;
-    Vector3 _lookDir;
-
-
+    /*
+     * Player 상태 객체 초기화
+     * 
+     * Object를 감지하는 Seeking 클래스 구독
+     */
     private void Awake()
     {
         IdleState = new Idle(this);
@@ -40,22 +59,24 @@ public class Player : StateMachine
         ChopState = new Chop(this);
         GrabIdleState = new Grab_Idle(this);
         GrabMovingState = new Grab_Moving(this);
-
-        Overlap.ObjectSelectEnter += Select;
     }
 
-    private void OnDestroy()
-    {
-        Overlap.ObjectSelectEnter -= Select;
-    }
 
+    /*
+     * Player FSM의 초기 상태를 Idle로 정의함
+     */
     protected override BaseState GetInitialState()
     {
         return IdleState;
     }
 
-    
-    // Player 움직임
+
+    /*
+     * Player 움직임
+     * -> 키입력에 따라 위치, 방향이 바뀜
+     * -> 특정키로 대쉬를 사용하면 쿨타임에 따라 바라보는 방향으로 Rigidbody 힘이 가해짐
+     * -> 이펙트 생성 및 사운드 출력
+     */
     public void PlayerMove()
     {
         Vector3 moveDirection = Vector3.zero;
@@ -68,55 +89,54 @@ public class Player : StateMachine
             moveDirection += Vector3.back;
         if (Input.GetKey(KeyCode.RightArrow))
             moveDirection += Vector3.right;
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            float dashForce = 7f;
+
+            // 쿨타임 체크
+            if (Time.time - _lastDashTime >= _dashCoolDown)
+            {
+                Rigidbody.velocity = _lookDir * dashForce;
+                Rigidbody.AddForce(_lookDir * dashForce, ForceMode.Force);
+
+                Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, transform.Find("Chararcter"));
+                Managers.Sound.Play("AudioClip/Dash5", Define.Sound.Effect);
+
+                // 다시 쿨타임을 시작하기 위해 시간 기록
+                _lastDashTime = Time.time;
+            }
+        }
 
         Rigidbody.position += moveDirection.normalized * Time.deltaTime * Speed;
 
         if (moveDirection != Vector3.zero)
-            PlayerRotate(moveDirection);
-
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-            Dash();
-    }
-
-    public void PlayerRotate(Vector3 moveDir)
-    {
-        Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.06f);
-        _lookDir = transform.forward;
-    }
-
-    public void Dash()
-    {
-        float dashForce = 7f;
-
-        // 쿨타임 체크
-        if (Time.time - _lastDashTime >= _dashCoolDown)       
         {
-            Transform DashPos = transform.Find("Chararcter");
-            Rigidbody.velocity = _lookDir * dashForce;
-            Rigidbody.AddForce(_lookDir * dashForce, ForceMode.Force);
-            Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, DashPos);
-            Managers.Sound.Play("AudioClip/Dash5", Define.Sound.Effect);
-            // 다시 쿨타임을 시작하기 위해 시간 기록
-            _lastDashTime = Time.time;
+            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.06f);
+            _lookDir = transform.forward;
         }
     }
 
 
-    // Chop 조건
-    private void Select(GameObject obj)
+    /*
+     * Player가 Object와 충돌될 때 호출되는 함수
+     * -> 도마 Tag를 감지할 때 CookingPlace에서 구독한 이벤트 발생
+     * -> 조건에 따라 Chop 상태와 Grab 상태를 업데이트
+     */
+    public void Select(GameObject obj)
     {
-        if (obj != null)
+        _selectObject = obj;
+        CanCut = false;
+
+        if(obj != null)
         {
-            SelectObj = obj;
-            CookingPlace place = obj.GetComponent<CookingPlace>();
-
-            if (place != null)
+            if (obj.CompareTag("CuttingBoard"))
             {
-                Transform spawnPos = place.transform.Find("SpawnPos");
+                Cooking.Invoke();
 
-                if (spawnPos.childCount == 1 && place.CanChop == true)
+                CookingPlace place = obj.GetComponent<CookingPlace>();
+
+                if (place.CanChop == true)
                     CanCut = true;
                 else
                     CanCut = false;
@@ -126,111 +146,160 @@ public class Player : StateMachine
                 else 
                     CanGrab = true;
             }
-            else
-            {
-                CanCut = false;
-            }
-        }
-        else
-        {
-            CanCut = false;
-            SelectObj = null;
         }
     }
 
-    
-    // Chop할때 효과들
+
+    /*
+     * Chop 애니메이션 발생시 호출되는 Animation Event
+     * -> CookingPlace에서 구독한 이벤트 발생
+     *  -> Chop한 횟수를 카운트할 때 필요
+     *  
+     * -> Chop할 때 이펙트 생성 및 사운드 재생
+     */
     private void Cutting()
     {
-        CookingPlace cook = SelectObj.GetComponent<CookingPlace>();
-        cook.CuttingFood();
+        ChopCounting.Invoke();
 
-        Managers.Resource.Instantiate("Chophit", ChopPos.position, Quaternion.identity,ChopPos);
+        Managers.Resource.Instantiate("Chophit", _chopPos.position, Quaternion.identity, _chopPos);
         Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
     }
 
 
-    // Idle & Moving에서 Object 탐지시
+    /*
+     * Idle & Moving에서 Object와 상호작용할 때 호출되는 함수
+     * -> Player가 탐지한 SelectObj의 tag에 따라 행동이 나뉨
+     *  
+     *  -> PlateGenerator(접시 생성대) : 접시를 잡는 용도
+     *      -> Player 손 위에 접시 생성
+     *      -> PlateGenerator 클래스에서 구독하는 이벤트 발생
+     *      
+     *  -> Crate(재료 상자) : 재료를 잡는 용도
+     *      -> 애니메이션 재생, 재료 상자 이름에 따라 Player 손 위에 재료 생성
+     *      
+     *  -> Food(음식) : 땅에 떨어진 음식을 잡는 용도
+     *      -> Player 손 위에 떨어진 음식 이름에 따라 생성, 땅에 있는 음식 파괴
+     *      
+     *  -> Table(식탁) : 식탁 위에 있는 Object를 잡는 용도
+     *      -> Player가 잡을 수 있는 상태의 Object만 손 위에 생성, 식탁에 있는 Object 파괴
+     *  
+     *  -> CuttingBoard(도마) : 도마 위에 있는 Object를 잡는 용도
+     *      -> Table과 같으며 썰리지 않았을 때만 잡을 수 있는 조건 추가
+     */
     public void InteractObject()
     {
-        if (SelectObj == null)
+        if (_selectObject == null)
             return;
         
-
-        switch (SelectObj.tag)
+        switch (_selectObject.tag)
         {
-            case "PlateReturn": // 접시
+            case "PlateGenerator":
             {
-                PlateReturn plateReturn = SelectObj.GetComponent<PlateReturn>();
+                if (_selectObject.transform.GetChild(0).childCount == 0)
+                    return;
 
-                if (plateReturn.CurrentPlateNumber > 0 && SpawnPos.childCount < 1)
-                {
-                    if (plateReturn.PlateSpawnPos.childCount == 0)
-                        return;
-
-                    Managers.Resource.Instantiate("Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                    Managers.Resource.Destroy(plateReturn.PlateSpawnPos.GetChild(plateReturn.PlateSpawnPos.childCount - 1).gameObject);
-                }
+                PlateDestroy.Invoke();
+                Managers.Resource.Instantiate("Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
             }
             break;
 
-            case "Crate": // 재료상자
+            case "Crate":
             {
-                if(SpawnPos.childCount < 1)
-                {
-                    Animator crateBoxAnimator = SelectObj.GetComponent<Animator>();
-                    crateBoxAnimator.SetTrigger("IsOpen");
+                _selectObject.GetComponent<Animator>().SetTrigger("IsOpen");
 
-                    string ingredientName = SelectObj.transform.GetChild(0).name.Remove(0, "Crate_".Length);
+                string ingredientName = _selectObject.transform.GetChild(0).name.Remove(0, "Crate_".Length);
 
-                    Managers.Resource.Instantiate(ingredientName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                }
+                Managers.Resource.Instantiate(ingredientName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
             }
             break;
 
-            case "Food": // 음식
+            case "Food":
             {
-                string droppedItemName = SelectObj.name.Replace("_Drop(Clone)", "");
+                string droppedItemName = _selectObject.name.Replace("_Drop(Clone)", "");
 
                 Managers.Resource.Instantiate(droppedItemName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                Managers.Resource.Destroy(SelectObj);
+                Managers.Resource.Destroy(_selectObject);
             }
             break;
 
-            case "CuttingBoard":  // 도마
+            case "Table":
             {
-                if (CanGrab == false)
+                Transform tableSpawnPos = _selectObject.transform.GetChild(0);
+
+                if (tableSpawnPos != null)
                 {
-                    return;
+                    if (tableSpawnPos.childCount == 1)
+                    {
+                        string tableObjectName = tableSpawnPos.GetChild(0).name.Replace("(Clone)", "");
+
+                        Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                        Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
+                    }
                 }
             }
             break;
-        }
 
-
-        // Grab
-        // 테이블
-        Transform spawnPos = SelectObj.transform.Find("SpawnPos");
-
-        if (spawnPos != null)
-        {
-            if(spawnPos.childCount == 1)
+            case "CuttingBoard":
             {
-                Transform table = SelectObj.transform.Find("SpawnPos");
-                string tableObjectName = table.GetChild(0).name.Replace("(Clone)", "");
+                Transform tableSpawnPos = _selectObject.transform.GetChild(0);
 
-                Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                Managers.Resource.Destroy(table.GetChild(0).gameObject);
+                if (tableSpawnPos != null)
+                {
+                    if (CanGrab && tableSpawnPos.childCount == 1)
+                    {
+                        string tableObjectName = tableSpawnPos.GetChild(0).name.Replace("(Clone)", "");
+
+                        Managers.Resource.Instantiate(tableObjectName, SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                        Managers.Resource.Destroy(tableSpawnPos.GetChild(0).gameObject);
+                    }
+                }
             }
+            break;
         }
     }
 
 
+    /*
+     * Grab_Idle & Grab_Moving에서 Object와 상호작용할 때 호출되는 함수
+     * -> Player가 탐지한 SelectObj의 tag에 따라 행동이 나뉨
+     *  
+     *  -> null & Food(음식) : 들고 있는 Object를 바닥에 떨어뜨리는 용도
+     *  
+     *  -> Bin(쓰레기통) : 들고 있는 Object를 버리는 용도
+     *      -> 접시를 들고 있을 때 접시 생성 이벤트 발생
+     *      -> 잡고 있는 Object 파괴
+     *      -> 쓰레기통 자식으로 생성, 쓰레기통 애니메이션 재생
+     *  
+     *  -> Passing(반납대) : 들고 있는 Object를 제출하는 용도
+     *      -> 접시가 있어야만 조건 검사를 함
+     *      -> 접시 생성 이벤트 호출
+     *      -> 잡고 있는 Object 파괴
+     *      -> 음식 이름에 따라 주문서 확인 이벤트 호출하고 음식 이름을 인자로 넘김
+     *  
+     *  -> CuttingBoard(도마) : 들고 있는 Object가 도마에 올라갈 수 있는지 판단하는 용도
+     *      -> 도마에 물체가 있을 때
+     *          -> Player가 접시를 들고 도마에 있는 Object를 잡을 수 있을 때
+     *              -> 두 Object를 파괴 후 Player에게 완성된 음식을 생성
+     *      -> 도마에 물체가 없을 때
+     *          -> 접시는 못 올리게 막음
+     *          -> "생선" Object만 높이 조절 한 후 도마에 배치
+     *          -> 잡고 있는 Object 파괴
+     *  
+     *  -> Table(조리대)
+     *      -> 테이블에 물체가 있을 때
+     *          -> 테이블에 접시가 있고 Player가 접시에 담을 수 있는 Object를 잡고 있을 때
+     *              -> 두 Object 파괴 후 Table에 완성된 음식을 생성
+     *          -> 테이블에 완성된 음식이 있고 Player가 접시를 잡고 있을 때
+     *              -> 두 Object 파괴 후 Player에게 완성된 음식을 생성
+     *      -> 테이블에 물체가 없을 때
+     *          -> "생선" Object만 높이 조절 한 후 도마에 배치
+     *          -> 잡고 있는 Object 파괴
+     */
     public void InteractObjectWhileGrabbing()
     {
-        string grabObjectName = this.SpawnPos.GetChild(0).name.Replace("(Clone)", "");
+        string grabObjectName = SpawnPos.GetChild(0).name.Replace("(Clone)", "");
 
-        if (SelectObj == null)
+        if (_selectObject == null || _selectObject.tag == "Food")
         {
             Animator.SetBool("Grab", false);
 
@@ -240,38 +309,30 @@ public class Player : StateMachine
             return;
         }
 
-
-        switch (SelectObj.tag)
+        switch (_selectObject.tag)
         {
-            case "Bin": // 쓰레기통
+            case "Bin":
             {
-                Transform trash = SelectObj.transform.Find("BinSpawnPos");
+                Transform trash = _selectObject.transform.GetChild(0);
+                
+                if (SpawnPos.GetChild(0).name.Contains("Plate"))
+                {
+                     PlateGenerate.Invoke();
+                }
 
                 Managers.Sound.Play("AudioClip/TrashCan", Define.Sound.Effect);
                 Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
                 Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+
+                trash.GetChild(0).GetComponent<Animator>().SetTrigger("binTrigger");
             }
             break;
 
-            case "Food": // 음식
-            {
-                Animator.SetBool("Grab", false);
-
-                Managers.Resource.Instantiate(grabObjectName + "_Drop", SpawnPos.position, Quaternion.identity);
-                Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
-            }
-            break;
-
-            case "Passing": // 음식 제출대
+            case "Passing":
             {
                 if (SpawnPos.GetChild(0).name.Contains("Plate"))
                 {
-                    Animator.SetBool("Grab", false);
-
-                    PassingGate PassingGate = SelectObj.GetComponent<PassingGate>();
-
-                    PassingGate.PlateReturn.PlateList.RemoveAt(PassingGate.PlateReturn.PlateList.Count - 1);
-                    PassingGate.PlateReturn.CurrentPlateNumber--;
+                    PlateGenerate.Invoke();
 
                     string returnFoodName;
 
@@ -288,48 +349,79 @@ public class Player : StateMachine
                 }
             }
             break;
-        }
 
-
-        // 테이블
-        Transform table = SelectObj.transform.Find("SpawnPos");
-
-        if (table != null)
-        {
-            //도마 위에 접시 안올라가게 함
-            if (SelectObj.tag == "CuttingBoard" && table.childCount < 1 && SpawnPos.GetChild(0).tag.Contains("Plate"))
-                return;
-
-            if (table.childCount == 1)
+            case "CuttingBoard":
             {
-                // 테이블 접시 + 플레이어 음식
-                if (table.GetChild(0).tag == "EmptyPlate" && SpawnPos.GetChild(0).tag == "SlicedFood")
-                {
-                    Managers.Resource.Instantiate(grabObjectName + "_Plate", table.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, table);
-                    Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
-                    Managers.Resource.Destroy(table.GetChild(0).gameObject);
-                }
-                // 테이블 음식 + 플레이어 접시
-                else if (SpawnPos.GetChild(0).tag == "EmptyPlate" && table.GetChild(0).tag == "SlicedFood")
-                {
-                    string tableObjectName = table.GetChild(0).name.Replace("(Clone)", "");
+                Transform table = _selectObject.transform.GetChild(0);
 
-                    Managers.Resource.Instantiate(tableObjectName + "_Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
-                    Managers.Resource.Destroy(table.GetChild(0).gameObject);
-                    Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+                if(table != null)
+                {
+                    if (table.childCount == 1)
+                    {
+                        if (SpawnPos.GetChild(0).tag == "EmptyPlate" && CanGrab)
+                        {
+                            string tableObjectName = table.GetChild(0).name.Replace("(Clone)", "");
 
-                    Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
+                            Managers.Resource.Instantiate(tableObjectName + "_Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                            Managers.Resource.Destroy(table.GetChild(0).gameObject);
+                            Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+
+                            Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
+                        }
+                    }
+                    else
+                    {
+                        if (SpawnPos.GetChild(0).tag.Contains("Plate"))
+                            return;
+
+                        if (grabObjectName == "Fish")
+                            Managers.Resource.Instantiate(grabObjectName, table.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, table);
+                        else
+                            Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
+                        
+                        Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+                    }
                 }
             }
-            else if (table.childCount < 1)
-            {
-                Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+            break;
 
-                if (grabObjectName == "Fish")
-                    Managers.Resource.Instantiate(grabObjectName, table.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, table);
-                else
-                    Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
+            case "Table":
+            {
+                Transform table = _selectObject.transform.GetChild(0);
+
+                if(table != null)
+                {
+                    if (table.childCount == 1)
+                    {
+                        if (table.GetChild(0).tag == "EmptyPlate" && SpawnPos.GetChild(0).tag == "SlicedFood")
+                        {
+                            Managers.Resource.Instantiate(grabObjectName + "_Plate", table.position, Quaternion.identity, table);
+                            Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+                            Managers.Resource.Destroy(table.GetChild(0).gameObject);
+                        }
+                        else if (SpawnPos.GetChild(0).tag == "EmptyPlate" && table.GetChild(0).tag == "SlicedFood")
+                        {
+                            string tableObjectName = table.GetChild(0).name.Replace("(Clone)", "");
+
+                            Managers.Resource.Instantiate(tableObjectName + "_Plate", SpawnPos.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, SpawnPos);
+                            Managers.Resource.Destroy(table.GetChild(0).gameObject);
+                            Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+
+                            Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
+                        }
+                    }
+                    else
+                    {
+                        if (grabObjectName == "Fish")
+                            Managers.Resource.Instantiate(grabObjectName, table.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity, table);
+                        else
+                            Managers.Resource.Instantiate(grabObjectName, table.position, Quaternion.identity, table);
+                        
+                            Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
+                    }
+                }
             }
+            break;
         }
     }
 }

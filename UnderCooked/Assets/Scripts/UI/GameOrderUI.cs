@@ -40,7 +40,7 @@ public class GameOrderUI : MonoBehaviour
 
     private void Start()
     {
-        GameReadyUI.OrderStart += SceneStart;
+        GameReadyUI.OrderAction += SceneStart;
     }
 
 
@@ -48,9 +48,9 @@ public class GameOrderUI : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
 
-        _orderPanel = Managers.UI.FindDeepChild(transform, "Order_Panel").gameObject;
-        _scorePanel = Managers.UI.FindDeepChild(transform, "Score_Panel").gameObject;
-        _scoreText = Managers.UI.FindDeepChild(_scorePanel.transform, "Score").GetComponent<Text>();
+        _orderPanel = Define.FindDeepChild(transform, "Order_Panel").gameObject;
+        _scorePanel = Define.FindDeepChild(transform, "Score_Panel").gameObject;
+        _scoreText = Define.FindDeepChild(_scorePanel.transform, "Score").GetComponent<Text>();
         _grid = _orderPanel.GetComponent<GridLayoutGroup>();
         _grid.enabled = false;
 
@@ -64,7 +64,7 @@ public class GameOrderUI : MonoBehaviour
     void OnDestroy()
     {
         Player.FoodOrderCheck -= OrderListChecking;
-        GameReadyUI.OrderStart -= SceneStart;
+        GameReadyUI.OrderAction -= SceneStart;
     }
 
 
@@ -87,7 +87,7 @@ public class GameOrderUI : MonoBehaviour
 
     IEnumerator OrderObjectProgress(GameObject obj, int _orderNumber)
     {
-        Transform progressBar = Managers.UI.FindDeepChild(obj.transform, "ProgressBar");
+        Transform progressBar = Define.FindDeepChild(obj.transform, "ProgressBar");
         float waitingAmount = progressBar.GetComponent<Image>().fillAmount;
 
         // 1초간 게이지 줄어듦
@@ -273,7 +273,7 @@ public class GameOrderUI : MonoBehaviour
 
     IEnumerator SuccessOrderDestroy(GameObject go)
     {
-        Transform effectImage = Managers.UI.FindDeepChild(go.transform, "Success");
+        Transform effectImage = Define.FindDeepChild(go.transform, "Success");
         effectImage.gameObject.SetActive(true);
         
         float alpha = 0;
@@ -292,7 +292,7 @@ public class GameOrderUI : MonoBehaviour
 
     IEnumerator FailOrderDestroy(GameObject go)
     {
-        Transform effectImage = Managers.UI.FindDeepChild(go.transform, "Fail");
+        Transform effectImage = Define.FindDeepChild(go.transform, "Fail");
         effectImage.gameObject.SetActive(true);
 
         float alpha = 0;
@@ -311,7 +311,7 @@ public class GameOrderUI : MonoBehaviour
 
     IEnumerator EntireFailed(int num)
     {
-        Transform effectImage = Managers.UI.FindDeepChild(OrderList[num].Key.transform, "Fail");
+        Transform effectImage = Define.FindDeepChild(OrderList[num].Key.transform, "Fail");
         effectImage.gameObject.SetActive(true);
 
         float alpha = 0;

@@ -17,8 +17,8 @@ public class GameTimerUI : MonoBehaviour
 
     void Start()
     {
-        _timeText = Managers.UI.FindDeepChild(transform, "Time").GetComponent<Text>();
-        _timerProgressBar = Managers.UI.FindDeepChild(transform, "ProgressBar").GetComponent<Image>();
+        _timeText = Define.FindDeepChild(transform, "Time").GetComponent<Text>();
+        _timerProgressBar = Define.FindDeepChild(transform, "ProgressBar").GetComponent<Image>();
         _currentTime = _timeLimit;
     }
 

@@ -32,7 +32,7 @@ public class Grab_Idle : BaseState
         }
 
         // Idle Á¶°Ç
-        if (_playerSM.SpawnPos.childCount < 1)
+        if (_playerSM.SpawnPos.childCount == 0)
         {
             Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
 

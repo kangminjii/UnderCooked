@@ -25,19 +25,19 @@ public class Grab_Moving : BaseState
 
     public override void UpdateLogic()
     {
+        // GrabIdle 조건
+        if (Input.anyKey == false)
+        {
+            _stateMachine.ChangeState(_playerSM.GrabIdleState);
+        }
+
         // Idle 조건
-        if (_playerSM.SpawnPos.childCount < 1)
+        if (_playerSM.SpawnPos.childCount == 0)
         {
             Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
             
             _playerSM.Animator.SetBool("Grab", false);
             _stateMachine.ChangeState(_playerSM.MovingState);
-        }
-
-        // GrabIdle 조건
-        if (Input.anyKey == false)
-        {
-            _stateMachine.ChangeState(_playerSM.GrabIdleState);
         }
 
         // Object와 상호작용시
