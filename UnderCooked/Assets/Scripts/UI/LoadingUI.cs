@@ -17,7 +17,6 @@ public class LoadingUI : FadeInFadeOut
      * 이펙트 효과음 재생
      * FadeIn 코루틴 실행
      * DecreaseVolumeOverTime 코루틴 실행
-     * 
      */
     void Awake()
     {
@@ -39,12 +38,12 @@ public class LoadingUI : FadeInFadeOut
     IEnumerator DecreaseVolumeOverTime(AudioSource audioSource, float targetVolume, float duration)
     {
         float startVolume = audioSource.volume;
-        float startTime = Time.time;
+        float elapsedTime = 0f;
 
-        while (Time.time < startTime + duration)
+        while (elapsedTime < duration)
         {
-            float t = (Time.time - startTime) / duration;
-            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, t);
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime/duration);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
