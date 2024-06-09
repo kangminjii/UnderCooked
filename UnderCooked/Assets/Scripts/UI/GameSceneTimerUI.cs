@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class GameTimerUI : MonoBehaviour
+public class GameSceneTimerUI : MonoBehaviour
 {
     float       _timeLimit = 100f;
     float       _currentTime;
