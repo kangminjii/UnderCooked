@@ -7,6 +7,7 @@ public class LoadingSceneUI : FadeInFadeOut
 {
     Color _startColor = new Color(0,0,0,0);
     Color _endColor = Color.black;
+    
     [SerializeField]
     Image _loadingBar;
     [SerializeField]

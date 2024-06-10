@@ -10,8 +10,10 @@ public class StartSceneUI : FadeInFadeOut
     Color       _endColor = new Color(0, 0, 0, 0);
     bool        _pressSpace = false;
     string      _playScene = "[2]Game";
-    Vector3     _finalPosition = new Vector3(-1.57f, 4.17f, -9.05f);
-    Quaternion  _finalRotation = Quaternion.Euler(0, 7.83f, 0);
+    Vector3     _cameraFinalPosition = new Vector3(-13f, -33.6f, -7f);
+    Quaternion  _cameraFinalRotation = Quaternion.Euler(0, 7.83f, 0);
+    Vector3     _vanShutterFinalPosition = new Vector3(-12f, -20f, 0f);
+
     [SerializeField]
     GameObject  _startButton;
     [SerializeField]
@@ -24,6 +26,8 @@ public class StartSceneUI : FadeInFadeOut
     GameObject  _vanShutter;
     [SerializeField]
     Camera      _camera;
+    [SerializeField]
+    GameObject  _cloud;
 
 
     /*
@@ -34,8 +38,8 @@ public class StartSceneUI : FadeInFadeOut
     private void Awake()
     {
         Cursor.visible = true;
-        AudioSource bgmAudioSource = Managers.Sound.AudioSources[(int)Define.Sound.Bgm];
 
+        AudioSource bgmAudioSource = Managers.Sound.AudioSources[(int)Define.Sound.Bgm];
         if (bgmAudioSource.clip == null)
             Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
 
@@ -69,6 +73,14 @@ public class StartSceneUI : FadeInFadeOut
                 _pressSpace = true;
             }
         }
+
+
+        _cloud.transform.Translate(Vector3.left * Time.deltaTime);
+        
+        if (_cloud.transform.position.x < -60)
+        {
+            _cloud.transform.position = new Vector3(0f, -16f, 9.4f);
+        }
     }
 
 
@@ -78,10 +90,10 @@ public class StartSceneUI : FadeInFadeOut
      */
     IEnumerator CameraAnimation()
     {
-        while (_camera.transform.position.x > _finalPosition.x || _camera.transform.position.y > _finalPosition.y || _camera.transform.position.z > _finalPosition.z)
+        while (_camera.transform.position.x > _cameraFinalPosition.x || _camera.transform.position.y > _cameraFinalPosition.y || _camera.transform.position.z > _cameraFinalPosition.z)
         {
-            _camera.transform.position = Vector3.Lerp(_camera.transform.position, _finalPosition, 3f * Time.deltaTime);
-            _camera.transform.rotation = Quaternion.RotateTowards(_camera.transform.rotation, _finalRotation, 5f * Time.deltaTime);
+            _camera.transform.position = Vector3.Lerp(_camera.transform.position, _cameraFinalPosition, 3f * Time.deltaTime);
+            _camera.transform.rotation = Quaternion.RotateTowards(_camera.transform.rotation, _cameraFinalRotation, 5f * Time.deltaTime);
 
             yield return null;
         }
@@ -94,13 +106,13 @@ public class StartSceneUI : FadeInFadeOut
      */
     IEnumerator ShutterAnimation()
     {
-        while (_vanShutter.transform.position.y < 7.9f)
+        while (_vanShutter.transform.position.y < _vanShutterFinalPosition.y)
         {
             _vanShutter.transform.position += new Vector3(0, 0.05f);
             yield return null;
         }
 
-        _vanShutter.transform.position = new Vector3(-0.77f, 20f, -2.61f);
+        _vanShutter.transform.position = _vanShutterFinalPosition;
     }
 
 

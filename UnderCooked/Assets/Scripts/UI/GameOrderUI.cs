@@ -18,8 +18,8 @@ public class GameOrderUI : MonoBehaviour
     int _totalScore = 0;
     int _successFood = 0;
     int _failFood = 0;
+    [SerializeField]
     Text _scoreText;
-    GameObject _scorePanel;
 
     // orderUpdate
     float _updateTime = 10f;
@@ -40,7 +40,7 @@ public class GameOrderUI : MonoBehaviour
 
     private void Start()
     {
-        GameReadyUI.OrderAction += SceneStart;
+        GameSceneUI.OrderAction += SceneStart;
     }
 
 
@@ -49,8 +49,6 @@ public class GameOrderUI : MonoBehaviour
         PlayerPrefs.DeleteAll();
 
         _orderPanel = Define.FindDeepChild(transform, "Order_Panel").gameObject;
-        _scorePanel = Define.FindDeepChild(transform, "Score_Panel").gameObject;
-        _scoreText = Define.FindDeepChild(_scorePanel.transform, "Score").GetComponent<Text>();
         _grid = _orderPanel.GetComponent<GridLayoutGroup>();
         _grid.enabled = false;
 
@@ -64,7 +62,7 @@ public class GameOrderUI : MonoBehaviour
     void OnDestroy()
     {
         Player.FoodOrderCheck -= OrderListChecking;
-        GameReadyUI.OrderAction -= SceneStart;
+        GameSceneUI.OrderAction -= SceneStart;
     }
 
 

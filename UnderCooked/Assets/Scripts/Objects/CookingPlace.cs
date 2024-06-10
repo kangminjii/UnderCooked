@@ -5,6 +5,7 @@ public class CookingPlace : MonoBehaviour
 {
     string[]    _foodIngredient = new string[2] { "Prawn(Clone)", "Fish(Clone)" };
     GameObject  _foodOnTable;
+    
     [SerializeField]
     GameObject  _cookingKnife;
     [SerializeField]

@@ -20,6 +20,9 @@ public class EndSceneUI : MonoBehaviour
     [Header("LoadScene")]
     string       _startScene = "[1]Start";
     string       _playScene = "[2]Game";
+    
+    [SerializeField]
+    Image        _image;
     [Header("Pass, Fail")]
     [SerializeField]
     Text[]       _order;
@@ -59,6 +62,7 @@ public class EndSceneUI : MonoBehaviour
 
     /*
      * 조건이 충족되면 키 입력에 따라 다른 씬으로 넘어감
+     * EndScene의 뒷배경 이미지의 위치에 따라 위치값을 조절함
      */
     private void Update()
     {
@@ -76,6 +80,15 @@ public class EndSceneUI : MonoBehaviour
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("Loading");
             }
+        }
+
+        if (_image.rectTransform.anchoredPosition.y > -1080)
+        {
+            _image.rectTransform.anchoredPosition -= new Vector2(0, 1);
+        }
+        else
+        {
+            _image.rectTransform.anchoredPosition = new Vector2(0, 0);
         }
     }
 

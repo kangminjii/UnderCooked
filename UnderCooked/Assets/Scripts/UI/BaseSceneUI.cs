@@ -10,6 +10,7 @@ public class BaseSceneUI : FadeInFadeOut
     string  _playScene = "[1]Start";
     int     _width = 1920;
     int     _height = 1080;
+    
     [SerializeField]
     Image   _image;
     [SerializeField]

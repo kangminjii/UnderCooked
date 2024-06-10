@@ -2,34 +2,53 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
-public class GameReadyUI : MonoBehaviour
+public class GameSceneUI : MonoBehaviour
 {
     Transform _player;
     float _cameraSpeed = 2f;
     Vector3 _offset = new Vector3(-0.08f, 9.7f, -6.81f);
+    float _timeLimit = 100f;
+    float _currentTime;
+    bool _canUpdate = true;
+    string _endScene = "[3]End";
+
     [SerializeField]
-    GameObject _recipe;
+    Camera _camera;
+    [Header("Image")]
     [SerializeField]
-    GameObject _ready;
+    GameObject _recipeImage;
     [SerializeField]
-    GameObject  _start;
+    GameObject _readyObject;
+    [SerializeField]
+    GameObject _startObject;
     [SerializeField]
     Image _spaceBar;
     [SerializeField]
-    Image _image;
+    Image _startImage;
     [SerializeField]
-    Camera _camera;
+    GameObject _endImage;
+    [Header("Timer")]
+    [SerializeField]
+    Image _timerProgressBar;
+    [SerializeField]
+    Text _timeText;
 
 
     public static Action OrderAction;
 
 
-
+    /*
+    * 현재 시간 초기화
+    * 
+    */
     void Start()
     {
         _player = GameObject.Find("Chef").transform;
+        _currentTime = _timeLimit;
+        _timeText.text = FormatTime(_currentTime);
 
         Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
         Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
@@ -64,8 +83,8 @@ public class GameReadyUI : MonoBehaviour
 
             if (_spaceBar.fillAmount >= 1)
             {
-                _recipe.SetActive(false);
-                _image.color = new Color(0, 0, 0, 0);
+                _recipeImage.SetActive(false);
+                _startImage.color = new Color(0, 0, 0, 0);
                 
                 Managers.Sound.Play("AudioClip/Tutorial_Pop_Out", Define.Sound.Effect, 1f, 0.2f);
                 StartCoroutine(ResumeGame());
@@ -84,13 +103,13 @@ public class GameReadyUI : MonoBehaviour
 
         yield return WaitForRealSeconds(2f);
 
-        _ready.SetActive(true);
+        _readyObject.SetActive(true);
         Managers.Sound.Play("AudioClip/LevelReady_01", Define.Sound.Effect);
 
         yield return WaitForRealSeconds(2.5f);
         
-        _ready.SetActive(false);
-        _start.SetActive(true);
+        _readyObject.SetActive(false);
+        _startObject.SetActive(true);
         Managers.Sound.Play("AudioClip/LevelGo", Define.Sound.Effect);
         
         Time.timeScale = 1;
@@ -99,7 +118,7 @@ public class GameReadyUI : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-        _start.SetActive(false);
+        _startObject.SetActive(false);
         Managers.Sound.GetAudio(Define.Sound.Bgm).Play();
     }
 
@@ -110,6 +129,72 @@ public class GameReadyUI : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+
+    // 타이머
+    /*
+     * Time이 흐를 때만 현재 시간을 변화시킴
+     * -> 종료시 AppearEndingObject() 함수 호출
+     * -> FormatTime에 맞춰 _timeText 변화
+     * -> 시간에 맞춰 타이머바의 이미지 변화
+     */
+    void Update()
+    {
+        if (_canUpdate)
+        {
+            if (Time.timeScale > 0)
+            {
+                _currentTime -= Time.deltaTime;
+            }
+
+            if (_currentTime <= 0)
+            {
+                _currentTime = 0;
+                _canUpdate = false;
+
+                AppearEndingObject();
+            }
+
+            _timeText.text = FormatTime(_currentTime);
+            _timerProgressBar.fillAmount = _currentTime / _timeLimit;
+        }
+    }
+
+    /*
+    * 시간값을 00:00 포멧에 맞춰 바꿔주는 함수
+    */
+    string FormatTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+
+    /*
+     * 게임 종료시 나오는 GameObject 함수
+     * -> bgm 종료 및 이펙트 효과음 재생
+     * -> 다음씬 로드
+     */
+    void AppearEndingObject()
+    {
+        _endImage.SetActive(true);
+
+        Managers.Sound.Play("AudioClip/TimesUpSting", Define.Sound.Effect);
+        Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
+
+        StartCoroutine(LoadNextScene());
+    }
+
+
+    /*
+     * 5초 뒤 다음 씬 로드
+     */
+    IEnumerator LoadNextScene()
+    {
+        yield return new WaitForSeconds(5.0f);
+        SceneManager.LoadScene(_endScene);
     }
 
 

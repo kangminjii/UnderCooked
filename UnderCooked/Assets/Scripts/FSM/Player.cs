@@ -7,6 +7,7 @@ public class Player : StateMachine
     float       _lastDashTime = 0f;
     float       _dashCoolDown = 0.3f;
     Vector3     _lookDir;
+    
     [SerializeField]
     GameObject  _selectObject;
     [SerializeField]

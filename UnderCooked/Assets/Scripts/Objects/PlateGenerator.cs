@@ -9,6 +9,7 @@ public class PlateGenerator : MonoBehaviour
     string           _plateName = "Plate";
     int              _maxPlateNumber = 3;
     List<GameObject> _plateList = new List<GameObject>();
+    
     [SerializeField]
     Transform        _plateSpawnPos;
 
