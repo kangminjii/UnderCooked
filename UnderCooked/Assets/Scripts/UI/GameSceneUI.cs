@@ -15,8 +15,6 @@ public class GameSceneUI : MonoBehaviour
     bool        _canUpdate = true;
     string      _endScene = "[3]End";
 
-    [SerializeField]
-    Camera      _camera;
     [Header("Image")]
     [SerializeField]
     GameObject  _recipeImage;
@@ -35,6 +33,11 @@ public class GameSceneUI : MonoBehaviour
     Image       _timerProgressBar;
     [SerializeField]
     Text        _timeText;
+    [Header("Objects")]
+    [SerializeField]
+    Camera       _camera;
+    [SerializeField]
+    MeshRenderer _passing;
 
 
     public static Action OrderAction;
@@ -68,8 +71,10 @@ public class GameSceneUI : MonoBehaviour
 
     /*
      * [Timer 관련]
-     * -> timeScale이 1일 때만 _currentTime을 변화시킴
-     * -> _currentTime = 0일 때(게임종료시) AppearEndingObject() 함수 호출
+     * -> timeScale이 1일 때
+     *  -> _currentTime을 변화
+     *  -> Passing material 위치를 변화하여 애니메이션과 같이 출력
+     * -> _currentTime = 0일 때(게임종료시)
      *  -> _endImage 활성화
      *  -> bgm 종료 및 효과음 재생
      *  -> LoadNextScene 코루틴 실행
@@ -84,6 +89,9 @@ public class GameSceneUI : MonoBehaviour
             if (Time.timeScale > 0)
             {
                 _currentTime -= Time.deltaTime;
+
+                float offsetX = Time.time * -1f;
+                _passing.material.SetTextureOffset("_MainTex", new Vector2(offsetX, 0));
             }
 
             if (_currentTime <= 0)
