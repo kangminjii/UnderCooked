@@ -5,7 +5,6 @@ public class Grab_Idle : BaseState
     protected Player _playerSM;
 
 
-
     public Grab_Idle(Player stateMachine) : base("Grab_Idle", stateMachine)
     {
         _playerSM = (Player)stateMachine;

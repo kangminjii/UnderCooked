@@ -12,7 +12,7 @@ public class StartSceneUI : FadeInFadeOut
     string      _playScene = "[2]Game";
     Vector3     _cameraFinalPosition = new Vector3(-13f, -33.6f, -7f);
     Quaternion  _cameraFinalRotation = Quaternion.Euler(0, 7.83f, 0);
-    Vector3     _vanShutterFinalPosition = new Vector3(-12f, -20f, 0f);
+    Vector3     _cloudStartPosition = new Vector3(0f, -16f, 9.4f);
 
     [SerializeField]
     GameObject  _startButton;
@@ -53,6 +53,8 @@ public class StartSceneUI : FadeInFadeOut
      * -> 버튼 사운드 재생 및 Bgm 사운드 감소
      * -> UI 표시 On/Off
      * -> Update문에 다시 오지 않도록 bool값으로 처리
+     * 
+     * 시작화면에 재생되는 구름 Object의 위치를 Update 처리
      */
     void Update()
     {
@@ -74,13 +76,10 @@ public class StartSceneUI : FadeInFadeOut
             }
         }
 
-
         _cloud.transform.Translate(Vector3.left * Time.deltaTime);
         
         if (_cloud.transform.position.x < -60)
-        {
-            _cloud.transform.position = new Vector3(0f, -16f, 9.4f);
-        }
+            _cloud.transform.position = _cloudStartPosition;
     }
 
 
@@ -94,7 +93,6 @@ public class StartSceneUI : FadeInFadeOut
         {
             _camera.transform.position = Vector3.Lerp(_camera.transform.position, _cameraFinalPosition, 3f * Time.deltaTime);
             _camera.transform.rotation = Quaternion.RotateTowards(_camera.transform.rotation, _cameraFinalRotation, 5f * Time.deltaTime);
-
             yield return null;
         }
     }
@@ -106,13 +104,11 @@ public class StartSceneUI : FadeInFadeOut
      */
     IEnumerator ShutterAnimation()
     {
-        while (_vanShutter.transform.position.y < _vanShutterFinalPosition.y)
+        while (_vanShutter.transform.position.y < -20f)
         {
             _vanShutter.transform.position += new Vector3(0, 0.05f);
             yield return null;
         }
-
-        _vanShutter.transform.position = _vanShutterFinalPosition;
     }
 
 

@@ -5,8 +5,6 @@ public class Grab_Moving : BaseState
 {
     protected Player _playerSM;
     
-    public static Action<string> FoodOrderCheck;
-
 
     public Grab_Moving(Player stateMachine) : base("Grab_Moving", stateMachine)
     {
