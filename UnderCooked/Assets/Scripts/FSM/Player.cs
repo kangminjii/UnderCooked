@@ -42,7 +42,6 @@ public class Player : StateMachine
      * Player(옵저버 패턴의 주체)가 구독한 이벤트 목록 
      */
     public static Action         Cooking;
-    public static Action         ChopCounting;
     public static Action         PlateGenerate;
     public static Action         PlateDestroy;
     public static Action<string> FoodOrderCheck;
@@ -153,14 +152,14 @@ public class Player : StateMachine
 
     /*
      * Chop 애니메이션 발생시 호출되는 Animation Event
-     * -> CookingPlace에서 구독한 이벤트 발생
+     * -> CookingPlace의 ChopCounting 함수 호출
      *  -> Chop한 횟수를 카운트할 때 필요
      *  
      * -> Chop할 때 이펙트 생성 및 사운드 재생
      */
     private void Cutting()
     {
-        ChopCounting.Invoke();
+        _selectObject.GetComponent<CookingPlace>().ChopCounting();
 
         Managers.Resource.Instantiate("Chophit", _chopPos.position, Quaternion.identity, _chopPos);
         Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
