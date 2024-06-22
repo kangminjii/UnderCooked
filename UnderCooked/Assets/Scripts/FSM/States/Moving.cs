@@ -28,7 +28,7 @@ public class Moving : BaseState
         // Grab Á¶°Ç
         if (_playerSM.SpawnPos.childCount > 0)
         {
-            Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
+            Managers.Sound.Play("Effect/Game/Grab_On", Define.Sound.Effect);
 
             _stateMachine.ChangeState(_playerSM.GrabMovingState);
         }

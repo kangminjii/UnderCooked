@@ -41,7 +41,7 @@ public class StartSceneUI : FadeInFadeOut
 
         AudioSource bgmAudioSource = Managers.Sound.AudioSources[(int)Define.Sound.Bgm];
         if (bgmAudioSource.clip == null)
-            Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
+            Managers.Sound.Play("Bgm/Frontend", Define.Sound.Bgm);
 
         StartCoroutine(FadeOut(_startColor, _endColor, _image));
     }
@@ -65,7 +65,7 @@ public class StartSceneUI : FadeInFadeOut
                 StartCoroutine(CameraAnimation());
                 StartCoroutine(ShutterAnimation());
 
-                Managers.Sound.Play("AudioClip/UI_PressStart", Define.Sound.Effect);
+                Managers.Sound.Play("Effect/UI/UI_PressStart", Define.Sound.Effect);
                 Managers.Sound.BgmDown();
 
                 _startButton.SetActive(true);
@@ -130,7 +130,7 @@ public class StartSceneUI : FadeInFadeOut
      */
     public void OnPointerSound()
     {
-        Managers.Sound.Play("AudioClip/UI_Button_Drop", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/UI/UI_Button_Drop", Define.Sound.Effect);
     }
 
 

@@ -53,7 +53,7 @@ public class EndSceneUI : MonoBehaviour
             _totalScore = 0;
 
         Managers.Sound.Clear();
-        Managers.Sound.Play("AudioClip/LevelVictorySound", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/UI/LevelVictorySound", Define.Sound.Effect);
         
         Invoke("PlaySound", 4f);
         ShowGameResult();
@@ -98,7 +98,7 @@ public class EndSceneUI : MonoBehaviour
      */
     void PlaySound()
     {
-        Managers.Sound.Play("AudioClip/RoundResults", Define.Sound.Bgm);
+        Managers.Sound.Play("Bgm/RoundResults", Define.Sound.Bgm);
         _canSpace = true;
     }
 
@@ -112,15 +112,15 @@ public class EndSceneUI : MonoBehaviour
     {
         if(_totalScore >= _firstStageScore[0])
         {
-            StartCoroutine(ActivateStar(_star[0], 0.5f, "AudioClip/RoundResults_Star_01"));
+            StartCoroutine(ActivateStar(_star[0], 0.5f, "Effect/UI/RoundResults_Star_01"));
 
             if (_totalScore >= _firstStageScore[1])
             {
-                StartCoroutine(ActivateStar(_star[1], 1.5f, "AudioClip/RoundResults_Star_02"));
+                StartCoroutine(ActivateStar(_star[1], 1.5f, "Effect/UI/RoundResults_Star_02"));
 
                 if (_totalScore >= _firstStageScore[2])
                 {
-                    StartCoroutine(ActivateStar(_star[2], 2.5f, "AudioClip/RoundResults_Star_03"));
+                    StartCoroutine(ActivateStar(_star[2], 2.5f, "Effect/UI/RoundResults_Star_03"));
                 }
             }
         }

@@ -195,7 +195,7 @@ public class GameOrderUI : MonoBehaviour
 
                     GameObject passing = GameObject.FindGameObjectWithTag("Passing");
                     Managers.Resource.Instantiate("OrderEffect", passing.transform.position + new Vector3(-1f, 1f, 0f), Quaternion.identity);
-                    Managers.Sound.Play("AudioClip/Order_Successful", Define.Sound.Effect);
+                    Managers.Sound.Play("Effect/UI/Order_Successful", Define.Sound.Effect);
 
                     _totalScore += _addScore;
                     _scoreText.text = _totalScore.ToString();
@@ -250,7 +250,7 @@ public class GameOrderUI : MonoBehaviour
         _scoreText.text = _totalScore.ToString();
         PlayerPrefs.SetInt("Fail", ++_failFood);
 
-        Managers.Sound.Play("AudioClip/Order_Fail", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/UI/Order_Fail", Define.Sound.Effect);
 
         for (int i = 0; i < _orderList.Count; i++)
         {

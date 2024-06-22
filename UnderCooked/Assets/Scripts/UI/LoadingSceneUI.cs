@@ -23,7 +23,7 @@ public class LoadingSceneUI : FadeInFadeOut
     {
         AudioSource bgmAudioSource = Managers.Sound.AudioSources[(int)Define.Sound.Bgm];
         
-        Managers.Sound.Play("AudioClip/UI_Screen_In", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/UI/UI_Screen_In", Define.Sound.Effect);
 
         StartCoroutine(FadeIn(_startColor, _endColor, _image));
         StartCoroutine(DecreaseVolumeOverTime(bgmAudioSource, 0f, 2.5f));
@@ -89,8 +89,8 @@ public class LoadingSceneUI : FadeInFadeOut
     {
         yield return new WaitForSeconds(1.0f);
 
-        Managers.Sound.Play("AudioClip/UI_Screen_Out", Define.Sound.Effect);
-        Managers.Sound.Play("AudioClip/Tutorial_Pop_In", Define.Sound.Effect, 1f , 0.2f);
+        Managers.Sound.Play("Effect/UI/UI_Screen_Out", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/UI/Tutorial_Pop_In", Define.Sound.Effect, 1f , 0.2f);
 
         yield return base.FadeOut(start, end, image);
 

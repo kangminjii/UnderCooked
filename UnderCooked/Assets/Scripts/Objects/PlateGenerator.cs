@@ -65,7 +65,7 @@ public class PlateGenerator : MonoBehaviour
         GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, _plateSpawnPos);
         _plateList.Add(plate);
 
-        Managers.Sound.Play("AudioClip/WashedPlate", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/Game/WashedPlate", Define.Sound.Effect);
     }
 
 

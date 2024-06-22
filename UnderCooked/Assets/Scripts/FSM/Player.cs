@@ -100,7 +100,7 @@ public class Player : StateMachine
                 Rigidbody.AddForce(_lookDir * dashForce, ForceMode.Force);
 
                 Managers.Resource.Instantiate("DashEffect", this.transform.position, Quaternion.identity, transform.Find("Chararcter"));
-                Managers.Sound.Play("AudioClip/Dash5", Define.Sound.Effect);
+                Managers.Sound.Play("Effect/Game/Dash5", Define.Sound.Effect);
 
                 // 다시 쿨타임을 시작하기 위해 시간 기록
                 _lastDashTime = Time.time;
@@ -162,7 +162,7 @@ public class Player : StateMachine
         _selectObject.GetComponent<CookingPlace>().ChopCounting();
 
         Managers.Resource.Instantiate("Chophit", _chopPos.position, Quaternion.identity, _chopPos);
-        Managers.Sound.Play("AudioClip/Chop_Sound", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/Game/Chop_Sound", Define.Sound.Effect);
     }
 
 
@@ -303,7 +303,7 @@ public class Player : StateMachine
         {
             Animator.SetBool("Grab", false);
 
-            Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
+            Managers.Sound.Play("Effect/Game/Grab_Off", Define.Sound.Effect);
             Managers.Resource.Instantiate(grabObjectName + "_Drop", SpawnPos.position, Quaternion.identity);
             Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
             return;
@@ -320,7 +320,7 @@ public class Player : StateMachine
                      PlateGenerate.Invoke();
                 }
 
-                Managers.Sound.Play("AudioClip/TrashCan", Define.Sound.Effect);
+                Managers.Sound.Play("Effect/Game/TrashCan", Define.Sound.Effect);
                 Managers.Resource.Instantiate(grabObjectName, trash.position, Quaternion.identity, trash);
                 Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
 
@@ -366,7 +366,7 @@ public class Player : StateMachine
                             Managers.Resource.Destroy(table.GetChild(0).gameObject);
                             Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
 
-                            Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
+                            Managers.Sound.Play("Effect/Game/Grab_On", Define.Sound.Effect);
                         }
                     }
                     else
@@ -407,7 +407,7 @@ public class Player : StateMachine
                             Managers.Resource.Destroy(table.GetChild(0).gameObject);
                             Managers.Resource.Destroy(SpawnPos.GetChild(0).gameObject);
 
-                            Managers.Sound.Play("AudioClip/Grab_On", Define.Sound.Effect);
+                            Managers.Sound.Play("Effect/Game/Grab_On", Define.Sound.Effect);
                         }
                     }
                     else

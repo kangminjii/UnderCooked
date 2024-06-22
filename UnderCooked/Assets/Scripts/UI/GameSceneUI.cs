@@ -59,7 +59,7 @@ public class GameSceneUI : MonoBehaviour
         _currentTime = _timeLimit;
         _timeText.text = string.Format("{0:00}:{1:00}", Mathf.FloorToInt(_currentTime / 60f), Mathf.FloorToInt(_currentTime % 60f));
 
-        Managers.Sound.Play("AudioClip/TheNeonCity", Define.Sound.Bgm);
+        Managers.Sound.Play("Bgm/TheNeonCity", Define.Sound.Bgm);
         Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
 
         StartCoroutine(CheckSpaceBar());
@@ -101,7 +101,7 @@ public class GameSceneUI : MonoBehaviour
 
                 _endImage.SetActive(true);
 
-                Managers.Sound.Play("AudioClip/TimesUpSting", Define.Sound.Effect);
+                Managers.Sound.Play("Effect/UI/TimesUpSting", Define.Sound.Effect);
                 Managers.Sound.GetAudio(Define.Sound.Bgm).Stop();
 
                 StartCoroutine(LoadNextScene());
@@ -164,7 +164,7 @@ public class GameSceneUI : MonoBehaviour
                 _recipeImage.SetActive(false);
                 _startImage.color = new Color(0, 0, 0, 0);
                 
-                Managers.Sound.Play("AudioClip/Tutorial_Pop_Out", Define.Sound.Effect, 1f, 0.2f);
+                Managers.Sound.Play("Effect/UI/Tutorial_Pop_Out", Define.Sound.Effect, 1f, 0.2f);
                 StartCoroutine(ResumeGame());
                 break;
             }
@@ -195,7 +195,7 @@ public class GameSceneUI : MonoBehaviour
         }
 
         _readyObject.SetActive(true);
-        Managers.Sound.Play("AudioClip/LevelReady_01", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/UI/LevelReady_01", Define.Sound.Effect);
 
         startTime = Time.realtimeSinceStartup;
         while (Time.realtimeSinceStartup - startTime < 2.5f)
@@ -205,7 +205,7 @@ public class GameSceneUI : MonoBehaviour
 
         _readyObject.SetActive(false);
         _startObject.SetActive(true);
-        Managers.Sound.Play("AudioClip/LevelGo", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/UI/LevelGo", Define.Sound.Effect);
         
         Time.timeScale = 1;
         OrderAction?.Invoke();
