@@ -477,6 +477,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: m_city_wall_straight_04_inside (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1146086679217197180, guid: 33d817d000da57148a3979229beca8b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce437c9d2b299d84990856aa55d0a9e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d817d000da57148a3979229beca8b9, type: 3}
 --- !u!4 &217798978 stripped
@@ -1301,6 +1305,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: m_city_wall_straight_04_inside (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1146086679217197180, guid: 33d817d000da57148a3979229beca8b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce437c9d2b299d84990856aa55d0a9e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d817d000da57148a3979229beca8b9, type: 3}
 --- !u!4 &635408982 stripped
@@ -1550,7 +1558,6 @@ GameObject:
   - component: {fileID: 695056224}
   - component: {fileID: 695056223}
   - component: {fileID: 695056222}
-  - component: {fileID: 695056225}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1624,18 +1631,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 1.148, z: 0}
---- !u!114 &695056225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695056221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b8eb90611e4af546a90cc2873495d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &872825612
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,6 +2177,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: m_city_wall_straight_04_inside (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1146086679217197180, guid: 33d817d000da57148a3979229beca8b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce437c9d2b299d84990856aa55d0a9e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d817d000da57148a3979229beca8b9, type: 3}
 --- !u!4 &1143964988 stripped
@@ -2256,6 +2255,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: m_city_wall_straight_04_inside (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1146086679217197180, guid: 33d817d000da57148a3979229beca8b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce437c9d2b299d84990856aa55d0a9e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d817d000da57148a3979229beca8b9, type: 3}
 --- !u!1001 &1207365552
@@ -2325,6 +2328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: m_city_wall_straight_04_inside (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1146086679217197180, guid: 33d817d000da57148a3979229beca8b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce437c9d2b299d84990856aa55d0a9e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d817d000da57148a3979229beca8b9, type: 3}
 --- !u!1 &1212994459
@@ -3019,6 +3026,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: m_city_wall_straight_04_inside (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1146086679217197180, guid: 33d817d000da57148a3979229beca8b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce437c9d2b299d84990856aa55d0a9e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d817d000da57148a3979229beca8b9, type: 3}
 --- !u!4 &1804931338 stripped
@@ -3354,6 +3365,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 434320443}
     m_Modifications:
+    - target: {fileID: 1713869852, guid: 55323bfb16ad9074faf01e98d77367cd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca8b0346bf34c98418e4db129e5fc4fc, type: 2}
     - target: {fileID: 6039813638332087222, guid: 55323bfb16ad9074faf01e98d77367cd, type: 3}
       propertyPath: m_Name
       value: Van
