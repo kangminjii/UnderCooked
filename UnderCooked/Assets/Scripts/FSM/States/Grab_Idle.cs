@@ -5,7 +5,6 @@ public class Grab_Idle : BaseState
     protected Player _playerSM;
 
 
-
     public Grab_Idle(Player stateMachine) : base("Grab_Idle", stateMachine)
     {
         _playerSM = (Player)stateMachine;
@@ -34,7 +33,7 @@ public class Grab_Idle : BaseState
         // Idle Á¶°Ç
         if (_playerSM.SpawnPos.childCount == 0)
         {
-            Managers.Sound.Play("AudioClip/Grab_Off", Define.Sound.Effect);
+            Managers.Sound.Play("Effect/Game/Grab_Off", Define.Sound.Effect);
 
             _playerSM.Animator.SetBool("Grab", false);
             _stateMachine.ChangeState(_playerSM.IdleState);

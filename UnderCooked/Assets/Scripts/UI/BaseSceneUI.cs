@@ -10,6 +10,7 @@ public class BaseSceneUI : FadeInFadeOut
     string  _playScene = "[1]Start";
     int     _width = 1920;
     int     _height = 1080;
+    
     [SerializeField]
     Image   _image;
     [SerializeField]
@@ -37,7 +38,7 @@ public class BaseSceneUI : FadeInFadeOut
     {
         yield return new WaitForSeconds(3f);
 
-        Managers.Sound.Play("AudioClip/Frontend", Define.Sound.Bgm);
+        Managers.Sound.Play("Bgm/Frontend", Define.Sound.Bgm);
 
         yield return base.FadeOut(start, end, image);
         yield return new WaitForSeconds(2f);

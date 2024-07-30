@@ -13,7 +13,7 @@ public class FadeInFadeOut : MonoBehaviour
      * -> 이미지의 색이 start 색에서 end 색까지 time/_changeDuration 만큼 변화함
      * -> time에 Time.deltaTime만큼 시간이 추가되며 반환
      */
-    protected float ChangeColor(Color start, Color end, float time, Image image)
+    private float ChangeColor(Color start, Color end, float time, Image image)
     {
         Color lerpedColor = Color.Lerp(start, end, time / _changeDuration);
         image.color = lerpedColor;

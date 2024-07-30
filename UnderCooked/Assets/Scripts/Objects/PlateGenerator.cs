@@ -9,6 +9,7 @@ public class PlateGenerator : MonoBehaviour
     string           _plateName = "Plate";
     int              _maxPlateNumber = 3;
     List<GameObject> _plateList = new List<GameObject>();
+    
     [SerializeField]
     Transform        _plateSpawnPos;
 
@@ -64,7 +65,7 @@ public class PlateGenerator : MonoBehaviour
         GameObject plate = Managers.Resource.Instantiate(_plateName, spwanPlatePos, Quaternion.identity, _plateSpawnPos);
         _plateList.Add(plate);
 
-        Managers.Sound.Play("AudioClip/WashedPlate", Define.Sound.Effect);
+        Managers.Sound.Play("Effect/Game/WashedPlate", Define.Sound.Effect);
     }
 
 

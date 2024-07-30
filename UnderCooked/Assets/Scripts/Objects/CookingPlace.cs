@@ -5,6 +5,7 @@ public class CookingPlace : MonoBehaviour
 {
     string[]    _foodIngredient = new string[2] { "Prawn(Clone)", "Fish(Clone)" };
     GameObject  _foodOnTable;
+    
     [SerializeField]
     GameObject  _cookingKnife;
     [SerializeField]
@@ -30,7 +31,6 @@ public class CookingPlace : MonoBehaviour
         _slider.gameObject.SetActive(false);
 
         Player.Cooking += HandleCooking;
-        Player.ChopCounting += HandleChopCounting;
     }
     
 
@@ -40,7 +40,6 @@ public class CookingPlace : MonoBehaviour
     private void OnDestroy()
     {
         Player.Cooking -= HandleCooking;
-        Player.ChopCounting -= HandleChopCounting;
     }
 
 
@@ -93,7 +92,7 @@ public class CookingPlace : MonoBehaviour
      * -> ChopCount가 10회가 되면 초기화
      * -> 재료 파괴 후 완성된 음식으로 생성
      */
-    public void HandleChopCounting()
+    public void ChopCounting()
     {
         if (ChopCount < 10)
         {
