@@ -19,7 +19,7 @@ public class EndSceneUI : MonoBehaviour
     int          _failOrder;
     [Header("LoadScene")]
     string       _startScene = "[1]Start";
-    string       _playScene = "[2]Game";
+    string       _playScene = "[2-1]Game";
     
     [SerializeField]
     Image        _image;

@@ -9,7 +9,7 @@ public class StartSceneUI : FadeInFadeOut
     Color       _startColor = new Color(0, 0, 0, 1);
     Color       _endColor = new Color(0, 0, 0, 0);
     bool        _pressSpace = false;
-    string      _playScene = "[2]Game";
+    string      _playScene = "[2-1]Game";
     Vector3     _cameraFinalPosition = new Vector3(-13f, -33.6f, -7f);
     Quaternion  _cameraFinalRotation = Quaternion.Euler(0, 7.83f, 0);
     Vector3     _cloudStartPosition = new Vector3(0f, -16f, 9.4f);
