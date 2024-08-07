@@ -12,7 +12,7 @@ public class TaskPatrol : Node
 
     private int _currentWaypointIndex = 0;
 
-    private float _waitTime = 1f; // in seconds
+    private float _waitTime = 1f;
     private float _waitCounter = 0f;
     private bool _waiting = false;
 
@@ -48,8 +48,9 @@ public class TaskPatrol : Node
             }
             else
             {
-                //_transform.position = Vector3.MoveTowards(_transform.position, wp.position, GuardBT.speed * Time.deltaTime);
+                _transform.position = Vector3.MoveTowards(_transform.position, wp.position, GuardBT.speed * Time.deltaTime);
                 _transform.LookAt(wp.position);
+                _animator.SetBool("Walking", true);
             }
         }
 

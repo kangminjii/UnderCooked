@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 namespace BehaviorTree
 {
+    // and
+    // failure 만날때 상태바뀜
     public class Sequence : Node
     {
         public Sequence() : base() { }
