@@ -36,9 +36,19 @@ public class CheckEnemyInFOVRange : Node
             state = NodeState.FAILURE;
             return state;
         }
+        else
+        {
+            Transform target = (Transform)t;
+            if (Vector3.Distance(_transform.position, target.position) > GuardBT.fovRange)
+            {
+                state = NodeState.FAILURE;
+                return state;
+            }
 
-        state = NodeState.SUCCESS;
-        return state;
+            state = NodeState.SUCCESS;
+            return state;
+        }
+       
     }
 
 }

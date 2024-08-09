@@ -7,7 +7,7 @@ public class GuardBT : Tree
 
     public static float speed = 2f;
     public static float fovRange = 4f;
-    public static float attackRange = 1f;
+    public static float attackRange = 2f;
 
     // 우선순위에 따라 짜야함
     protected override Node SetupTree()
@@ -17,7 +17,7 @@ public class GuardBT : Tree
             new Sequence(new List<Node>
             {
                 new CheckEnemyInAttackRange(transform),
-                //new TaskAttack(transform),
+                new TaskAttack(transform),
             }),
             new Sequence(new List<Node>
             {

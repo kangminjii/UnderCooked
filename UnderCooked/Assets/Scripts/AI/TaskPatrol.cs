@@ -32,6 +32,7 @@ public class TaskPatrol : Node
             {
                 _waiting = false;
                 _animator.SetBool("Walking", true);
+                _animator.SetBool("Attacking", false);
             }
         }
         else
@@ -51,6 +52,7 @@ public class TaskPatrol : Node
                 _transform.position = Vector3.MoveTowards(_transform.position, wp.position, GuardBT.speed * Time.deltaTime);
                 _transform.LookAt(wp.position);
                 _animator.SetBool("Walking", true);
+                _animator.SetBool("Attacking", false);
             }
         }
 

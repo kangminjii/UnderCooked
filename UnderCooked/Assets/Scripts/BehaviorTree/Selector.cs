@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace BehaviorTree
 {
     // or
-    // success 또는 running 만날때 상태바뀜
+    // success 또는 running 만날때까지 계속 평가
     public class Selector : Node
     {
         public Selector() : base() { }
