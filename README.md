@@ -26,11 +26,11 @@ exe 파일 실행 --> 게임 스테이지 선택 --> 게임 진행 --> 다시하
 #### Player AI
 - Idle State  
 
-  Key 입력이나 오브젝트를 들고 있을때 Move,Grab 상태로 전환
+  Key 입력이나 오브젝트를 들고 있을때 Move,Grab 상태로 변경
   <dr/>
 - move State
   
-  방향키의 키 입력이 들어오면 Speed값에 따른 움직임 이후 Idle 상태로 전환
+  방향키의 키 입력이 들어오면 Speed값에 따른 움직임 이후 Idle 상태로 변경
   <dr/>
 - Grab State
 
